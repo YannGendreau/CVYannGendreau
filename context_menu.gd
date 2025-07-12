@@ -224,6 +224,7 @@ func _on_hand_button_pressed():
 
 	var object_name = target_node.name
 	GameManager.last_object_interacted = object_name.to_lower()
+	GameManager.last_clicked_object = object_name.to_lower()
 
 	if GameManager and GameManager.has_method("move_player_to_object"):
 		GameManager.on_object_clicked(object_name)

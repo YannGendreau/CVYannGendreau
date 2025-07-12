@@ -34,9 +34,43 @@ func _process(delta):
 		global_position = path_follower.global_position
 		moving = false
 		update_animation()
+		
+#var target_position = 0.0  # Position cible en unités absolues
+##var moving = false  # État de déplacement	
+#func _process(delta):
+	#if moving:
+		#var curve_length = get_parent().curve.get_baked_length()
+		#var current_progress = progress  # Utiliser une variable locale pour plus de clarté
+		#var current_ratio = current_progress / curve_length
+		#var distance = abs(target_position - current_progress)
+		#print("Déplacement : current_progress=", current_progress, " target=", target_position, " distance=", distance)
+		#if distance > 1:  # Petite marge
+			#var move_speed = speed * delta
+			#progress = move_toward(current_progress, target_position, move_speed)
+			#if animated_sprite:
+				#animated_sprite.play("walk")
+		#else:
+			#moving = false
+			#if animated_sprite:
+				#animated_sprite.play("idle")
 
 func update_animation():
 	if moving:
 		animated_sprite.play("walkleft")
 	else:
 		animated_sprite.play("idle")
+
+func _on_context_menu_action_selected(action: String, object_name: String):
+	#GameManager.last_object_interacted = object_name  # Ajouter cette ligne
+	GameManager.last_clicked_object = object_name  # Ajouter cette ligne
+
+	if action == "eye":
+		#_show_bubble_text(object_name)
+		GameManager.move_to_object(object_name)
+	elif action == "hand":
+		GameManager.move_to_object(object_name)
+		var scene_path = "res://scenes/" + object_name + ".tscn"
+		if ResourceLoader.exists(scene_path):
+			get_tree().change_scene_to_file(scene_path)
+		else:
+			print("Erreur : Scène ", scene_path, " non trouvée")

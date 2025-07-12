@@ -1,11 +1,15 @@
 extends Node  # Le GameManager gère les déplacements du joueur, les bulles de dialogue, et les interactions globales
 
 # Accès direct au PathFollow2D sur lequel le joueur se déplace
-@onready var path_follower: PathFollow2D = get_node("/root/ChezYann/Path2D/PathFollower")
+#@onready var path_follower: PathFollow2D = get_node("/root/ChezYann/Path2D/PathFollower")
 @onready var speech_bubble_container := get_node("/root/ChezYann/UI/SpeechBubbleContainer")
 @onready var context_menu = get_node("/root/ChezYann/ContextMenu")  # Menu contextuel global.
 @onready var arrow_green = preload("res://assets/ui/cursors/arrow_1.png")
 @onready var arrow_blue = preload("res://assets/ui/cursors/arrow_2.png")
+
+@onready var path_follower: PathFollow2D = get_node_or_null("/root/ChezYann/Path2D/PathFollower")
+@onready var player: Node2D = path_follower.get_node_or_null("AnimatedSprite2D") if path_follower else null
+
 var speech_bubble_scene: PackedScene = preload("res://speechbubble.tscn")
 
 
@@ -23,7 +27,7 @@ var player_path_ratio := 0.5  # Position par défaut
 # Références à d'autres objets utiles
 var path: Path2D
 #var player: CharacterBody2D
-@onready var player = get_node("/root/ChezYann/Path2D/PathFollower/Employeur")
+#@onready var player = get_node("/root/ChezYann/Path2D/PathFollower/Employeur")
 var speed : float = 300.0
 var target_offset :float  = 0.0
 @export var move_speed_ratio: float = 0.5  # vitesse en unité de ratio par seconde
@@ -74,6 +78,16 @@ func _ready():
 	Input.set_custom_mouse_cursor(arrow_blue, Input.CURSOR_ARROW)
 	
 	call_deferred("place_player_at_last_offset")
+	
+	# Recherche des nœuds dans la scène principale (ajuste le chemin selon chez_yann.tscn)
+	if not path_follower or not player:
+		push_error("❌ GameManager : Références manquantes. Vérifie la structure de chez_yann.tscn.")
+		print("path_follower: ", path_follower, ", player: ", player)
+	else:
+		print("✅ Références GameManager initialisées")
+# Éviter de réinitialiser la position au démarrage
+	if path_follower.progress > 0:  # Garder la dernière position si existante
+		path_follower.moving = false  # Assurer que le déplacement s’arrête
 
 #Appel des noeuds du Player, chemin et Chemin à suivre 
 func init_refs(root_node: Node):
@@ -106,7 +120,8 @@ func _process(delta):
 			emit_signal("reached_target")
 
 func move_player_to_object(object_name: String):
-	last_object_interacted = object_name
+	#last_object_interacted = object_name
+	last_clicked_object = object_name
 	var offset_ratio : float = OBJECT_OFFSETS.get(object_name.to_lower(), 0.0)
 	
 	# Donne uniquement le ratio cible au personnage
@@ -147,23 +162,65 @@ func hide_all_context_menus():
 	for object in get_tree().get_nodes_in_group("context_objects"):
 		if object.has_method("hide_with_tween"):
 			object.hide_with_tween()
-
+######################################################################
+#func place_player_at_last_offset():
+	#if not player or not path_follower:
+		#push_error("Références manquantes pour placer le joueur.")
+		#return
+#
+	#if last_object_interacted == "":
+		#push_error("❌ last_object_interacted est vide ! Impossible de placer le joueur.")
+		#return
+#
+	#if OBJECT_OFFSETS.has(last_object_interacted):
+		#var offset = OBJECT_OFFSETS[last_object_interacted]
+		#path_follower.progress_ratio = offset
+		#player.global_position = path_follower.global_position
+		#print("✅ Employeur replacé à l'offset de ", last_object_interacted)
+	#else:
+		#push_warning("⚠️ Aucun offset trouvé pour " + last_object_interacted)
+	########################################################################
+#grok
 func place_player_at_last_offset():
+	#if not player or not path_follower:
+		#push_error("Références manquantes pour placer le joueur.")
+		#return
+#
+	##if last_object_interacted == "":
+	#if last_clicked_object == "":
+		#push_error("❌  last_clicked_object est vide ! Impossible de placer le joueur.")
+		#return
+#
+	##if OBJECT_OFFSETS.has(last_object_interacted):
+	#if OBJECT_OFFSETS.has(last_clicked_object):
+		#var offset = OBJECT_OFFSETS[last_clicked_object]
+		#path_follower.progress_ratio = offset
+		#if player:
+			#player.global_position = path_follower.global_position
+			#print("✅ Employeur replacé à l'offset de ", last_clicked_object)
+		#else:
+			#push_warning("⚠️ Aucun offset trouvé pour " + last_clicked_object)
+		#
+		#print("last_clicked_object: ", last_clicked_object)
+		
 	if not player or not path_follower:
-		push_error("Références manquantes pour placer le joueur.")
+		push_error("GameManager: Références manquantes pour placer le joueur.")
 		return
 
-	if last_object_interacted == "":
-		push_error("❌ last_object_interacted est vide ! Impossible de placer le joueur.")
+	if last_clicked_object == "":
+		push_error("❌ last_clicked_object est vide ! Impossible de placer le joueur.")
 		return
 
-	if OBJECT_OFFSETS.has(last_object_interacted):
-		var offset = OBJECT_OFFSETS[last_object_interacted]
-		path_follower.progress_ratio = offset
-		player.global_position = path_follower.global_position
-		print("✅ Employeur replacé à l'offset de ", last_object_interacted)
+	if OBJECT_OFFSETS.has(last_clicked_object):
+		var ratio = OBJECT_OFFSETS[last_clicked_object]
+		var curve_length = path_follower.get_parent().curve.get_baked_length()
+		var target_progress = ratio * curve_length
+		print("Calculé target_progress: ", target_progress, " pour ratio ", ratio, " et longueur ", curve_length)
+		path_follower.target_position = target_progress
+		path_follower.moving = true
+		print("✅ Employeur en route vers l'offset de ", last_clicked_object, " à ", target_progress)
 	else:
-		push_warning("⚠️ Aucun offset trouvé pour " + last_object_interacted)
+		push_warning("⚠️ Aucun offset trouvé pour " + last_clicked_object)
 		
 func on_object_clicked(object_name: String):
 	last_clicked_object = object_name
