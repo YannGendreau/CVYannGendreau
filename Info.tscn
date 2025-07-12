@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://chighkot1prtk"]
+
+[ext_resource type="Texture2D" uid="uid://bodf5s7nwh88a" path="res://assets/backgrounds/ecran informatique.png" id="1_v3brf"]
+
+[node name="Info" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(960, 540)
+texture = ExtResource("1_v3brf")

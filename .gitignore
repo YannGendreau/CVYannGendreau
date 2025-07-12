@@ -1,0 +1,33 @@
+
+# Godot 4+ specific ignores
+.godot/
+.android/
+export_presets.cfg
+export.cfg
+.import/
+*.import
+*.tmp
+*.log
+*.godot
+*.pck
+*.scn
+*.uid
+
+# Ignorer tous les fichiers de sauvegarde temporaire
+*.tscn-*
+
+# Vidéos (à ne pas push sur GitHub)
+Videos/
+*.mp4
+*.mov
+*.webm
+*.ogv
+
+# Autres formats lourds (optionnel si jamais tu en utilises)
+*.avi
+*.mkv
+*.flv
+
+# Systèmes d’exploitation (à ignorer pour tous projets)
+.DS_Store
+Thumbs.db
