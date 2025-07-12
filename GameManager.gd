@@ -26,6 +26,7 @@ var path: Path2D
 @onready var player = get_node("/root/ChezYann/Path2D/PathFollower/Employeur")
 var speed : float = 300.0
 var target_offset :float  = 0.0
+@export var move_speed_ratio: float = 0.5  # vitesse en unité de ratio par seconde
 var fade_timer: Timer = null
 var is_moving :bool = false
 var current_bubble: SpeechBubble = null
@@ -88,6 +89,21 @@ func delete_follower():
 	# Supprime le follower (utile si on veut détruire la trajectoire)
 	print("✂ Suppression path_follower")
 	path_follower.queue_free()
+	
+func _process(delta):
+	if is_moving:
+		var cur = path_follower.unit_offset
+		var dir = sign(target_offset - cur)
+		cur += dir * move_speed_ratio * delta
+		path_follower.unit_offset = clamp(cur, 0.0, 1.0)
+		# mise à jour du joueur : il groupera automatiquement
+		player.global_position = path_follower.global_position
+
+		if abs(cur - target_offset) < 0.005:
+			is_moving = false
+			path_follower.unit_offset = target_offset
+			player.global_position = path_follower.global_position
+			emit_signal("reached_target")
 
 func move_player_to_object(object_name: String):
 	last_object_interacted = object_name
