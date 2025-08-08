@@ -1,29 +1,29 @@
 [gd_scene load_steps=81 format=3 uid="uid://quox87bb6okb"]
 
-[ext_resource type="Script" uid="uid://lncxt3njhi35" path="res://chez_yann.gd" id="1_lifh0"]
-[ext_resource type="Texture2D" uid="uid://74y0rtg7xxd1" path="res://assets/backgrounds/piece_yann.png" id="2_dk3hb"]
-[ext_resource type="Script" uid="uid://bay7cddphyicm" path="res://cadre.gd" id="3_5kfan"]
-[ext_resource type="Texture2D" uid="uid://tvy53e415aio" path="res://sprites/Objets/cadre_obj.png" id="3_21ub8"]
-[ext_resource type="Script" uid="uid://lo3c2exemulk" path="res://carton.gd" id="3_criyy"]
-[ext_resource type="Texture2D" uid="uid://5aw5qq3bh2bg" path="res://sprites/Objets/carton.png" id="4_lkr1c"]
-[ext_resource type="Script" uid="uid://dsgowwpfe8rug" path="res://context_menu.gd" id="5_3ipe8"]
-[ext_resource type="Script" uid="uid://chseayplbxiby" path="res://hover_area.gd" id="6_qjw3s"]
-[ext_resource type="Texture2D" uid="uid://cf1h6puhqmpd7" path="res://sprites/UI/oeil-spritesheet.png" id="7_kyyng"]
-[ext_resource type="Texture2D" uid="uid://kukd0httqvni" path="res://sprites/UI/main_blue1.png" id="8_mbdna"]
-[ext_resource type="Texture2D" uid="uid://cmo3cd4npxqlf" path="res://sprites/Objets/ordi-Sheet.png" id="8_mrf0o"]
-[ext_resource type="Texture2D" uid="uid://bjwt2pig0g2my" path="res://sprites/UI/main_blue2.png" id="9_oik1x"]
-[ext_resource type="Script" uid="uid://6ebdf3vivo5m" path="res://hand_button.gd" id="10_4bvsw"]
-[ext_resource type="Script" uid="uid://bjyweoeppn1dp" path="res://tv.gd" id="11_pdin3"]
-[ext_resource type="Texture2D" uid="uid://djxg3tb2o32j7" path="res://sprites/Objets/tv.png" id="12_6ac8t"]
-[ext_resource type="Script" uid="uid://uticutxy62rd" path="res://scripts/ordi.gd" id="13_17ec4"]
+[ext_resource type="Script" uid="uid://dwqfhnerk2o6c" path="res://chez_yann.gd" id="1_lifh0"]
+[ext_resource type="Texture2D" uid="uid://deyqvr6xegdrj" path="res://assets/backgrounds/piece_yann.png" id="2_dk3hb"]
+[ext_resource type="Script" uid="uid://bxxwrnqhnb67e" path="res://cadre.gd" id="3_5kfan"]
+[ext_resource type="Texture2D" uid="uid://et44vuh7waw0" path="res://sprites/Objets/cadre_obj.png" id="3_21ub8"]
+[ext_resource type="Script" uid="uid://cool1ahid5i8b" path="res://carton.gd" id="3_criyy"]
+[ext_resource type="Texture2D" uid="uid://cg8ghqkpcitfo" path="res://sprites/Objets/carton.png" id="4_lkr1c"]
+[ext_resource type="Script" uid="uid://i6gphdnx2ias" path="res://context_menu.gd" id="5_3ipe8"]
+[ext_resource type="Script" uid="uid://3yo35vys8ogp" path="res://hover_area.gd" id="6_qjw3s"]
+[ext_resource type="Texture2D" uid="uid://iu8qja85o4lw" path="res://sprites/UI/oeil-spritesheet.png" id="7_kyyng"]
+[ext_resource type="Texture2D" uid="uid://cgu4tvpxvhx15" path="res://sprites/UI/main_blue1.png" id="8_mbdna"]
+[ext_resource type="Texture2D" uid="uid://w6gvxq1cffnc" path="res://sprites/Objets/ordi-Sheet.png" id="8_mrf0o"]
+[ext_resource type="Texture2D" uid="uid://v6lv5hpbbowr" path="res://sprites/UI/main_blue2.png" id="9_oik1x"]
+[ext_resource type="Script" uid="uid://ccah5mc1st1fg" path="res://hand_button.gd" id="10_4bvsw"]
+[ext_resource type="Script" uid="uid://e34hfgpy066i" path="res://tv.gd" id="11_pdin3"]
+[ext_resource type="Texture2D" uid="uid://buwhf2xt5nvoq" path="res://sprites/Objets/tv.png" id="12_6ac8t"]
+[ext_resource type="Script" uid="uid://cuqcja2ro4w65" path="res://scripts/ordi.gd" id="13_17ec4"]
 [ext_resource type="PackedScene" uid="uid://b2pu573y1yatl" path="res://employeur.tscn" id="15_sbs8g"]
-[ext_resource type="Script" uid="uid://c1mml3dfaqcyu" path="res://kiki.gd" id="16_opjl1"]
-[ext_resource type="Texture2D" uid="uid://dfn18wmnnim1n" path="res://sprites/Objets/kiki-spritesheet.png" id="17_a2qix"]
-[ext_resource type="Texture2D" uid="uid://bekuacnh137fh" path="res://sprites/Objets/canape.png" id="18_3w6es"]
-[ext_resource type="Script" uid="uid://dvyvggf8afaqc" path="res://computer.gd" id="19_5xjue"]
-[ext_resource type="Texture2D" uid="uid://by8hu06wil5y2" path="res://sprites/Objets/computer_floor-Sheet.png" id="19_opd1e"]
-[ext_resource type="Texture2D" uid="uid://8c8dhiq61h0t" path="res://sprites/Objets/clavier-souris-Sheet.png" id="21_hitn6"]
-[ext_resource type="Script" uid="uid://dnjejuveubudc" path="res://clavier_souris.gd" id="21_mrf0o"]
+[ext_resource type="Script" uid="uid://c5fghqv78cqo1" path="res://kiki.gd" id="16_opjl1"]
+[ext_resource type="Texture2D" uid="uid://drux3k5pvonow" path="res://sprites/Objets/kiki-spritesheet.png" id="17_a2qix"]
+[ext_resource type="Texture2D" uid="uid://e6lfe848dwke" path="res://sprites/Objets/canape.png" id="18_3w6es"]
+[ext_resource type="Script" uid="uid://vmfm1qbavptn" path="res://computer.gd" id="19_5xjue"]
+[ext_resource type="Texture2D" uid="uid://dcevr0umf605x" path="res://sprites/Objets/computer_floor-Sheet.png" id="19_opd1e"]
+[ext_resource type="Texture2D" uid="uid://d0chasrf2g7lb" path="res://sprites/Objets/clavier-souris-Sheet.png" id="21_hitn6"]
+[ext_resource type="Script" uid="uid://cdvhkmswwhxg6" path="res://clavier_souris.gd" id="21_mrf0o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5kfan"]
 size = Vector2(96, 57)
@@ -243,7 +243,7 @@ size = Vector2(87, 69)
 
 [sub_resource type="Curve2D" id="Curve2D_ign4d"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 757, 414, 0, 0, 0, 0, 171, 414)
+"points": PackedVector2Array(0, 0, 0, 0, 762, 404, 0, 0, 0, 0, 171, 402)
 }
 point_count = 2
 
@@ -494,7 +494,7 @@ curve = SubResource("Curve2D_ign4d")
 metadata/_edit_group_ = true
 
 [node name="PathFollower" type="PathFollow2D" parent="Path2D"]
-position = Vector2(757, 414)
+position = Vector2(762, 404)
 rotation = 3.14159
 rotates = false
 
@@ -589,6 +589,7 @@ metadata/_edit_use_anchors_ = true
 
 [connection signal="input_event" from="cadre/Area2D" to="cadre" method="_on_area_2d_input_event"]
 [connection signal="input_event" from="Kiki/Area2D" to="Kiki" method="_on_area_2d_input_event"]
+[connection signal="mouse_entered" from="ContextMenu" to="ContextMenu" method="_on_mouse_entered"]
 [connection signal="mouse_entered" from="ContextMenu/EyeButton" to="ContextMenu" method="_on_eye_button_mouse_entered"]
 [connection signal="mouse_exited" from="ContextMenu/EyeButton" to="ContextMenu" method="_on_eye_button_mouse_exited"]
 [connection signal="pressed" from="ContextMenu/EyeButton" to="ContextMenu" method="_on_eye_button_pressed"]

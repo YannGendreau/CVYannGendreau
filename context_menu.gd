@@ -55,13 +55,7 @@ func _ready() -> void:
 		GameManager.connect("reached_target", Callable(self, "_on_player_arrived"))
 
 	$EyeButton.pressed.connect(_on_eye_pressed)
-	
-#func show_menu_for(object: Node, global_position: Vector2) -> void:
-	#target_object = object
-	#position = global_position
-	#visible = true
-#
-#
+
 ## Setter appelé par le script de l'objet pour indiquer la scène à charger
 func set_target_scene(scene_path: String) -> void:
 	target_scene = scene_path
@@ -153,34 +147,11 @@ func show_menu(position: Vector2, scene_path: String, target_pos: Vector2, objec
 	self.target_position = target_pos
 	self.object_name = object_name  # 👈 stocke localement
 	show()
-	
-	
-#func show_menu(target: Node, global_position: Vector2):
-	#visible = true
-	#target_node = target
-	#position = global_position
-	#
-#func _on_eye_button_pressed():
-	#if not target_node:
-		#push_error("❌ Aucun objet cible défini pour le menu contextuel.")
-		#return
-#
-	#var object_name = target_node.name
-	#if GameManager and GameManager.has_method("move_player_to_object"):
-		#GameManager.on_object_clicked(object_name)
-		#GameManager.move_player_to_object(object_name, "idle")  # Animation finale
-	#visible = false
-	
+
 func _on_eye_pressed():
 	if target_node:
 		var game_manager = get_node("/root/GameManager")  # ou où se trouve ton GameManager
 		game_manager.on_eye_clicked(target_node)
-	
-	
-#func show_menu(target: Node, global_position: Vector2):
-	#visible = true
-	#target_node = target
-	#position = global_position
 
 func _on_eye_button_pressed():
 	if not target_node:
@@ -193,31 +164,10 @@ func _on_eye_button_pressed():
 		#GameManager.move_player_to_object(object_name, "idle")  # Animation finale
 		GameManager.move_player_to_object(object_name)
 		print(target_node.name)
-	
-	
+		
 	visible = false
 
-func _on_hand_button_pressed():
-	#if not target_node:
-		#push_error("❌ Aucun objet cible défini pour le menu contextuel.")
-		#return
-#
-	#var object_name = target_node.name
-	#if GameManager and GameManager.has_method("move_player_to_object"):
-		#GameManager.on_object_clicked(object_name)
-		#GameManager.move_player_to_object(object_name)  # Par exemple
-	#visible = false
-	## Attend que le joueur ait atteint la position
-	#await GameManager.reached_target
-#
-	## Petite pause pour laisser souffler la narration
-	##await get_tree().create_timer(0.5).timeout
-	#if target_scene != "":
-		#GameManager.last_clicked_object = target_name  # <<< ICI
-		#get_tree().change_scene_to_file(target_scene)
-	#else:
-		#print("⚠️ Aucune scène cible définie.")
-		
+func _on_hand_button_pressed():	
 	if not target_node:
 		push_error("❌ Aucun objet cible défini pour le menu contextuel.")
 		return

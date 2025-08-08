@@ -6,7 +6,7 @@ extends Node  # Le GameManager gère les déplacements du joueur, les bulles de 
 @onready var context_menu = get_node("/root/ChezYann/ContextMenu")  # Menu contextuel global.
 @onready var arrow_green = preload("res://assets/ui/cursors/arrow_1.png")
 @onready var arrow_blue = preload("res://assets/ui/cursors/arrow_2.png")
-
+#@onready var path: Path2D = get_node_or_null("/root/ChezYann/Path2D")
 @onready var path_follower: PathFollow2D = get_node_or_null("/root/ChezYann/Path2D/PathFollower")
 @onready var player: Node2D = path_follower.get_node_or_null("AnimatedSprite2D") if path_follower else null
 
@@ -79,6 +79,7 @@ func _ready():
 	
 	call_deferred("place_player_at_last_offset")
 	
+	
 	# Recherche des nœuds dans la scène principale (ajuste le chemin selon chez_yann.tscn)
 	if not path_follower or not player:
 		push_error("❌ GameManager : Références manquantes. Vérifie la structure de chez_yann.tscn.")
@@ -120,12 +121,9 @@ func _process(delta):
 			emit_signal("reached_target")
 
 func move_player_to_object(object_name: String):
-	#last_object_interacted = object_name
 	last_clicked_object = object_name
 	var offset_ratio : float = OBJECT_OFFSETS.get(object_name.to_lower(), 0.0)
-	
-	# Donne uniquement le ratio cible au personnage
-	#player.go_to(offset_ratio)
+
 	if player and player.is_inside_tree():
 		player.go_to(offset_ratio)
 	else:
@@ -162,46 +160,16 @@ func hide_all_context_menus():
 	for object in get_tree().get_nodes_in_group("context_objects"):
 		if object.has_method("hide_with_tween"):
 			object.hide_with_tween()
-######################################################################
-#func place_player_at_last_offset():
-	#if not player or not path_follower:
-		#push_error("Références manquantes pour placer le joueur.")
-		#return
-#
-	#if last_object_interacted == "":
-		#push_error("❌ last_object_interacted est vide ! Impossible de placer le joueur.")
-		#return
-#
-	#if OBJECT_OFFSETS.has(last_object_interacted):
-		#var offset = OBJECT_OFFSETS[last_object_interacted]
-		#path_follower.progress_ratio = offset
-		#player.global_position = path_follower.global_position
-		#print("✅ Employeur replacé à l'offset de ", last_object_interacted)
-	#else:
-		#push_warning("⚠️ Aucun offset trouvé pour " + last_object_interacted)
-	########################################################################
-#grok
+
 func place_player_at_last_offset():
-	#if not player or not path_follower:
-		#push_error("Références manquantes pour placer le joueur.")
-		#return
-#
-	##if last_object_interacted == "":
-	#if last_clicked_object == "":
-		#push_error("❌  last_clicked_object est vide ! Impossible de placer le joueur.")
-		#return
-#
-	##if OBJECT_OFFSETS.has(last_object_interacted):
-	#if OBJECT_OFFSETS.has(last_clicked_object):
-		#var offset = OBJECT_OFFSETS[last_clicked_object]
-		#path_follower.progress_ratio = offset
-		#if player:
-			#player.global_position = path_follower.global_position
-			#print("✅ Employeur replacé à l'offset de ", last_clicked_object)
-		#else:
-			#push_warning("⚠️ Aucun offset trouvé pour " + last_clicked_object)
-		#
-		#print("last_clicked_object: ", last_clicked_object)
+	
+	if path_follower and path_follower.progress_ratio:
+		print("✅ chemin trouvé :", path_follower.progress_ratio)
+	else:
+		print("❌ Pas de chemin associé à path_follower !")
+	
+	#print("📏 Longueur du chemin :", path.curve.get_baked_length())
+
 		
 	if not player or not path_follower:
 		push_error("GameManager: Références manquantes pour placer le joueur.")
@@ -230,7 +198,6 @@ func show_speech_bubble_above(character: Node2D, text: String) -> void:
 	if not speech_bubble_scene or not speech_bubble_container:
 		print("❌ Pas de scène ou de conteneur défini")
 		return
-
 	# Instancier la bulle et l'ajouter au conteneur
 	var bubble := speech_bubble_scene.instantiate()
 	speech_bubble_container.add_child(bubble)
@@ -250,21 +217,20 @@ func show_speech_bubble_above(character: Node2D, text: String) -> void:
 	await get_tree().create_timer(3.0).timeout
 	if is_instance_valid(bubble):
 		bubble.queue_free()
-		
-		
-func get_player_position() -> Vector2:
-	# Renvoie la position globale du joueur
-	if player:
-		return player.global_position
-	return Vector2.ZERO
+			
+#func get_player_position() -> Vector2:
+	## Renvoie la position globale du joueur
+	#if player:
+		#return player.global_position
+	#return Vector2.ZERO
 
-func _on_player_reached_target():
-	# Alternative au signal reached_target
-	if arrival_animation != "":
-		player.play_animation(arrival_animation)
-	else:
-		player.play_animation("idle")  # fallback
-	emit_signal("reached_target")
+#func _on_player_reached_target():
+	## Alternative au signal reached_target
+	#if arrival_animation != "":
+		#player.play_animation(arrival_animation)
+	#else:
+		#player.play_animation("idle")  # fallback
+	#emit_signal("reached_target")
 	
-func on_scene_name(scene_name: String):
-	last_clicked_object = scene_name
+#func on_scene_name(scene_name: String):
+	#last_clicked_object = scene_name

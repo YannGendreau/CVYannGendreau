@@ -7,6 +7,9 @@ var moving = false
 var target_ratio: float = 0.0
 var speed: float = 0.5  # ajustable
 
+func _ready() -> void:
+	animated_sprite.play("idle")
+
 func go_to(ratio: float):
 	#target_ratio = path_follower.curve.sample_baked(ratio * path_follower.curve.get_baked_length())
 	target_ratio = clamp(ratio, 0.0, 1.0)
@@ -56,7 +59,7 @@ func _process(delta):
 
 func update_animation():
 	if moving:
-		animated_sprite.play("walkleft")
+		animated_sprite.play("walk")
 	else:
 		animated_sprite.play("idle")
 

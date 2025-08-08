@@ -97,7 +97,6 @@ func start_timer_safe():
 		GameManager.fade_timer.start()  # Redémarre le timer si rien n’est survolé.
 		print('Timer lancé')
 
-######################################
 func _on_context_menu_action_chosen(action: String):
 	if action == "hand":
 		# Fait déplacer le joueur à côté de l’objet.

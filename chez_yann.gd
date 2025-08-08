@@ -5,11 +5,8 @@ extends Node2D
 @onready var player = $Path2D/PathFollower/Employeur
 
 func _ready():
-	#print("Appel de place_player_at_last_offset, last_object_interacted: ", get_node("/root/GameManager").last_object_interacted)
-	#get_node("/root/GameManager").place_player_at_last_offset()
 	print("Appel de place_player_at_last_offset, last_clicked_object: ", get_node("/root/GameManager").last_clicked_object)
 	get_node("/root/GameManager").place_player_at_last_offset()
-	#GameManager.move_player_to_object("centre")
 	if GameManager and GameManager.last_clicked_object != "":
 		await get_tree().process_frame
 		GameManager.place_player_at_last_offset()
