@@ -8,6 +8,7 @@ extends Node  # Le GameManager gère les déplacements du joueur, les bulles de 
 @onready var arrow_blue = preload("res://assets/ui/cursors/arrow_2.png")
 #@onready var path: Path2D = get_node_or_null("/root/ChezYann/Path2D")
 @onready var path_follower: PathFollow2D = get_node_or_null("/root/ChezYann/Path2D/PathFollower")
+#@onready var path_follower: PathFollow2D = get_parent()
 @onready var player: Node2D = path_follower.get_node_or_null("AnimatedSprite2D") if path_follower else null
 
 var speech_bubble_scene: PackedScene = preload("res://speechbubble.tscn")
@@ -51,6 +52,34 @@ var LOOK_TEXTS = {
 	"ordi": "Je regarde l'ordinateur...",
 	"cadre": "Je regarde le cadre..."
 }
+
+#const OBJECT_OFFSETS := {
+	#"tv": {
+		#"offset": 0.1,
+		#"facing": "back",
+		#"text": "Une télévision accrochée au mur. Idéal pour montrer mes vidéos."
+	#},
+	#"ordi": {
+		#"offset": 0.8,
+		#"facing": "back",
+		#"text": "Un ordinateur pour mes projets de programmation et développement web."
+	#},
+	#"carton": {
+		#"offset": 0.6,
+		#"facing": "back",
+		#"text": "Un carton rempli d'expériences professionnelles variées."
+	#},
+	#"cadre": {
+		#"offset": 0.3,
+		#"facing": "left",
+		#"text": "Un cadre photo, souvenir de mes collaborations passées."
+	#},
+	#"centre": {
+		#"offset": 0.5,
+		#"facing": "right",
+		#"text": "Le centre de la pièce, un point de rencontre."
+	#}
+#}
 
 const OFFSET_BUBBLE := Vector2(90, 370) 
 
@@ -133,7 +162,9 @@ func move_player_to_object(object_name: String):
 
 	print("👣 Déplacement vers ", object_name, " → position ", target_position)
 	
-	await get_tree().create_timer(0.7).timeout
+	var timer = get_tree().create_timer(2).timeout
+	await timer
+	print(timer)
 	
 	emit_signal("reached_target")
 	return reached_target  # Permet `await GameManager.move_player_to_object(...)`
@@ -171,24 +202,39 @@ func place_player_at_last_offset():
 	#print("📏 Longueur du chemin :", path.curve.get_baked_length())
 
 		
-	if not player or not path_follower:
-		push_error("GameManager: Références manquantes pour placer le joueur.")
-		return
-
+	#if not player or not path_follower:
+		#push_error("GameManager: Références manquantes pour placer le joueur.")
+		#return
+#
+	#if last_clicked_object == "":
+		#push_error("❌ last_clicked_object est vide ! Impossible de placer le joueur.")
+		#return
+#
+	#if OBJECT_OFFSETS.has(last_clicked_object):
+		#var ratio = OBJECT_OFFSETS[last_clicked_object]
+		#var curve_length = path_follower.get_parent().curve.get_baked_length()
+		#var target_progress = ratio * curve_length
+		#print("Calculé target_progress: ", target_progress, " pour ratio ", ratio, " et longueur ", curve_length)
+		#path_follower.target_position = target_progress
+		#path_follower.moving = true
+		#print("✅ Employeur en route vers l'offset de ", last_clicked_object, " à ", target_progress)
+	#else:
+		#push_warning("⚠️ Aucun offset trouvé pour " + last_clicked_object)
+		
 	if last_clicked_object == "":
-		push_error("❌ last_clicked_object est vide ! Impossible de placer le joueur.")
+		print("⏩ Aucun objet encore cliqué, le joueur ne sera pas déplacé au démarrage.")
 		return
-
-	if OBJECT_OFFSETS.has(last_clicked_object):
-		var ratio = OBJECT_OFFSETS[last_clicked_object]
-		var curve_length = path_follower.get_parent().curve.get_baked_length()
-		var target_progress = ratio * curve_length
-		print("Calculé target_progress: ", target_progress, " pour ratio ", ratio, " et longueur ", curve_length)
-		path_follower.target_position = target_progress
-		path_follower.moving = true
-		print("✅ Employeur en route vers l'offset de ", last_clicked_object, " à ", target_progress)
-	else:
-		push_warning("⚠️ Aucun offset trouvé pour " + last_clicked_object)
+		
+	if player == null:
+		player = get_tree().get_first_node_in_group("Employeur")
+		
+	if player == null or player.path_follower == null:
+		print("❌ Pas de chemin associé à path_follower ! (player ou path_follower null)")
+		return
+		
+	var ratio = OBJECT_OFFSETS[last_clicked_object]
+	player.path_follower.progress_ratio = ratio
+	print("✅ Joueur replacé sur le chemin à ratio:", ratio)
 		
 func on_object_clicked(object_name: String):
 	last_clicked_object = object_name

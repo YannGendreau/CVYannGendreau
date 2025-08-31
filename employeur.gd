@@ -9,12 +9,38 @@ var speed: float = 0.5  # ajustable
 
 func _ready() -> void:
 	animated_sprite.play("idle")
+	add_to_group("Employeur")
 
 func go_to(ratio: float):
 	#target_ratio = path_follower.curve.sample_baked(ratio * path_follower.curve.get_baked_length())
 	target_ratio = clamp(ratio, 0.0, 1.0)
 	moving = true
 	update_animation()
+	
+#func go_to(offset_ratio: float, facing: String = "right"):
+	#if path_follower:
+		#path_follower.progress_ratio = offset_ratio
+#
+	#match facing:
+		#"left":
+			#$AnimatedSprite2D.play("walkleft")
+		#"right":
+			#$AnimatedSprite2D.play("walkright")
+		#"back":
+			#$AnimatedSprite2D.play("back")
+			#
+	#target_ratio = clamp(offset_ratio, 0.0, 1.0)
+	#moving = true
+	#update_animation()
+	#
+#func set_idle(facing: String):
+	#match facing:
+		#"left":
+			#$AnimatedSprite2D.play("idle")
+		#"right":
+			#$AnimatedSprite2D.play("idle_right")
+		#"back":
+			#$AnimatedSprite2D.play("back")
 
 func _process(delta):
 	if not moving:
