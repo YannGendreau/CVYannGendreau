@@ -3,6 +3,8 @@ extends CharacterBody2D
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var path_follower = get_node("/root/ChezYann/Path2D/PathFollower")
 
+signal reached_target   # ✅ déclaration du signal
+
 var moving = false
 var target_ratio: float = 0.0
 var speed: float = 0.5  # ajustable
@@ -62,6 +64,7 @@ func _process(delta):
 		path_follower.progress_ratio = target_ratio
 		global_position = path_follower.global_position
 		moving = false
+		emit_signal("reached_target")
 		update_animation()
 		
 #var target_position = 0.0  # Position cible en unités absolues

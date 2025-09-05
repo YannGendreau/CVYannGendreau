@@ -38,13 +38,13 @@ var current_bubble: SpeechBubble = null
 var arrival_animation: String = ""  # Nom de l'animation à jouer une fois arrivé
 var object_name = ""
 # mapping : objets -> offset sur le Path2D
-const OBJECT_OFFSETS := {
-	"tv": 0.1,
-	"ordi": 0.8,
-	"carton": 0.6,
-	"cadre": 0.3,
-	"centre": 0.5
-}
+#const OBJECT_OFFSETS := {
+	#"tv": 0.1,
+	#"ordi": 0.8,
+	#"carton": 0.6,
+	#"cadre": 0.3,
+	#"centre": 0.5
+#}
 
 var LOOK_TEXTS = {
 	"tv": "Je regarde la TV...",
@@ -53,33 +53,33 @@ var LOOK_TEXTS = {
 	"cadre": "Je regarde le cadre..."
 }
 
-#const OBJECT_OFFSETS := {
-	#"tv": {
-		#"offset": 0.1,
-		#"facing": "back",
-		#"text": "Une télévision accrochée au mur. Idéal pour montrer mes vidéos."
-	#},
-	#"ordi": {
-		#"offset": 0.8,
-		#"facing": "back",
-		#"text": "Un ordinateur pour mes projets de programmation et développement web."
-	#},
-	#"carton": {
-		#"offset": 0.6,
-		#"facing": "back",
-		#"text": "Un carton rempli d'expériences professionnelles variées."
-	#},
-	#"cadre": {
-		#"offset": 0.3,
-		#"facing": "left",
-		#"text": "Un cadre photo, souvenir de mes collaborations passées."
-	#},
-	#"centre": {
-		#"offset": 0.5,
-		#"facing": "right",
-		#"text": "Le centre de la pièce, un point de rencontre."
-	#}
-#}
+const OBJECT_DATA := {
+	"tv": {
+		"ratio": 0.1,
+		"facing": "back",
+		"text": "Une bande démo vidéo."
+	},
+	"ordi": {
+		"ratio": 0.8,
+		"facing": "back",
+		"text": "Ses compétences informatiques."
+	},
+	"carton": {
+		"ratio": 0.6,
+		"facing": "back",
+		"text": "Divers. Apparemment, il s'agit de son expérience professionelle inclassable."
+	},
+	"cadre": {
+		"ratio": 0.3,
+		"facing": "left",
+		"text": "Ses études et diplômes."
+	},
+	"centre": {
+		"ratio": 0.5,
+		"facing": "right",
+		"text": "Le centre de la pièce, un point de rencontre."
+	}
+}
 
 const OFFSET_BUBBLE := Vector2(90, 370) 
 
@@ -149,30 +149,70 @@ func _process(delta):
 			player.global_position = path_follower.global_position
 			emit_signal("reached_target")
 
+#func move_player_to_object(object_name: String):
+
+	#last_clicked_object = object_name
+	#var offset_ratio : float = OBJECT_OFFSETS.get(object_name.to_lower(), 0.0)
+#
+	#if player and player.is_inside_tree():
+		#player.go_to(offset_ratio)
+	#else:
+		#push_error("❌ Le player n'est pas prêt ou a été libéré.")
+#
+	#print("🚀 Déplacement demandé vers %s → ratio %.2f" % [object_name, offset_ratio])
+#
+	#print("👣 Déplacement vers ", object_name, " → position ", target_position)
+	#
+	#var timer = get_tree().create_timer(0.8).timeout
+	#await timer
+	#print(timer)
+	#
+	#emit_signal("reached_target")
+	#return reached_target  # Permet `await GameManager.move_player_to_object(...)`
+
 func move_player_to_object(object_name: String):
 	last_clicked_object = object_name
-	var offset_ratio : float = OBJECT_OFFSETS.get(object_name.to_lower(), 0.0)
 
+	# 🔎 On récupère les infos depuis OBJECT_DATA
+	var obj_data = OBJECT_DATA.get(object_name.to_lower(), null)
+	if obj_data == null:
+		push_error("❌ Objet inconnu : %s" % object_name)
+		return false
+
+	var offset_ratio : float = obj_data.get("ratio", 0.0)
+
+	# 🏃 Déplacement du joueur
 	if player and player.is_inside_tree():
 		player.go_to(offset_ratio)
 	else:
 		push_error("❌ Le player n'est pas prêt ou a été libéré.")
+		return false
 
+	# 📢 Debug infos
 	print("🚀 Déplacement demandé vers %s → ratio %.2f" % [object_name, offset_ratio])
+	print("👣 Déplacement vers ", object_name)
 
-	print("👣 Déplacement vers ", object_name, " → position ", target_position)
-	
-	var timer = get_tree().create_timer(2).timeout
-	await timer
-	print(timer)
-	
+	await player.reached_target  # ✅ attend vraiment que le joueur arrive
+	print("✅ Joueur arrivé à destination !")
+
+	#emit_signal("reached_target")
+	## ⏳ Petit délai avant signal
+	#var timer = get_tree().create_timer(0.8).timeout
+	#await timer
+	#print(timer)
+
 	emit_signal("reached_target")
-	return reached_target  # Permet `await GameManager.move_player_to_object(...)`
+	
+	var texte = obj_data.get("text", "")
+	if texte != "":
+		show_speech_bubble_above(player, texte)
 
 func on_eye_clicked(target: Node2D) -> void:
 	var target_name := target.name.to_lower()
-	if LOOK_TEXTS.has(target_name):
-		var text : String = LOOK_TEXTS[target_name]
+	#if LOOK_TEXTS.has(target_name):
+	if OBJECT_DATA.has(target_name) :
+		#var text : String = LOOK_TEXTS[target_name]
+		var text : String = OBJECT_DATA[target_name]["text"]
 		show_speech_bubble_above(target, text)
 	else:
 		show_speech_bubble_above(target, "Je ne vois rien de spécial.")
@@ -232,51 +272,81 @@ func place_player_at_last_offset():
 		print("❌ Pas de chemin associé à path_follower ! (player ou path_follower null)")
 		return
 		
-	var ratio = OBJECT_OFFSETS[last_clicked_object]
+	#var ratio = OBJECT_OFFSETS[last_clicked_object]
+	var ratio = OBJECT_DATA[last_clicked_object]["ratio"]
 	player.path_follower.progress_ratio = ratio
 	print("✅ Joueur replacé sur le chemin à ratio:", ratio)
-		
+
+#Utilisé avec la fonction on_hand_button_pressed du context_menu	
 func on_object_clicked(object_name: String):
 	last_clicked_object = object_name
 	print("Dernier objet cliqué: ", last_clicked_object)  # Ajouter un print pour confirmer
+
+#func show_speech_bubble_above(character: Node2D, text: String) -> void:
+	#if not speech_bubble_scene or not speech_bubble_container:
+		#print("❌ Pas de scène ou de conteneur défini")
+		#return
+	## Instancier la bulle et l'ajouter au conteneur
+	#var bubble := speech_bubble_scene.instantiate()
+	#speech_bubble_container.add_child(bubble)
+	#print("✅ Bulle ajoutée :", bubble)
+#
+	## Position du personnage dans le monde
+	#var world_pos := character.global_position - OFFSET_BUBBLE
+	#print("🌍 Position monde :", world_pos)
+#
+	## Convertir en position écran dans le viewport sans Camera2D
+	#var screen_pos := get_viewport().get_canvas_transform().affine_inverse() * world_pos
+	#print("📍 Position écran bulle :", screen_pos)
+	#
+	#bubble.position = screen_pos
+	#bubble.set_text(text)
+#
+	#await get_tree().create_timer(3.0).timeout
+	#if is_instance_valid(bubble):
+		#bubble.queue_free()
+			#
+##func get_player_position() -> Vector2:
+	### Renvoie la position globale du joueur
+	##if player:
+		##return player.global_position
+	##return Vector2.ZERO
+#
+##func _on_player_reached_target():
+	### Alternative au signal reached_target
+	##if arrival_animation != "":
+		##player.play_animation(arrival_animation)
+	##else:
+		##player.play_animation("idle")  # fallback
+	##emit_signal("reached_target")
+	#
+##func on_scene_name(scene_name: String):
+	##last_clicked_object = scene_name
 
 func show_speech_bubble_above(character: Node2D, text: String) -> void:
 	if not speech_bubble_scene or not speech_bubble_container:
 		print("❌ Pas de scène ou de conteneur défini")
 		return
-	# Instancier la bulle et l'ajouter au conteneur
+
+	# Détruire l’ancienne bulle avant d’en créer une nouvelle
+	if current_bubble and is_instance_valid(current_bubble):
+		current_bubble.queue_free()
+		current_bubble = null
+
+	# Nouvelle bulle
 	var bubble := speech_bubble_scene.instantiate()
 	speech_bubble_container.add_child(bubble)
-	print("✅ Bulle ajoutée :", bubble)
+	current_bubble = bubble
 
-	# Position du personnage dans le monde
+	# Position du joueur
 	var world_pos := character.global_position - OFFSET_BUBBLE
-	print("🌍 Position monde :", world_pos)
-
-	# Convertir en position écran dans le viewport sans Camera2D
 	var screen_pos := get_viewport().get_canvas_transform().affine_inverse() * world_pos
-	print("📍 Position écran bulle :", screen_pos)
-	
+
 	bubble.position = screen_pos
 	bubble.set_text(text)
 
+	# Disparition après 3s
 	await get_tree().create_timer(3.0).timeout
 	if is_instance_valid(bubble):
 		bubble.queue_free()
-			
-#func get_player_position() -> Vector2:
-	## Renvoie la position globale du joueur
-	#if player:
-		#return player.global_position
-	#return Vector2.ZERO
-
-#func _on_player_reached_target():
-	## Alternative au signal reached_target
-	#if arrival_animation != "":
-		#player.play_animation(arrival_animation)
-	#else:
-		#player.play_animation("idle")  # fallback
-	#emit_signal("reached_target")
-	
-#func on_scene_name(scene_name: String):
-	#last_clicked_object = scene_name
+		current_bubble = null
