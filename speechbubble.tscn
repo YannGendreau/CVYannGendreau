@@ -32,6 +32,10 @@ axis_stretch_vertical = 1
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 5
 
 [node name="Text" type="Label" parent="Bubble/MarginContainer"]
 layout_mode = 2
@@ -40,11 +44,15 @@ text = "test"
 label_settings = SubResource("LabelSettings_6n4en")
 vertical_alignment = 1
 
-[node name="Arrow" type="TextureRect" parent="."]
+[node name="Arrow" type="TextureRect" parent="Bubble"]
 texture_filter = 1
-layout_mode = 0
-offset_top = 1.0
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -60.0
 offset_right = 40.0
-offset_bottom = 41.0
+offset_bottom = -20.0
+grow_vertical = 0
 texture = ExtResource("4_0g8jb")
 stretch_mode = 2

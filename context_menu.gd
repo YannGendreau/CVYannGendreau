@@ -54,22 +54,22 @@ func _ready() -> void:
 	if GameManager and not GameManager.is_connected("reached_target", Callable(self, "_on_player_arrived")):
 		GameManager.connect("reached_target", Callable(self, "_on_player_arrived"))
 
-	$EyeButton.pressed.connect(_on_eye_pressed)
+	#$EyeButton.pressed.connect(_on_eye_pressed)
 
 ## Setter appelé par le script de l'objet pour indiquer la scène à charger
 func set_target_scene(scene_path: String) -> void:
 	target_scene = scene_path
 	print("✅ target_scene défini :", target_scene)
 #
-## Quand la souris entre sur le bouton œil → joue l'animation "open"
-#func _on_eye_button_mouse_entered() -> void:
-	#if eye_anim:
-		#eye_anim.play("open")
+# Quand la souris entre sur le bouton œil → joue l'animation "open"
+func _on_eye_button_mouse_entered() -> void:
+	if eye_anim:
+		eye_anim.play("open")
 #
-## Quand la souris quitte le bouton œil → retourne à l'animation "idle"
-#func _on_eye_button_mouse_exited() -> void:
-	#if eye_anim:
-		#eye_anim.play("idle")
+# Quand la souris quitte le bouton œil → retourne à l'animation "idle"
+func _on_eye_button_mouse_exited() -> void:
+	if eye_anim:
+		eye_anim.play("idle")
 #
 ##func _on_eye_button_pressed() -> void:
 	##print("👁 Oeil cliqué")
@@ -148,10 +148,10 @@ func show_menu(position: Vector2, scene_path: String, target_pos: Vector2, objec
 	self.object_name = object_name  # 👈 stocke localement
 	show()
 
-func _on_eye_pressed():
-	if target_node:
-		var game_manager = get_node("/root/GameManager")  # ou où se trouve ton GameManager
-		game_manager.on_eye_clicked(target_node)
+#func _on_eye_pressed():
+	#if target_node:
+		#var game_manager = get_node("/root/GameManager")  # ou où se trouve ton GameManager
+		#game_manager.on_eye_clicked(target_node)
 
 func _on_eye_button_pressed():
 	if not target_node:

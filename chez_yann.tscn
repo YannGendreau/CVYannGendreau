@@ -435,18 +435,18 @@ animation = &"idle"
 position = Vector2(2.5, -8)
 shape = SubResource("RectangleShape2D_opd1e")
 
-[node name="TV" type="CharacterBody2D" parent="."]
+[node name="tv" type="CharacterBody2D" parent="."]
 position = Vector2(846, 271)
 input_pickable = true
 script = ExtResource("11_pdin3")
 target_scene = "res://scene_tv.tscn"
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="TV"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="tv"]
 position = Vector2(7, -8)
 sprite_frames = SubResource("SpriteFrames_lbywn")
 animation = &"idle"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TV"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="tv"]
 position = Vector2(7.5, -8.5)
 shape = SubResource("RectangleShape2D_3w6es")
 

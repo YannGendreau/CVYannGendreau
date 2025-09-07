@@ -57,27 +57,32 @@ const OBJECT_DATA := {
 	"tv": {
 		"ratio": 0.1,
 		"facing": "back",
-		"text": "Une bande démo vidéo."
+		"text": "Une bande démo vidéo.",
+		"bubble_offset": Vector2(250, 120)
 	},
 	"ordi": {
 		"ratio": 0.8,
 		"facing": "back",
-		"text": "Ses compétences informatiques."
+		"text": "Ses compétences informatiques.",
+		"bubble_offset": Vector2(100, 350)
 	},
 	"carton": {
 		"ratio": 0.6,
 		"facing": "back",
-		"text": "Divers. Apparemment, il s'agit de son expérience professionelle inclassable."
+		"text": "Divers. Apparemment, il s'agit de son expérience professionelle inclassable.",
+		"bubble_offset": Vector2(100, 400)
 	},
 	"cadre": {
 		"ratio": 0.3,
 		"facing": "left",
-		"text": "Ses études et diplômes."
+		"text": "Ses études et diplômes.",
+		"bubble_offset": Vector2(100, 270)
 	},
 	"centre": {
 		"ratio": 0.5,
 		"facing": "right",
-		"text": "Le centre de la pièce, un point de rencontre."
+		"text": "Le centre de la pièce, un point de rencontre.",
+		"bubble_offset": Vector2(480, 270)
 	}
 }
 
@@ -194,28 +199,47 @@ func move_player_to_object(object_name: String):
 
 	await player.reached_target  # ✅ attend vraiment que le joueur arrive
 	print("✅ Joueur arrivé à destination !")
+	
+		# Vérifie si le joueur est déjà sur le même ratio
+	#if player and abs(player.path_follower.progress_ratio - offset_ratio) < 0.005:
+		#print("⏸️ Pas de déplacement : le joueur est déjà à %.2f" % offset_ratio)
+		#emit_signal("reached_target")
+		#return
+
+	
+	# Si le joueur est déjà arrivé (tolérance de quelques pixels)
+
 
 	#emit_signal("reached_target")
 	## ⏳ Petit délai avant signal
 	#var timer = get_tree().create_timer(0.8).timeout
 	#await timer
 	#print(timer)
+	
+	
+	#await timer
+	#print(timer)
 
 	emit_signal("reached_target")
 	
+	var timer = get_tree().create_timer(0.5).timeout
+	
 	var texte = obj_data.get("text", "")
 	if texte != "":
+		await timer
 		show_speech_bubble_above(player, texte)
+		#show_speech_bubble_above(player, texte, object_name)
 
-func on_eye_clicked(target: Node2D) -> void:
-	var target_name := target.name.to_lower()
-	#if LOOK_TEXTS.has(target_name):
-	if OBJECT_DATA.has(target_name) :
-		#var text : String = LOOK_TEXTS[target_name]
-		var text : String = OBJECT_DATA[target_name]["text"]
-		show_speech_bubble_above(target, text)
-	else:
-		show_speech_bubble_above(target, "Je ne vois rien de spécial.")
+
+#func on_eye_clicked(target: Node2D) -> void:
+	#var target_name := target.name.to_lower()
+	##if LOOK_TEXTS.has(target_name):
+	#if OBJECT_DATA.has(target_name) :
+		##var text : String = LOOK_TEXTS[target_name]
+		#var text : String = OBJECT_DATA[target_name]["text"]
+		#show_speech_bubble_above(target, text)
+	#else:
+		#show_speech_bubble_above(target, "Je ne vois rien de spécial.")
 
 func is_player_moving() -> bool:
 	# Accès simple à l'état de déplacement
@@ -338,9 +362,21 @@ func show_speech_bubble_above(character: Node2D, text: String) -> void:
 	speech_bubble_container.add_child(bubble)
 	current_bubble = bubble
 
-	# Position du joueur
-	var world_pos := character.global_position - OFFSET_BUBBLE
+	## Position du joueur
+	#var bubble_offset = OBJECT_DATA[last_clicked_object]["bubble_offset"]
+	##var world_pos := character.global_position - OFFSET_BUBBLE
+	#var world_pos : Vector2 = character.global_position - bubble_offset
+#
+	#var screen_pos := get_viewport().get_canvas_transform().affine_inverse() * world_pos
+	
+	var bubble_offset = OBJECT_DATA[last_clicked_object]["bubble_offset"]
+	var world_pos: Vector2 = character.global_position - bubble_offset
 	var screen_pos := get_viewport().get_canvas_transform().affine_inverse() * world_pos
+
+	# Clamp pour rester dans l’écran
+	var screen_size = get_viewport().size
+	screen_pos.x = clamp(screen_pos.x, 0, screen_size.x - bubble.size.x)
+	screen_pos.y = clamp(screen_pos.y, 0, screen_size.y - bubble.size.y)
 
 	bubble.position = screen_pos
 	bubble.set_text(text)
@@ -350,3 +386,130 @@ func show_speech_bubble_above(character: Node2D, text: String) -> void:
 	if is_instance_valid(bubble):
 		bubble.queue_free()
 		current_bubble = null
+
+#func show_speech_bubble_above(character: Node2D, text: String) -> void:
+	#
+	#if not speech_bubble_scene or not speech_bubble_container:
+		#print("❌ Pas de scène ou de conteneur défini")
+		#return
+#
+	## Détruire l’ancienne bulle avant d’en créer une nouvelle
+	#if current_bubble and is_instance_valid(current_bubble):
+		#current_bubble.queue_free()
+		#current_bubble = null
+#
+	## Vérifier que le texte n’est pas vide
+	#if text == "":
+		#print("⚠️ Texte vide → pas de bulle créée")
+		#return
+#
+	## Nouvelle bulle
+	#var bubble := speech_bubble_scene.instantiate()
+	##var bubble = $UI/SpeechBubbleContainer
+	#speech_bubble_container.add_child(bubble)
+	#current_bubble = bubble
+#
+	#print("💬 Nouvelle bulle créée avec texte:", text)
+#
+	## Position
+	#var world_pos := character.global_position - OFFSET_BUBBLE
+	#var screen_pos := get_viewport().get_canvas_transform().affine_inverse() * world_pos
+#
+	#bubble.position = screen_pos
+	#bubble.set_text(text)
+#
+	## Timer pour suppression
+	#await get_tree().create_timer(6.0).timeout
+	#if is_instance_valid(bubble):
+		#bubble.queue_free()
+		#current_bubble = null
+		#
+##func show_speech_bubble_above(character: Node2D, text: String, object_name: String = "") -> void:
+	##if not speech_bubble_scene or not speech_bubble_container:
+		##print("❌ Pas de scène ou de conteneur défini")
+		##return
+##
+	### Supprimer l’ancienne bulle
+	##if current_bubble and is_instance_valid(current_bubble):
+		##current_bubble.queue_free()
+		##current_bubble = null
+##
+	##if text == "":
+		##print("⚠️ Texte vide → pas de bulle créée")
+		##return
+##
+	### Nouvelle bulle
+	##var bubble := speech_bubble_scene.instantiate()
+	##speech_bubble_container.add_child(bubble)
+	##current_bubble = bubble
+##
+	##print("💬 Nouvelle bulle créée avec texte:", text)
+##
+	### 🔹 Choix de l’offset (si défini dans OBJECT_DATA)
+	##var offset := OFFSET_BUBBLE
+	##if object_name != "" and OBJECT_DATA.has(object_name) and OBJECT_DATA[object_name].has("bubble_offset"):
+		##offset = OBJECT_DATA[object_name]["bubble_offset"]
+		##print(offset)
+##
+	### Position finale
+	##var world_pos := character.global_position + offset
+	##var screen_pos := get_viewport().get_canvas_transform().affine_inverse() * world_pos
+##
+	##bubble.position = screen_pos
+	##bubble.set_text(text)
+##
+	### Timer pour suppression
+	##await get_tree().create_timer(6.0).timeout
+	##if is_instance_valid(bubble):
+		##bubble.queue_free()
+		##current_bubble = null
+#
+##func show_speech_bubble_above(character: Node2D, text: String, object_name: String = "") -> void:
+	##if not speech_bubble_scene or not speech_bubble_container:
+		##print("❌ Pas de scène ou de conteneur défini")
+		##return
+##
+	### Supprimer l’ancienne bulle
+	##if current_bubble and is_instance_valid(current_bubble):
+		##current_bubble.queue_free()
+		##current_bubble = null
+##
+	##if text == "":
+		##print("⚠️ Texte vide → pas de bulle créée")
+		##return
+##
+	### Nouvelle bulle
+	##var bubble := speech_bubble_scene.instantiate()
+	##speech_bubble_container.add_child(bubble)
+	##current_bubble = bubble
+##
+	##print("💬 Nouvelle bulle créée avec texte:", text)
+##
+	### 🔹 Choix de l’offset (si défini dans OBJECT_DATA)
+	##var offset := OFFSET_BUBBLE
+	##if object_name != "" and OBJECT_DATA.has(object_name) and OBJECT_DATA[object_name].has("bubble_offset"):
+		##offset = OBJECT_DATA[object_name]["bubble_offset"]
+##
+	### Position finale
+	##var world_pos := character.global_position + offset
+	###var screen_pos := get_viewport().get_canvas_transform().affine_inverse() * world_pos
+	##
+	##var screen_pos := character.global_position + offset
+	##var screen_size = get_viewport().size  # (960, 540 dans ton cas)
+	##
+	### Empêche la bulle de sortir de l’écran
+	##screen_pos.x = clamp(screen_pos.x, 0, screen_size.x - bubble.size.x)
+	##screen_pos.y = clamp(screen_pos.y, 0, screen_size.y - bubble.size.y)
+	##
+	##print("🟢 Character:", character.global_position, " Offset:", offset, " → Position finale bulle:", screen_pos)
+##
+	##bubble.position = screen_pos
+##
+	###bubble.position = screen_pos
+	##bubble.set_text(text)
+##
+	### Timer pour suppression
+	##await get_tree().create_timer(6.0).timeout
+	##if is_instance_valid(bubble):
+		##bubble.queue_free()
+		##current_bubble = null
