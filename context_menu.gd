@@ -141,12 +141,13 @@ func _on_eye_button_mouse_exited() -> void:
 #
 #
 		#
-func show_menu(position: Vector2, scene_path: String, target_pos: Vector2, object_name: String):
-	global_position = position
-	self.scene_path = scene_path
-	self.target_position = target_pos
-	self.object_name = object_name  # 👈 stocke localement
-	show()
+#func show_menu(position: Vector2, scene_path: String, target_pos: Vector2, object_name: String):
+	#global_position = position
+	#self.scene_path = scene_path
+	#self.target_position = target_pos
+	#self.object_name = object_name  # 👈 stocke localement
+	#show()
+	#print('Pouf, le menu apparait')
 
 #func _on_eye_pressed():
 	#if target_node:

@@ -9,7 +9,13 @@ extends Node  # Le GameManager gère les déplacements du joueur, les bulles de 
 #@onready var path: Path2D = get_node_or_null("/root/ChezYann/Path2D")
 @onready var path_follower: PathFollow2D = get_node_or_null("/root/ChezYann/Path2D/PathFollower")
 #@onready var path_follower: PathFollow2D = get_parent()
-@onready var player: Node2D = path_follower.get_node_or_null("AnimatedSprite2D") if path_follower else null
+#@onready var player: Node2D = path_follower.get_node_or_null("AnimatedSprite2D") if path_follower else null
+#@onready var player: AnimatedSprite2D = path_follower.get_node("Employeur/AnimatedSprite2D")
+#@onready var anim_sprite: AnimatedSprite2D = path_follower.get_node("Employeur/AnimatedSprite2D")
+
+@onready var player: CharacterBody2D = path_follower.get_node("Employeur")
+
+@onready var anim_sprite: AnimatedSprite2D = null
 
 var speech_bubble_scene: PackedScene = preload("res://speechbubble.tscn")
 
@@ -58,31 +64,42 @@ const OBJECT_DATA := {
 		"ratio": 0.1,
 		"facing": "back",
 		"text": "Une bande démo vidéo.",
-		"bubble_offset": Vector2(250, 120)
+		"bubble_offset": Vector2(100, 320),
+		"animation": "idle"  # par défaut
+		
 	},
 	"ordi": {
 		"ratio": 0.8,
 		"facing": "back",
 		"text": "Ses compétences informatiques.",
-		"bubble_offset": Vector2(100, 350)
+		"bubble_offset": Vector2(100, 350),
+		"animation": "idle"  # par défaut
 	},
 	"carton": {
-		"ratio": 0.6,
+		"ratio": 0.7,
 		"facing": "back",
 		"text": "Divers. Apparemment, il s'agit de son expérience professionelle inclassable.",
-		"bubble_offset": Vector2(100, 400)
+		"bubble_offset": Vector2(100, 400),
+		"animation": "back"  # par défaut
 	},
 	"cadre": {
-		"ratio": 0.3,
+		"ratio": 0.6,
 		"facing": "left",
 		"text": "Ses études et diplômes.",
-		"bubble_offset": Vector2(100, 270)
+		"bubble_offset": Vector2(170, 320),
+		"animation": "back"  # par défaut
 	},
 	"centre": {
 		"ratio": 0.5,
 		"facing": "right",
 		"text": "Le centre de la pièce, un point de rencontre.",
 		"bubble_offset": Vector2(480, 270)
+	},
+	"kiki": {
+	"ratio": 0.4,
+	"facing": "right",
+	"text": "Le kiki.",
+	"bubble_offset": Vector2(170, 320)
 	}
 }
 
@@ -93,6 +110,9 @@ signal reached_target
 #
 #version avec position dynamique
 func _ready():
+
+	anim_sprite = player.get_node("AnimatedSprite2D")
+
 	#Nouveau timer
 	fade_timer = Timer.new()
 	#Nommer le timer
@@ -175,10 +195,86 @@ func _process(delta):
 	#emit_signal("reached_target")
 	#return reached_target  # Permet `await GameManager.move_player_to_object(...)`
 
+#func move_player_to_object(object_name: String):
+	#last_clicked_object = object_name
+#
+	## 🔎 On récupère les infos depuis OBJECT_DATA
+	#var obj_data = OBJECT_DATA.get(object_name.to_lower(), null)
+	#if obj_data == null:
+		#push_error("❌ Objet inconnu : %s" % object_name)
+		#return false
+#
+	#var offset_ratio : float = obj_data.get("ratio", 0.0)
+#
+	## 🏃 Déplacement du joueur
+	#if player and player.is_inside_tree():
+		#player.go_to(offset_ratio)
+	#else:
+		#push_error("❌ Le player n'est pas prêt ou a été libéré.")
+		#return false
+#
+	## 📢 Debug infos
+	#print("🚀 Déplacement demandé vers %s → ratio %.2f" % [object_name, offset_ratio])
+	#print("👣 Déplacement vers ", object_name)
+#
+	#await player.reached_target  # ✅ attend vraiment que le joueur arrive
+	#print("✅ Joueur arrivé à destination !")
+	#
+	#var anim_name = OBJECT_DATA.get(last_clicked_object, {}).get("animation")
+	#anim_sprite.play(anim_name)
+	#print(anim_name)
+	#print("Animations disponibles:", anim_sprite.sprite_frames.get_animation_names())
+	#
+	#if object_name in ["carton", "cadre"]:
+		#player.forced_anim = "back"
+#
+	#
+		## Vérifie si le joueur est déjà sur le même ratio
+	##if player and abs(player.path_follower.progress_ratio - offset_ratio) < 0.005:
+		##print("⏸️ Pas de déplacement : le joueur est déjà à %.2f" % offset_ratio)
+		##emit_signal("reached_target")
+		##return
+#
+	#
+	## Si le joueur est déjà arrivé (tolérance de quelques pixels)
+#
+#
+	##emit_signal("reached_target")
+	### ⏳ Petit délai avant signal
+	##var timer = get_tree().create_timer(0.8).timeout
+	##await timer
+	##print(timer)
+	#
+	#
+	##await timer
+	##print(timer)
+#
+	#emit_signal("reached_target")
+	#
+	#var timer = get_tree().create_timer(0.5).timeout
+	#
+	#var texte = obj_data.get("text", "")
+	#if texte != "":
+		#await timer
+		#show_speech_bubble_above(player, texte)
+		##show_speech_bubble_above(player, texte, object_name)
+#
+#
+##func on_eye_clicked(target: Node2D) -> void:
+	##var target_name := target.name.to_lower()
+	###if LOOK_TEXTS.has(target_name):
+	##if OBJECT_DATA.has(target_name) :
+		###var text : String = LOOK_TEXTS[target_name]
+		##var text : String = OBJECT_DATA[target_name]["text"]
+		##show_speech_bubble_above(target, text)
+	##else:
+		##show_speech_bubble_above(target, "Je ne vois rien de spécial.")
+
+
+
 func move_player_to_object(object_name: String):
 	last_clicked_object = object_name
 
-	# 🔎 On récupère les infos depuis OBJECT_DATA
 	var obj_data = OBJECT_DATA.get(object_name.to_lower(), null)
 	if obj_data == null:
 		push_error("❌ Objet inconnu : %s" % object_name)
@@ -186,42 +282,31 @@ func move_player_to_object(object_name: String):
 
 	var offset_ratio : float = obj_data.get("ratio", 0.0)
 
-	# 🏃 Déplacement du joueur
 	if player and player.is_inside_tree():
+		# 🔄 Réinitialise forced_anim avant tout nouveau déplacement
+		player.forced_anim = ""
+		player.update_animation()
+
 		player.go_to(offset_ratio)
 	else:
 		push_error("❌ Le player n'est pas prêt ou a été libéré.")
 		return false
 
-	# 📢 Debug infos
 	print("🚀 Déplacement demandé vers %s → ratio %.2f" % [object_name, offset_ratio])
-	print("👣 Déplacement vers ", object_name)
 
-	await player.reached_target  # ✅ attend vraiment que le joueur arrive
+	await player.reached_target
 	print("✅ Joueur arrivé à destination !")
-	
-		# Vérifie si le joueur est déjà sur le même ratio
-	#if player and abs(player.path_follower.progress_ratio - offset_ratio) < 0.005:
-		#print("⏸️ Pas de déplacement : le joueur est déjà à %.2f" % offset_ratio)
-		#emit_signal("reached_target")
-		#return
 
-	
-	# Si le joueur est déjà arrivé (tolérance de quelques pixels)
+	# 🎬 Animation spéciale si définie dans OBJECT_DATA
+	var anim_name = obj_data.get("animation", null)
+	if anim_name:
+		anim_sprite.play(anim_name)
 
+	# 🔙 Cas particulier pour les objets "carton" ou "cadre"
+	if object_name in ["carton", "cadre"]:
+		player.forced_anim = "back"
+		player.update_animation()
 
-	#emit_signal("reached_target")
-	## ⏳ Petit délai avant signal
-	#var timer = get_tree().create_timer(0.8).timeout
-	#await timer
-	#print(timer)
-	
-	
-	#await timer
-	#print(timer)
-
-	emit_signal("reached_target")
-	
 	var timer = get_tree().create_timer(0.5).timeout
 	
 	var texte = obj_data.get("text", "")
@@ -231,15 +316,6 @@ func move_player_to_object(object_name: String):
 		#show_speech_bubble_above(player, texte, object_name)
 
 
-#func on_eye_clicked(target: Node2D) -> void:
-	#var target_name := target.name.to_lower()
-	##if LOOK_TEXTS.has(target_name):
-	#if OBJECT_DATA.has(target_name) :
-		##var text : String = LOOK_TEXTS[target_name]
-		#var text : String = OBJECT_DATA[target_name]["text"]
-		#show_speech_bubble_above(target, text)
-	#else:
-		#show_speech_bubble_above(target, "Je ne vois rien de spécial.")
 
 func is_player_moving() -> bool:
 	# Accès simple à l'état de déplacement

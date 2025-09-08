@@ -9,8 +9,13 @@ var moving = false
 var target_ratio: float = 0.0
 var speed: float = 0.5  # ajustable
 
+var forced_anim: String = ""
+
+
 func _ready() -> void:
 	animated_sprite.play("idle")
+	animated_sprite.animation_finished.connect(_on_animation_finished)
+
 	add_to_group("Employeur")
 
 func go_to(ratio: float):
@@ -87,6 +92,10 @@ func _process(delta):
 				#animated_sprite.play("idle")
 
 func update_animation():
+	if forced_anim != "":
+		animated_sprite.play(forced_anim)
+		return
+
 	if moving:
 		animated_sprite.play("walk")
 	else:
@@ -106,3 +115,10 @@ func _on_context_menu_action_selected(action: String, object_name: String):
 			get_tree().change_scene_to_file(scene_path)
 		else:
 			print("Erreur : Scène ", scene_path, " non trouvée")
+			
+func _on_animation_finished():
+	if forced_anim != "":
+		forced_anim = ""
+		update_animation()
+			
+	
