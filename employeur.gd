@@ -23,31 +23,6 @@ func go_to(ratio: float):
 	target_ratio = clamp(ratio, 0.0, 1.0)
 	moving = true
 	update_animation()
-	
-#func go_to(offset_ratio: float, facing: String = "right"):
-	#if path_follower:
-		#path_follower.progress_ratio = offset_ratio
-#
-	#match facing:
-		#"left":
-			#$AnimatedSprite2D.play("walkleft")
-		#"right":
-			#$AnimatedSprite2D.play("walkright")
-		#"back":
-			#$AnimatedSprite2D.play("back")
-			#
-	#target_ratio = clamp(offset_ratio, 0.0, 1.0)
-	#moving = true
-	#update_animation()
-	#
-#func set_idle(facing: String):
-	#match facing:
-		#"left":
-			#$AnimatedSprite2D.play("idle")
-		#"right":
-			#$AnimatedSprite2D.play("idle_right")
-		#"back":
-			#$AnimatedSprite2D.play("back")
 
 func _process(delta):
 	if not moving:
@@ -72,24 +47,6 @@ func _process(delta):
 		emit_signal("reached_target")
 		update_animation()
 		
-#var target_position = 0.0  # Position cible en unités absolues
-##var moving = false  # État de déplacement	
-#func _process(delta):
-	#if moving:
-		#var curve_length = get_parent().curve.get_baked_length()
-		#var current_progress = progress  # Utiliser une variable locale pour plus de clarté
-		#var current_ratio = current_progress / curve_length
-		#var distance = abs(target_position - current_progress)
-		#print("Déplacement : current_progress=", current_progress, " target=", target_position, " distance=", distance)
-		#if distance > 1:  # Petite marge
-			#var move_speed = speed * delta
-			#progress = move_toward(current_progress, target_position, move_speed)
-			#if animated_sprite:
-				#animated_sprite.play("walk")
-		#else:
-			#moving = false
-			#if animated_sprite:
-				#animated_sprite.play("idle")
 
 func update_animation():
 	if forced_anim != "":

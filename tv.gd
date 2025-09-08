@@ -11,8 +11,7 @@ func _on_area_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		var menu = get_node(context_menu_path)
 		var object_name = self.object_name
-		#menu.target_name = object_name  # 👈 essentiel !
-		menu.show_menu(global_position, scene_path, player_target_position)
+		menu.target_name = object_name  # 👈 essentiel !
 		GameManager.on_object_clicked(object_name)  # 👈 Déclare le nom
 
 func _ready():

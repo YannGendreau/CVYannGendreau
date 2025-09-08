@@ -10,7 +10,6 @@ func _ready():
 	mouse_entered.connect(_on_mouse_entered)
 	mouse_exited.connect(_on_mouse_exited)
 
-
 func _on_mouse_entered():
 	Input.set_default_cursor_shape(Input.CURSOR_POINTING_HAND)
 
@@ -22,9 +21,8 @@ func _on_area_input_event(viewport, event, shape_idx):
 		var menu = get_node(context_menu_path)
 		var object_name = self.object_name
 		GameManager.on_object_clicked(object_name) 
-		#menu.target_name = object_name  # 👈 essentiel !
 		menu.show_menu(global_position, scene_path, player_target_position)
-		#$ContextMenu.open_for(self, global_position)
+		
 func _on_eye_icon_pressed() -> void:
 	GameManager.on_eye_clicked(self)
 	

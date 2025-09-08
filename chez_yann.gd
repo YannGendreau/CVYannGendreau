@@ -22,9 +22,3 @@ func _ready():
 	else:
 		push_error("❌ Erreur : Employeur ou GameManager non trouvé dans chez_yann.tscn")	
 		
-		#position = GameManager.last_player_position
-		#player.global_position = path_follower.global_position
-		#print("✅ Joueur positionné précisément sur le chemin à :", player.global_position)
-		#print("🎮 last_clicked_object au ready:", GameManager.last_clicked_object)
-		#GameManager.speech_bubble_container = $UI/SpeechBubbleContainer
-		#GameManager.show_speech_bubble_above(self, "Coucou !")
