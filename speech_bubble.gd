@@ -209,7 +209,7 @@ class_name SpeechBubble
 @onready var margin_container = $Bubble/MarginContainer
 @onready var arrow = $Bubble/Arrow
 
-const MAX_WIDTH := 270
+const MAX_WIDTH := 280
 const MARGIN := 12
 
 func set_text(text: String) -> void:
@@ -235,7 +235,7 @@ func set_text(text: String) -> void:
 	# placer la flèche centrée sous la bulle
 	arrow.position = Vector2(
 		bubble.size.x / 2 - arrow.size.x / 2,
-		bubble.size.y - 2   # petit offset vers le bas
+		bubble.size.y - 5   # petit offset vers le bas
 	)
 	
 		# Gauche
