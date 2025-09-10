@@ -668,7 +668,6 @@ texture = ExtResource("18_3w6es")
 [node name="kiki" type="CharacterBody2D" parent="."]
 position = Vector2(694, 321)
 script = ExtResource("16_opjl1")
-context_menu_path = NodePath("../ContextMenu")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="kiki"]
 scale = Vector2(2, 2)

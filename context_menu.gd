@@ -43,11 +43,24 @@ func _ready() -> void:
 		eye_anim.play("idle")
 	else:
 		print("⚠️ AnimatedSprite2D non trouvé dans EyeButton")
+	
+
 
 	# Se connecte au signal 'reached_target' du GameManager (une seule fois)
 	if GameManager and not GameManager.is_connected("reached_target", Callable(self, "_on_player_arrived")):
 		GameManager.connect("reached_target", Callable(self, "_on_player_arrived"))
 
+	# Si tu veux que tous les enfants (boutons/icônes) héritent
+	for child in get_children():
+		if child is Control:
+			child.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	
+			# Le panneau entier change le curseur en main
+	mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+
+	# S'assurer que le menu capte bien la souris
+	mouse_filter = Control.MOUSE_FILTER_STOP
+			
 	#$EyeButton.pressed.connect(_on_eye_pressed)
 
 ## Setter appelé par le script de l'objet pour indiquer la scène à charger
@@ -73,7 +86,7 @@ func _on_eye_button_pressed():
 	var object_name = target_node.name
 	if GameManager and GameManager.has_method("move_player_to_object"):
 		GameManager.on_object_clicked(object_name)
-		#GameManager.move_player_to_object(object_name, "idle")  # Animation finale
+		#GameManager.move_player_to_object(object_name, "eye")
 		GameManager.move_player_to_object(object_name)
 		print(target_node.name)
 		
@@ -90,8 +103,10 @@ func _on_hand_button_pressed():
 
 	if GameManager and GameManager.has_method("move_player_to_object"):
 		GameManager.on_object_clicked(object_name)
+		#await GameManager.move_player_to_object(object_name, "hand")  # Assure-toi que cette fonction est async (voir ci-dessous)
 		await GameManager.move_player_to_object(object_name)  # Assure-toi que cette fonction est async (voir ci-dessous)
-		
+
+		#GameManager.move_player_to_object(object_name, "hand")
 		# ⏳ Petite pause réaliste (optionnel)
 		await get_tree().create_timer(0.5).timeout
 

@@ -86,7 +86,6 @@ signal reached_target
 #
 #version avec position dynamique
 func _ready():
-
 	anim_sprite = player.get_node("AnimatedSprite2D")
 
 	#Nouveau timer
@@ -150,7 +149,97 @@ func _process(delta):
 			player.global_position = path_follower.global_position
 			emit_signal("reached_target")
 
-func move_player_to_object(object_name: String):
+#func move_player_to_object(object_name: String):
+	#last_clicked_object = object_name
+#
+	#var obj_data = OBJECT_DATA.get(object_name.to_lower(), null)
+	#if obj_data == null:
+		#push_error("❌ Objet inconnu : %s" % object_name)
+		#return false
+#
+	#var offset_ratio : float = obj_data.get("ratio", 0.0)
+#
+	#if player and player.is_inside_tree():
+		## 🔄 Réinitialise forced_anim avant tout nouveau déplacement
+		#player.forced_anim = ""
+		#player.update_animation()
+#
+		#player.go_to(offset_ratio)
+	#else:
+		#push_error("❌ Le player n'est pas prêt ou a été libéré.")
+		#return false
+#
+	#print("🚀 Déplacement demandé vers %s → ratio %.2f" % [object_name, offset_ratio])
+#
+	#await player.reached_target
+	#print("✅ Joueur arrivé à destination !")
+#
+	## 🎬 Animation spéciale si définie dans OBJECT_DATA
+	#var anim_name = obj_data.get("animation", null)
+	##if anim_name:
+		##anim_sprite.play(anim_name)
+	#if anim_name and anim_sprite and is_instance_valid(anim_sprite):
+		#anim_sprite.play(anim_name)
+	#else:
+		#print("⚠️ Impossible de jouer l’anim :", anim_name, "car anim_sprite est invalide.")
+#
+	## 🔙 Cas particulier pour les objets "carton" ou "cadre"
+	#if object_name in ["carton", "cadre"]:
+		#player.forced_anim = "back"
+		#player.update_animation()
+#
+	#var timer = get_tree().create_timer(0.5).timeout
+	#
+	#var texte = obj_data.get("text", "")
+	#if texte != "":
+		#await timer
+		#show_speech_bubble_above(player, texte)
+		##show_speech_bubble_above(player, texte, object_name)
+#
+#func move_player_to_object(object_name: String, action: String = "eye"):
+	#last_clicked_object = object_name
+#
+	#var obj_data = OBJECT_DATA.get(object_name.to_lower(), null)
+	#if obj_data == null:
+		#push_error("❌ Objet inconnu : %s" % object_name)
+		#return false
+#
+	#var offset_ratio: float = obj_data.get("ratio", 0.0)
+#
+	#if player and player.is_inside_tree():
+		#player.go_to(offset_ratio)
+	#else:
+		#push_error("❌ Le player n'est pas prêt ou a été libéré.")
+		#return false
+#
+	#print("🚀 Déplacement demandé vers %s → ratio %.2f" % [object_name, offset_ratio])
+#
+	#await player.reached_target
+	#print("✅ Joueur arrivé à destination !")
+			#
+		## 🎬 Animation spéciale si définie dans OBJECT_DATA
+	#var anim_name = obj_data.get("animation", null)
+	#if anim_name and anim_sprite and is_instance_valid(anim_sprite):
+		#anim_sprite.play(anim_name)
+	#else:
+		#print("⚠️ Impossible de jouer l’anim :", anim_name, "car anim_sprite est invalide.")
+#
+	## 🔙 Cas particulier pour les objets "carton" ou "cadre"
+	#if object_name in ["carton", "cadre"]:
+		#player.forced_anim = "back"
+		#player.update_animation()
+		#
+		## ✅ Ne montrer la bulle que si c’est un clic sur l’œil
+	#if action == "eye":
+		#var bubble_text = obj_data.get("text", "")
+		#if bubble_text != "":
+			#show_speech_bubble_above(player, bubble_text)
+	#elif action == "hand":
+		#pass
+#
+	#return true
+##############################################################################
+func move_player_to_object(object_name: String, action: String = ""):
 	last_clicked_object = object_name
 
 	var obj_data = OBJECT_DATA.get(object_name.to_lower(), null)
@@ -196,7 +285,15 @@ func move_player_to_object(object_name: String):
 		await timer
 		show_speech_bubble_above(player, texte)
 		#show_speech_bubble_above(player, texte, object_name)
-
+		
+	if action == "eye":
+		var bubble_text = obj_data.get("text", "")
+		if bubble_text != "":
+			show_speech_bubble_above(player, bubble_text)
+			print('ça marche')
+	elif action != 'eye':
+		pass
+##############################################################################
 
 
 func is_player_moving() -> bool:

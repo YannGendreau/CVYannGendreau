@@ -46,8 +46,7 @@ func _process(delta):
 		moving = false
 		emit_signal("reached_target")
 		update_animation()
-		
-
+	
 func update_animation():
 	if forced_anim != "":
 		animated_sprite.play(forced_anim)
@@ -63,7 +62,6 @@ func _on_context_menu_action_selected(action: String, object_name: String):
 	GameManager.last_clicked_object = object_name  # Ajouter cette ligne
 
 	if action == "eye":
-		#_show_bubble_text(object_name)
 		GameManager.move_to_object(object_name)
 	elif action == "hand":
 		GameManager.move_to_object(object_name)
