@@ -1,3 +1,4 @@
+
 extends Node  # Le GameManager gère les déplacements du joueur, les bulles de dialogue, et les interactions globales
 
 
@@ -32,50 +33,47 @@ var fade_timer: Timer = null
 var is_moving :bool = false
 var current_bubble: SpeechBubble = null
 var arrival_animation: String = ""  # Nom de l'animation à jouer une fois arrivé
+
 var object_name = ""
+var last_action: String = ""   # mémorise l’action en cours ("eye" ou "hand")
+
 
 
 const OBJECT_DATA := {
 	"tv": {
 		"ratio": 0.1,
-		"facing": "back",
+		"facing": "idle_left",
+		"animation": "idle_left",
 		"text": "Une bande démo vidéo.",
-		"bubble_offset": Vector2(100, 320),
-		"animation": "idle"  # par défaut
-		
+		"bubble_offset": Vector2(100, 320)
 	},
 	"ordi": {
 		"ratio": 0.8,
-		"facing": "back",
+		"facing": "idle",
+		"animation": "idle",
 		"text": "Ses compétences informatiques.",
-		"bubble_offset": Vector2(100, 350),
-		"animation": "idle"  # par défaut
+		"bubble_offset": Vector2(100, 350)
 	},
 	"carton": {
 		"ratio": 0.7,
 		"facing": "back",
-		"text": "Divers. Apparemment, il s'agit de son expérience professionelle inclassable.",
-		"bubble_offset": Vector2(100, 400),
-		"animation": "back"  # par défaut
+		"animation": "back",
+		"text": "Divers. Expérience inclassable.",
+		"bubble_offset": Vector2(100, 400)
 	},
 	"cadre": {
 		"ratio": 0.6,
-		"facing": "left",
+		"facing": "back",
+		"animation": "back",
 		"text": "Ses études et diplômes.",
-		"bubble_offset": Vector2(170, 320),
-		"animation": "back"  # par défaut
-	},
-	"centre": {
-		"ratio": 0.5,
-		"facing": "right",
-		"text": "Le centre de la pièce, un point de rencontre.",
-		"bubble_offset": Vector2(480, 270)
+		"bubble_offset": Vector2(80, 350)
 	},
 	"kiki": {
-	"ratio": 0.4,
-	"facing": "right",
-	"text": "Le kiki.",
-	"bubble_offset": Vector2(170, 320)
+		"ratio": 0.27,
+		"facing": "front",
+		"animation": "idle_right",
+		"text": "Le kiki.",
+		"bubble_offset": Vector2(170, 320)
 	}
 }
 
@@ -108,7 +106,9 @@ func _ready():
 	
 	call_deferred("place_player_at_last_offset")
 	
-	
+	if player:
+		player.reached_target.connect(_on_character_reached_object)
+
 	# Recherche des nœuds dans la scène principale (ajuste le chemin selon chez_yann.tscn)
 	if not path_follower or not player:
 		push_error("❌ GameManager : Références manquantes. Vérifie la structure de chez_yann.tscn.")
@@ -149,96 +149,6 @@ func _process(delta):
 			player.global_position = path_follower.global_position
 			emit_signal("reached_target")
 
-#func move_player_to_object(object_name: String):
-	#last_clicked_object = object_name
-#
-	#var obj_data = OBJECT_DATA.get(object_name.to_lower(), null)
-	#if obj_data == null:
-		#push_error("❌ Objet inconnu : %s" % object_name)
-		#return false
-#
-	#var offset_ratio : float = obj_data.get("ratio", 0.0)
-#
-	#if player and player.is_inside_tree():
-		## 🔄 Réinitialise forced_anim avant tout nouveau déplacement
-		#player.forced_anim = ""
-		#player.update_animation()
-#
-		#player.go_to(offset_ratio)
-	#else:
-		#push_error("❌ Le player n'est pas prêt ou a été libéré.")
-		#return false
-#
-	#print("🚀 Déplacement demandé vers %s → ratio %.2f" % [object_name, offset_ratio])
-#
-	#await player.reached_target
-	#print("✅ Joueur arrivé à destination !")
-#
-	## 🎬 Animation spéciale si définie dans OBJECT_DATA
-	#var anim_name = obj_data.get("animation", null)
-	##if anim_name:
-		##anim_sprite.play(anim_name)
-	#if anim_name and anim_sprite and is_instance_valid(anim_sprite):
-		#anim_sprite.play(anim_name)
-	#else:
-		#print("⚠️ Impossible de jouer l’anim :", anim_name, "car anim_sprite est invalide.")
-#
-	## 🔙 Cas particulier pour les objets "carton" ou "cadre"
-	#if object_name in ["carton", "cadre"]:
-		#player.forced_anim = "back"
-		#player.update_animation()
-#
-	#var timer = get_tree().create_timer(0.5).timeout
-	#
-	#var texte = obj_data.get("text", "")
-	#if texte != "":
-		#await timer
-		#show_speech_bubble_above(player, texte)
-		##show_speech_bubble_above(player, texte, object_name)
-#
-#func move_player_to_object(object_name: String, action: String = "eye"):
-	#last_clicked_object = object_name
-#
-	#var obj_data = OBJECT_DATA.get(object_name.to_lower(), null)
-	#if obj_data == null:
-		#push_error("❌ Objet inconnu : %s" % object_name)
-		#return false
-#
-	#var offset_ratio: float = obj_data.get("ratio", 0.0)
-#
-	#if player and player.is_inside_tree():
-		#player.go_to(offset_ratio)
-	#else:
-		#push_error("❌ Le player n'est pas prêt ou a été libéré.")
-		#return false
-#
-	#print("🚀 Déplacement demandé vers %s → ratio %.2f" % [object_name, offset_ratio])
-#
-	#await player.reached_target
-	#print("✅ Joueur arrivé à destination !")
-			#
-		## 🎬 Animation spéciale si définie dans OBJECT_DATA
-	#var anim_name = obj_data.get("animation", null)
-	#if anim_name and anim_sprite and is_instance_valid(anim_sprite):
-		#anim_sprite.play(anim_name)
-	#else:
-		#print("⚠️ Impossible de jouer l’anim :", anim_name, "car anim_sprite est invalide.")
-#
-	## 🔙 Cas particulier pour les objets "carton" ou "cadre"
-	#if object_name in ["carton", "cadre"]:
-		#player.forced_anim = "back"
-		#player.update_animation()
-		#
-		## ✅ Ne montrer la bulle que si c’est un clic sur l’œil
-	#if action == "eye":
-		#var bubble_text = obj_data.get("text", "")
-		#if bubble_text != "":
-			#show_speech_bubble_above(player, bubble_text)
-	#elif action == "hand":
-		#pass
-#
-	#return true
-##############################################################################
 func move_player_to_object(object_name: String, action: String = ""):
 	last_clicked_object = object_name
 
@@ -264,38 +174,32 @@ func move_player_to_object(object_name: String, action: String = ""):
 	await player.reached_target
 	print("✅ Joueur arrivé à destination !")
 
-	# 🎬 Animation spéciale si définie dans OBJECT_DATA
-	var anim_name = obj_data.get("animation", null)
-	#if anim_name:
-		#anim_sprite.play(anim_name)
-	if anim_name and anim_sprite and is_instance_valid(anim_sprite):
-		anim_sprite.play(anim_name)
-	else:
-		print("⚠️ Impossible de jouer l’anim :", anim_name, "car anim_sprite est invalide.")
-
-	# 🔙 Cas particulier pour les objets "carton" ou "cadre"
-	if object_name in ["carton", "cadre"]:
-		player.forced_anim = "back"
-		player.update_animation()
-
 	var timer = get_tree().create_timer(0.5).timeout
-	
+
 	var texte = obj_data.get("text", "")
 	if texte != "":
 		await timer
 		show_speech_bubble_above(player, texte)
-		#show_speech_bubble_above(player, texte, object_name)
-		
-	if action == "eye":
-		var bubble_text = obj_data.get("text", "")
-		if bubble_text != "":
-			show_speech_bubble_above(player, bubble_text)
-			print('ça marche')
-	elif action != 'eye':
-		pass
-##############################################################################
 
+	if object_name == "kiki" and action == "hand":
+		var kiki = get_node("/root/ChezYann/kiki")  # adapte ton chemin
+		if kiki:
+			kiki.react_to_action(action)
+			
+		await player.animated_sprite.animation_finished
+		player.animated_sprite.play("idle")
 
+		await get_tree().create_timer(2.0).timeout
+		player.animated_sprite.play("down")
+
+		await player.animated_sprite.animation_finished
+		player.animated_sprite.play("ears")
+
+	_on_character_reached_object(object_name)
+
+	return true
+
+	
 func is_player_moving() -> bool:
 	# Accès simple à l'état de déplacement
 	return is_moving
@@ -371,3 +275,24 @@ func show_speech_bubble_above(character: Node2D, text: String) -> void:
 	if is_instance_valid(bubble):
 		bubble.queue_free()
 		current_bubble = null
+		
+func reset_bubbles() -> void:
+	if current_bubble and is_instance_valid(current_bubble):
+		current_bubble.queue_free()
+	current_bubble = null
+	
+func _on_character_reached_object(object_name: String):
+
+	if object_name in OBJECT_DATA:
+		var data = OBJECT_DATA[object_name]
+		if data.has("facing"):
+			var anim_name = data["facing"]
+			
+			if player and player.animated_sprite and player.animated_sprite.sprite_frames.has_animation(anim_name):
+				player.animated_sprite.play(anim_name)
+				print("▶️ Animation jouée :", anim_name)
+			else:
+				print("⚠️ Animation", anim_name, "non trouvée dans le sprite du joueur.")
+
+
+			

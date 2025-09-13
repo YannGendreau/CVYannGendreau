@@ -44,8 +44,6 @@ func _ready() -> void:
 	else:
 		print("⚠️ AnimatedSprite2D non trouvé dans EyeButton")
 	
-
-
 	# Se connecte au signal 'reached_target' du GameManager (une seule fois)
 	if GameManager and not GameManager.is_connected("reached_target", Callable(self, "_on_player_arrived")):
 		GameManager.connect("reached_target", Callable(self, "_on_player_arrived"))
@@ -86,13 +84,12 @@ func _on_eye_button_pressed():
 	var object_name = target_node.name
 	if GameManager and GameManager.has_method("move_player_to_object"):
 		GameManager.on_object_clicked(object_name)
-		#GameManager.move_player_to_object(object_name, "eye")
 		GameManager.move_player_to_object(object_name)
 		print(target_node.name)
 		
 	visible = false
 
-func _on_hand_button_pressed():	
+func _on_hand_button_pressed():
 	if not target_node:
 		push_error("❌ Aucun objet cible défini pour le menu contextuel.")
 		return
@@ -103,10 +100,10 @@ func _on_hand_button_pressed():
 
 	if GameManager and GameManager.has_method("move_player_to_object"):
 		GameManager.on_object_clicked(object_name)
-		#await GameManager.move_player_to_object(object_name, "hand")  # Assure-toi que cette fonction est async (voir ci-dessous)
-		await GameManager.move_player_to_object(object_name)  # Assure-toi que cette fonction est async (voir ci-dessous)
+		#GameManager.on_hand_action(GameManager.last_clicked_object)
+		# ✅ Ici on précise bien "hand"
+		await GameManager.move_player_to_object(object_name, "hand")
 
-		#GameManager.move_player_to_object(object_name, "hand")
 		# ⏳ Petite pause réaliste (optionnel)
 		await get_tree().create_timer(0.5).timeout
 
@@ -116,4 +113,6 @@ func _on_hand_button_pressed():
 			get_tree().change_scene_to_file(target_scene)
 		else:
 			print("⚠️ Aucune scène cible définie.")
+
+	# 🔒 Cache le menu après l’action
 	visible = false

@@ -13,8 +13,8 @@ var forced_anim: String = ""
 
 
 func _ready() -> void:
-	animated_sprite.play("idle")
-	animated_sprite.animation_finished.connect(_on_animation_finished)
+	#animated_sprite.play("idle")
+	#animated_sprite.animation_finished.connect(_on_animation_finished)
 
 	add_to_group("Employeur")
 
@@ -71,9 +71,18 @@ func _on_context_menu_action_selected(action: String, object_name: String):
 		else:
 			print("Erreur : Scène ", scene_path, " non trouvée")
 			
-func _on_animation_finished():
-	if forced_anim != "":
-		forced_anim = ""
-		update_animation()
-			
-	
+#func face_direction(facing: String):
+	#match facing:
+		#"left":
+			#animated_sprite.play("idle")
+		#"right":
+			#animated_sprite.play("idle_right")
+		#"back":
+			#animated_sprite.play("back")
+		#"front":
+			#animated_sprite.play("front")
+		#_:
+			#animated_sprite.play("front") # fallback
+
+func face_direction(facing: String):
+	animated_sprite.play(facing)  # joue directement le nom
