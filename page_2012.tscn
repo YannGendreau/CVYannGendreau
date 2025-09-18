@@ -1,0 +1,88 @@
+[gd_scene load_steps=9 format=3 uid="uid://bv3o8dq2nr4jg"]
+
+[ext_resource type="Script" uid="uid://bkcj6pf4464pp" path="res://page_2012.gd" id="1_25cac"]
+[ext_resource type="Script" uid="uid://g0ojf3h852bd" path="res://background.gd" id="1_vvy0d"]
+[ext_resource type="Texture2D" uid="uid://dju6rftarg6n5" path="res://sprites/Objets/2012_yellow_file.png" id="3_25cac"]
+[ext_resource type="Texture2D" uid="uid://cmcex4myrosw5" path="res://sprites/UI/croix.png" id="3_nvr2j"]
+[ext_resource type="FontFile" uid="uid://gg3uyttn5v82" path="res://fonts/NFPixels-Regular.ttf" id="5_nvr2j"]
+[ext_resource type="Script" uid="uid://cy34fmbf3x01a" path="res://texte.gd" id="6_gdju5"]
+[ext_resource type="FontFile" uid="uid://c4giwn7wnw0sh" path="res://fonts/police_ibm.png" id="6_rqylu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rqylu"]
+
+[node name="Page2012" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_25cac")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 960.0
+offset_bottom = 540.0
+script = ExtResource("1_vvy0d")
+
+[node name="Page" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("3_25cac")
+
+[node name="CloseButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 765.0
+offset_top = 20.0
+offset_right = 815.0
+offset_bottom = 70.0
+scale = Vector2(0.5, 0.5)
+icon = ExtResource("3_nvr2j")
+
+[node name="Titre" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 212.0
+offset_top = 30.0
+offset_right = 744.0
+offset_bottom = 120.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_nvr2j")
+theme_override_font_sizes/font_size = 23
+text = "Sept 2011 / Juin 2013 :
+Agent Service Généraux / téléphonie 
+SGIM/ELOGIE"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 2
+offset_left = 210.0
+offset_top = 39.0
+offset_right = 710.0
+offset_bottom = 522.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("6_rqylu")
+text = "Sept 2011 / Juin 2013 :
+Agent Service Généraux / téléphonie 
+SGIM/ELOGIE"
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(500, 200)
+layout_mode = 0
+offset_left = 211.0
+offset_top = 122.0
+offset_right = 711.0
+offset_bottom = 422.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_rqylu")
+
+[node name="Texte" type="Label" parent="PanelContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 12
+text = "+ Gestion des flux d’appels entrants et sortants (standard, redirections, suivi des tickets).
++ Création et mise à jour de tableaux de bord à destination de la DSI et de la direction.
++ Suivi budgétaire et optimisation des coûts liés à la téléphonie et aux moyens généraux.
++ Gestion des moyens généraux : fournitures, mobilier, badges d’accès, équipements divers.
++ Organisation logistique (salles de réunion, déménagements internes, gestion des prestataires).
++ Assistance technique et support utilisateur de premier niveau (téléphonie et équipements).
++ Participation aux projets transverses de modernisation des infrastructures et outils de communication."
+autowrap_mode = 3
+script = ExtResource("6_gdju5")

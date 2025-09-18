@@ -1,0 +1,6 @@
+Page2011 (Control)
+├── Background (ColorRect)   # zone cliquable pour fermer
+├── Content (Control)        # conteneur centré
+│   ├── Dossier (TextureRect)  Le dossier qui ne change pas
+│   ├── ButtonR (TextureButton) # flèche gauche
+│   └── ButtonL (TextureButton)# flèche droite

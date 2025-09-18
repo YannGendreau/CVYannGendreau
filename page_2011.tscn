@@ -1,0 +1,245 @@
+[gd_scene load_steps=17 format=3 uid="uid://buketsyp108cu"]
+
+[ext_resource type="Script" uid="uid://cepyyhpo2lqx5" path="res://page_2011.gd" id="1_5jrcd"]
+[ext_resource type="Script" uid="uid://g0ojf3h852bd" path="res://background.gd" id="1_eynv8"]
+[ext_resource type="Texture2D" uid="uid://b7uq0rkf87v7n" path="res://sprites/Objets/2011_purple_file.png" id="2_5jrcd"]
+[ext_resource type="Texture2D" uid="uid://cmcex4myrosw5" path="res://sprites/UI/croix.png" id="3_ega5w"]
+[ext_resource type="Texture2D" uid="uid://c8yt6oeh8ewj1" path="res://sprites/Objets/page_2.png" id="3_fi3a7"]
+[ext_resource type="Texture2D" uid="uid://df5vnqe5gi6pt" path="res://sprites/Objets/page_3.png" id="4_2i4eo"]
+[ext_resource type="Texture2D" uid="uid://cffwleil72wvq" path="res://sprites/Objets/page_1.png" id="4_emm8h"]
+[ext_resource type="Texture2D" uid="uid://piigd7khruo4" path="res://sprites/Objets/page_4.png" id="5_7i7v1"]
+[ext_resource type="FontFile" uid="uid://gg3uyttn5v82" path="res://fonts/NFPixels-Regular.ttf" id="5_ega5w"]
+[ext_resource type="Texture2D" uid="uid://dwt1wu0oc37mv" path="res://sprites/UI/arrow-turn-R-sm.png" id="8_2i4eo"]
+[ext_resource type="Texture2D" uid="uid://ds0gt7402k24n" path="res://sprites/UI/arrow-turn-L-sm.png" id="9_7i7v1"]
+[ext_resource type="Texture2D" uid="uid://cteivsfj8g5up" path="res://sprites/Objets/page_1_text_2011.png" id="11_40p5s"]
+[ext_resource type="FontFile" uid="uid://co5tg3ktlrhmm" path="res://fonts/montreal/Montreal-Bold.ttf" id="11_oderu"]
+[ext_resource type="FontFile" uid="uid://bevf8ib8f7vmf" path="res://fonts/montreal/Montreal-Regular.ttf" id="11_qw8dm"]
+[ext_resource type="FontFile" uid="uid://clnxtrhwbk14c" path="res://fonts/rainyhearts.ttf" id="12_7i7v1"]
+[ext_resource type="FontFile" path="res://fonts/droid-sans/DroidSans.tres" id="12_qw8dm"]
+
+[node name="Page2011" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_5jrcd")
+pages = Array[Texture2D]([ExtResource("4_emm8h"), ExtResource("4_2i4eo"), ExtResource("3_fi3a7"), ExtResource("5_7i7v1")])
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 960.0
+offset_bottom = 540.0
+script = ExtResource("1_eynv8")
+
+[node name="Content" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Dossier" type="TextureRect" parent="Content"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_5jrcd")
+
+[node name="Page" type="TextureRect" parent="Content"]
+layout_mode = 0
+offset_right = 960.0
+offset_bottom = 540.0
+
+[node name="ButtonR" type="TextureButton" parent="Content"]
+layout_mode = 0
+offset_left = 818.0
+offset_top = 454.0
+offset_right = 858.0
+offset_bottom = 524.0
+texture_normal = ExtResource("8_2i4eo")
+
+[node name="ButtonL" type="TextureButton" parent="Content"]
+layout_mode = 0
+offset_left = 772.0
+offset_top = 454.0
+offset_right = 812.0
+offset_bottom = 524.0
+texture_normal = ExtResource("9_7i7v1")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Content"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 0
+offset_top = 1.0
+offset_right = 960.0
+offset_bottom = 597.0
+
+[node name="Titre" type="Label" parent="Content/VBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_ega5w")
+theme_override_font_sizes/font_size = 23
+text = "2011: 
+Vendeur en photographie,
+FNAC Saint Lazare, Paris"
+
+[node name="Texte" type="Label" parent="Content/VBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_ega5w")
+theme_override_font_sizes/font_size = 20
+text = "tetetetttettetteteettteteet"
+
+[node name="Pages" type="VBoxContainer" parent="Content/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Content/VBoxContainer/Pages"]
+texture_filter = 1
+texture_repeat = 1
+layout_mode = 2
+texture = ExtResource("11_40p5s")
+stretch_mode = 2
+
+[node name="Titre1" type="Label" parent="Content/VBoxContainer/Pages"]
+visible = false
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("11_oderu")
+text = "Traducteur anglais/francais Editions Eclairs de Plume"
+autowrap_mode = 2
+
+[node name="Date1" type="Label" parent="Content/VBoxContainer/Pages"]
+visible = false
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("11_qw8dm")
+theme_override_font_sizes/font_size = 15
+text = "Février - Mai"
+autowrap_mode = 2
+
+[node name="Page2" type="RichTextLabel" parent="Content/VBoxContainer/Pages"]
+layout_mode = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("12_7i7v1")
+theme_override_font_sizes/bold_italics_font_size = 20
+theme_override_font_sizes/italics_font_size = 20
+theme_override_font_sizes/mono_font_size = 20
+theme_override_font_sizes/normal_font_size = 20
+theme_override_font_sizes/bold_font_size = 20
+fit_content = true
+
+[node name="Page3" type="RichTextLabel" parent="Content/VBoxContainer/Pages"]
+layout_mode = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("12_7i7v1")
+theme_override_font_sizes/bold_italics_font_size = 20
+theme_override_font_sizes/italics_font_size = 20
+theme_override_font_sizes/mono_font_size = 20
+theme_override_font_sizes/normal_font_size = 20
+theme_override_font_sizes/bold_font_size = 20
+fit_content = true
+
+[node name="Pages2" type="VBoxContainer" parent="Content/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Page1" type="RichTextLabel" parent="Content/VBoxContainer/Pages2"]
+visible = false
+layout_mode = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("12_7i7v1")
+theme_override_font_sizes/bold_italics_font_size = 20
+theme_override_font_sizes/italics_font_size = 20
+theme_override_font_sizes/mono_font_size = 20
+theme_override_font_sizes/normal_font_size = 20
+theme_override_font_sizes/bold_font_size = 20
+text = "Fév/Mai 2011: Traducteur anglais/francais Editions Eclairs de Plume
+• Traduction de manuels éducatifs pour enfants
+• Traduction de scénarii."
+fit_content = true
+
+[node name="Page2" type="RichTextLabel" parent="Content/VBoxContainer/Pages2"]
+layout_mode = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("12_7i7v1")
+theme_override_font_sizes/bold_italics_font_size = 20
+theme_override_font_sizes/italics_font_size = 20
+theme_override_font_sizes/mono_font_size = 20
+theme_override_font_sizes/normal_font_size = 20
+theme_override_font_sizes/bold_font_size = 20
+text = "Oct 2011 / Juin 2014 Théâtre des Nouveautés
+ Accueil du public / Placement"
+fit_content = true
+
+[node name="Page3" type="RichTextLabel" parent="Content/VBoxContainer/Pages2"]
+visible = false
+layout_mode = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("12_7i7v1")
+theme_override_font_sizes/bold_italics_font_size = 20
+theme_override_font_sizes/italics_font_size = 20
+theme_override_font_sizes/mono_font_size = 20
+theme_override_font_sizes/normal_font_size = 20
+theme_override_font_sizes/bold_font_size = 20
+text = "
+Sept 2011 / Juin 2013 : Responsable téléphonie SGIM/ELOGIE
+• Gestion des flux d'appel.
+• Création de tableaux de bord à destination de la DSI.
+• Gestion des moyens généraux ( fournitures, ameublement)"
+fit_content = true
+
+[node name="Pages3" type="VBoxContainer" parent="Content/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Page1" type="RichTextLabel" parent="Content/VBoxContainer/Pages3"]
+visible = false
+layout_mode = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("12_7i7v1")
+theme_override_font_sizes/bold_italics_font_size = 20
+theme_override_font_sizes/italics_font_size = 20
+theme_override_font_sizes/mono_font_size = 20
+theme_override_font_sizes/normal_font_size = 20
+theme_override_font_sizes/bold_font_size = 20
+text = "Fév/Mai 2011: Traducteur anglais/francais Editions Eclairs de Plume
+• Traduction de manuels éducatifs pour enfants
+• Traduction de scénarii."
+fit_content = true
+
+[node name="Page2" type="RichTextLabel" parent="Content/VBoxContainer/Pages3"]
+visible = false
+layout_mode = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("12_7i7v1")
+theme_override_font_sizes/bold_italics_font_size = 20
+theme_override_font_sizes/italics_font_size = 20
+theme_override_font_sizes/mono_font_size = 20
+theme_override_font_sizes/normal_font_size = 20
+theme_override_font_sizes/bold_font_size = 20
+text = "Oct 2011 / Juin 2014 Théâtre des Nouveautés
+ Accueil du public / Placement"
+fit_content = true
+
+[node name="Page3" type="RichTextLabel" parent="Content/VBoxContainer/Pages3"]
+layout_mode = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("12_qw8dm")
+theme_override_font_sizes/bold_italics_font_size = 20
+theme_override_font_sizes/italics_font_size = 20
+theme_override_font_sizes/mono_font_size = 20
+theme_override_font_sizes/normal_font_size = 20
+theme_override_font_sizes/bold_font_size = 20
+text = "
+Sept 2011 / Juin 2013 : Responsable téléphonie SGIM/ELOGIE
+• Gestion des flux d'appel.
+• Création de tableaux de bord à destination de la DSI.
+• Gestion des moyens généraux ( fournitures, ameublement)"
+fit_content = true
+
+[node name="CloseButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 765.0
+offset_top = 20.0
+offset_right = 815.0
+offset_bottom = 70.0
+scale = Vector2(0.5, 0.5)
+icon = ExtResource("3_ega5w")

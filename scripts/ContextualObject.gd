@@ -7,7 +7,7 @@ extends CharacterBody2D  # Le noeud représente un objet interactif pouvant êtr
 var hover_count: int = 0  # Nombre de zones actuellement survolées (pour éviter de cacher le menu trop tôt).
 
 # Constantes pour gérer l'apparence du menu
-const MENU_OFFSET := Vector2(-20, -50)  # Position du menu par rapport à l'objet.
+const MENU_OFFSET := Vector2(-20, -30)  # Position du menu par rapport à l'objet.
 const MENU_HIDE_OFFSET := Vector2(0, 50)  # Décalage quand le menu se replie.
 const MENU_SCALE_ZERO := Vector2(0.0, 0.0)  # Échelle invisible.
 const MENU_SCALE_ONE := Vector2(1.0, 1.0)# Échelle normale.

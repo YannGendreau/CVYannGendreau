@@ -1,7 +1,23 @@
-[gd_scene load_steps=3 format=3 uid="uid://brxfg8k02trup"]
+[gd_scene load_steps=15 format=3 uid="uid://brxfg8k02trup"]
 
 [ext_resource type="Texture2D" uid="uid://cyfv5mn8xaye1" path="res://assets/backgrounds/carton_scene.png" id="1_3tc44"]
 [ext_resource type="Script" uid="uid://cmelr0ohyox5w" path="res://carton_docs.gd" id="1_n8sjn"]
+[ext_resource type="Script" uid="uid://dwsbmwxv4delu" path="res://etiquette_1.gd" id="3_3dl18"]
+[ext_resource type="Texture2D" uid="uid://cpx5p4mw8ds6q" path="res://sprites/Objets/file_buttons_2001.png" id="3_764x5"]
+[ext_resource type="Script" uid="uid://csaijvdyuauut" path="res://etiquette_2.gd" id="5_dww28"]
+[ext_resource type="Texture2D" uid="uid://djqo7i4l0ns8k" path="res://sprites/Objets/file_buttons_2007.png" id="6_nllqb"]
+[ext_resource type="Script" uid="uid://dvkb6w7uhcxrq" path="res://etiquette_3.gd" id="7_q544b"]
+[ext_resource type="Texture2D" uid="uid://1gqxgy5qojfv" path="res://sprites/Objets/file_buttons_2011.png" id="7_qet46"]
+[ext_resource type="Texture2D" uid="uid://csmd2m5k8wl6d" path="res://sprites/Objets/file_buttons_2012.png" id="8_q544b"]
+[ext_resource type="Texture2D" uid="uid://g0f1dqglanrj" path="res://sprites/Objets/file_buttons_2016.png" id="9_k2gqr"]
+[ext_resource type="Script" uid="uid://dj5kyxsugd42v" path="res://etiquette_4.gd" id="9_nllqb"]
+[ext_resource type="Script" uid="uid://bdxombifdyvae" path="res://etiquette_5.gd" id="11_nllqb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_764x5"]
+size = Vector2(90, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dww28"]
+size = Vector2(89, 20)
 
 [node name="Carton_docs" type="Node2D"]
 script = ExtResource("1_n8sjn")
@@ -18,4 +34,70 @@ offset_right = 71.0
 offset_bottom = 530.0
 text = "Retour"
 
+[node name="Etiquette1" type="Area2D" parent="."]
+position = Vector2(0, -24)
+script = ExtResource("3_3dl18")
+
+[node name="Sprite2D" type="Sprite2D" parent="Etiquette1"]
+position = Vector2(257, 362)
+texture = ExtResource("3_764x5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Etiquette1"]
+position = Vector2(257, 362)
+shape = SubResource("RectangleShape2D_764x5")
+
+[node name="Etiquette2" type="Area2D" parent="."]
+position = Vector2(31, -34)
+script = ExtResource("5_dww28")
+
+[node name="Sprite2D" type="Sprite2D" parent="Etiquette2"]
+position = Vector2(341, 330)
+texture = ExtResource("6_nllqb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Etiquette2"]
+position = Vector2(340.5, 330)
+shape = SubResource("RectangleShape2D_dww28")
+
+[node name="Etiquette3" type="Area2D" parent="."]
+position = Vector2(149, -82)
+script = ExtResource("7_q544b")
+
+[node name="Sprite2D" type="Sprite2D" parent="Etiquette3"]
+position = Vector2(341, 330)
+texture = ExtResource("7_qet46")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Etiquette3"]
+position = Vector2(340.5, 330)
+shape = SubResource("RectangleShape2D_dww28")
+
+[node name="Etiquette4" type="Area2D" parent="."]
+visible = false
+position = Vector2(165, -84)
+script = ExtResource("9_nllqb")
+
+[node name="Sprite2D" type="Sprite2D" parent="Etiquette4"]
+position = Vector2(341, 330)
+texture = ExtResource("8_q544b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Etiquette4"]
+position = Vector2(340.5, 330)
+shape = SubResource("RectangleShape2D_dww28")
+
+[node name="Etiquette5" type="Area2D" parent="."]
+position = Vector2(274, -128)
+script = ExtResource("11_nllqb")
+
+[node name="Sprite2D" type="Sprite2D" parent="Etiquette5"]
+position = Vector2(341, 330)
+texture = ExtResource("9_k2gqr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Etiquette5"]
+position = Vector2(340.5, 330)
+shape = SubResource("RectangleShape2D_dww28")
+
 [connection signal="pressed" from="ReturnButton" to="." method="_on_return_button_pressed"]
+[connection signal="input_event" from="Etiquette1" to="Etiquette1" method="_on_input_event"]
+[connection signal="input_event" from="Etiquette2" to="Etiquette2" method="_on_input_event"]
+[connection signal="input_event" from="Etiquette3" to="Etiquette3" method="_on_input_event"]
+[connection signal="input_event" from="Etiquette4" to="Etiquette4" method="_on_input_event"]
+[connection signal="input_event" from="Etiquette5" to="Etiquette5" method="_on_input_event"]
