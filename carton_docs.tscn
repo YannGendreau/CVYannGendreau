@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://brxfg8k02trup"]
+[gd_scene load_steps=14 format=3 uid="uid://brxfg8k02trup"]
 
 [ext_resource type="Texture2D" uid="uid://cyfv5mn8xaye1" path="res://assets/backgrounds/carton_scene.png" id="1_3tc44"]
 [ext_resource type="Script" uid="uid://cmelr0ohyox5w" path="res://carton_docs.gd" id="1_n8sjn"]
@@ -13,9 +13,6 @@
 [ext_resource type="Script" uid="uid://dj5kyxsugd42v" path="res://etiquette_4.gd" id="9_nllqb"]
 [ext_resource type="Script" uid="uid://bdxombifdyvae" path="res://etiquette_5.gd" id="11_nllqb"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_764x5"]
-size = Vector2(90, 20)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dww28"]
 size = Vector2(89, 20)
 
@@ -24,51 +21,48 @@ script = ExtResource("1_n8sjn")
 scene_name = "carton"
 
 [node name="CartonScene" type="Sprite2D" parent="."]
-position = Vector2(480, 270)
+position = Vector2(960, 540)
 texture = ExtResource("1_3tc44")
 
 [node name="ReturnButton" type="Button" parent="."]
-offset_left = 10.0
-offset_top = 499.0
-offset_right = 71.0
-offset_bottom = 530.0
+offset_left = 11.0
+offset_top = 999.0
+offset_right = 126.0
+offset_bottom = 1074.0
 text = "Retour"
 
 [node name="Etiquette1" type="Area2D" parent="."]
-position = Vector2(0, -24)
+position = Vector2(308, 317)
 script = ExtResource("3_3dl18")
 
 [node name="Sprite2D" type="Sprite2D" parent="Etiquette1"]
 position = Vector2(257, 362)
 texture = ExtResource("3_764x5")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Etiquette1"]
-position = Vector2(257, 362)
-shape = SubResource("RectangleShape2D_764x5")
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Etiquette1"]
+polygon = PackedVector2Array(78, 382, 169, 380, 171, 347, 278, 348, 330, 350, 338, 379, 1227, 381, 1190, 499, 114, 499)
 
 [node name="Etiquette2" type="Area2D" parent="."]
-position = Vector2(31, -34)
+position = Vector2(438, 262)
 script = ExtResource("5_dww28")
 
 [node name="Sprite2D" type="Sprite2D" parent="Etiquette2"]
 position = Vector2(341, 330)
 texture = ExtResource("6_nllqb")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Etiquette2"]
-position = Vector2(340.5, 330)
-shape = SubResource("RectangleShape2D_dww28")
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Etiquette2"]
+polygon = PackedVector2Array(-39, 343, 257, 340, 257, 316, 415, 316, 427, 344, 1085, 350, 1060, 426, 251, 423, 134, 392, -19, 425)
 
 [node name="Etiquette3" type="Area2D" parent="."]
-position = Vector2(149, -82)
+position = Vector2(728, 166)
 script = ExtResource("7_q544b")
 
 [node name="Sprite2D" type="Sprite2D" parent="Etiquette3"]
 position = Vector2(341, 330)
 texture = ExtResource("7_qet46")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Etiquette3"]
-position = Vector2(340.5, 330)
-shape = SubResource("RectangleShape2D_dww28")
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Etiquette3"]
+polygon = PackedVector2Array(-311, 343, 250, 342, 261, 312, 418, 315, 439, 342, 776, 346, 746, 433, 149, 435, 129, 404, -29, 403, -41, 434, -281, 430)
 
 [node name="Etiquette4" type="Area2D" parent="."]
 visible = false
@@ -84,16 +78,15 @@ position = Vector2(340.5, 330)
 shape = SubResource("RectangleShape2D_dww28")
 
 [node name="Etiquette5" type="Area2D" parent="."]
-position = Vector2(274, -128)
+position = Vector2(963, 74)
 script = ExtResource("11_nllqb")
 
 [node name="Sprite2D" type="Sprite2D" parent="Etiquette5"]
 position = Vector2(341, 330)
 texture = ExtResource("9_k2gqr")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Etiquette5"]
-position = Vector2(340.5, 330)
-shape = SubResource("RectangleShape2D_dww28")
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Etiquette5"]
+polygon = PackedVector2Array(-499, 427, -521, 346, 258, 339, 266, 314, 421, 312, 422, 344, 500, 345, 479, 428, 199, 427, 199, 399, 18, 396, 15, 428)
 
 [connection signal="pressed" from="ReturnButton" to="." method="_on_return_button_pressed"]
 [connection signal="input_event" from="Etiquette1" to="Etiquette1" method="_on_input_event"]

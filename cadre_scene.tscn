@@ -8,7 +8,7 @@ script = ExtResource("1_mofjj")
 scene_name = "cadre"
 
 [node name="CadreScene" type="Sprite2D" parent="."]
-position = Vector2(480, 269)
+position = Vector2(960, 540)
 texture = ExtResource("1_5048l")
 
 [node name="ReturnButton" type="Button" parent="CadreScene"]

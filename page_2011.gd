@@ -4,8 +4,8 @@ extends Control
 @onready var background = $Background
 @onready var content = $Content/Page # maintenant un TextureRect
 @onready var close_button: Button = $CloseButton
-@onready var arrow_left: TextureButton = $Content/ButtonL
-@onready var arrow_right: TextureButton = $Content/ButtonR
+@onready var arrow_left: TextureButton = $ButtonL
+@onready var arrow_right: TextureButton = $ButtonR
 
 @export var pages: Array[Texture2D] = []
 var current_page: int = 0

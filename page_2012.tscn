@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bv3o8dq2nr4jg"]
+[gd_scene load_steps=8 format=3 uid="uid://bv3o8dq2nr4jg"]
 
 [ext_resource type="Script" uid="uid://bkcj6pf4464pp" path="res://page_2012.gd" id="1_25cac"]
 [ext_resource type="Script" uid="uid://g0ojf3h852bd" path="res://background.gd" id="1_vvy0d"]
@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://cmcex4myrosw5" path="res://sprites/UI/croix.png" id="3_nvr2j"]
 [ext_resource type="FontFile" uid="uid://gg3uyttn5v82" path="res://fonts/NFPixels-Regular.ttf" id="5_nvr2j"]
 [ext_resource type="Script" uid="uid://cy34fmbf3x01a" path="res://texte.gd" id="6_gdju5"]
-[ext_resource type="FontFile" uid="uid://c4giwn7wnw0sh" path="res://fonts/police_ibm.png" id="6_rqylu"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rqylu"]
 
@@ -57,7 +56,6 @@ offset_top = 39.0
 offset_right = 710.0
 offset_bottom = 522.0
 theme_override_colors/default_color = Color(0, 0, 0, 1)
-theme_override_fonts/normal_font = ExtResource("6_rqylu")
 text = "Sept 2011 / Juin 2013 :
 Agent Service Généraux / téléphonie 
 SGIM/ELOGIE"

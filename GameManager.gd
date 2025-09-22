@@ -45,35 +45,40 @@ const OBJECT_DATA := {
 		"facing": "idle_left",
 		"animation": "idle_left",
 		"text": "Une bande démo vidéo.",
-		"bubble_offset": Vector2(100, 320)
+		"bubble_offset": Vector2(0, 0),
+		"menu_offset": Vector2(0, -40),
 	},
 	"ordi": {
 		"ratio": 0.8,
 		"facing": "idle",
 		"animation": "idle",
 		"text": "Ses compétences informatiques.",
-		"bubble_offset": Vector2(100, 350)
+		"bubble_offset": Vector2(0, 0),
+		"menu_offset": Vector2(-230, -240),
 	},
 	"carton": {
 		"ratio": 0.7,
 		"facing": "back",
 		"animation": "back",
 		"text": "Divers. Expérience inclassable.",
-		"bubble_offset": Vector2(100, 400)
+		"bubble_offset": Vector2(100, 400),
+		"menu_offset": Vector2(0, -40),
 	},
 	"cadre": {
 		"ratio": 0.6,
 		"facing": "back",
 		"animation": "back",
 		"text": "Ses études et diplômes.",
-		"bubble_offset": Vector2(80, 350)
+		"bubble_offset": Vector2(500, 1700),
+		"menu_offset": Vector2(20, -140),
 	},
 	"kiki": {
 		"ratio": 0.27,
 		"facing": "front",
 		"animation": "idle_right",
 		"text": "Le kiki.",
-		"bubble_offset": Vector2(170, 320)
+		"bubble_offset": Vector2(170, 320),
+		"menu_offset": Vector2(0, -40),
 	}
 }
 

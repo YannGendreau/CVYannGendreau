@@ -40,7 +40,6 @@ theme_override_constants/margin_bottom = 5
 [node name="Text" type="Label" parent="Bubble/MarginContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_6n4en")
-theme_override_font_sizes/font_size = 16
 text = "test"
 label_settings = SubResource("LabelSettings_6n4en")
 vertical_alignment = 1

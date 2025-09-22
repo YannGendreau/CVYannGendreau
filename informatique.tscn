@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://blcg0ime0y6cr"]
+[gd_scene load_steps=5 format=3 uid="uid://blcg0ime0y6cr"]
 
 [ext_resource type="Script" uid="uid://bg65d514s8q5u" path="res://informatique.gd" id="1_8bg4p"]
 [ext_resource type="Texture2D" uid="uid://dutka4kjoemrd" path="res://assets/backgrounds/ecran informatique_sm.png" id="1_jwbeo"]
+[ext_resource type="Texture2D" uid="uid://xa5qcki4n5jn" path="res://sprites/Objets/ecran informatique_texte_P1.png" id="3_8x0i1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jwbeo"]
 size = Vector2(960, 30)
@@ -11,7 +12,7 @@ script = ExtResource("1_8bg4p")
 scene_name = "informatique"
 
 [node name="EcranInformatiqueSm" type="Sprite2D" parent="."]
-position = Vector2(480, 270)
+position = Vector2(960, 540)
 texture = ExtResource("1_jwbeo")
 
 [node name="Area2D" type="Area2D" parent="EcranInformatiqueSm"]
@@ -22,11 +23,16 @@ visible = false
 position = Vector2(0, 256)
 shape = SubResource("RectangleShape2D_jwbeo")
 
-[node name="ReturnButton" type="Button" parent="EcranInformatiqueSm"]
-offset_left = -471.0
-offset_top = 234.0
-offset_right = -413.0
-offset_bottom = 265.0
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("3_8x0i1")
+
+[node name="ReturnButton" type="Button" parent="."]
+offset_left = 24.0
+offset_top = 1036.0
+offset_right = 82.0
+offset_bottom = 1067.0
 text = "retour"
 
-[connection signal="pressed" from="EcranInformatiqueSm/ReturnButton" to="." method="_on_return_button_pressed"]
+[connection signal="pressed" from="ReturnButton" to="." method="_on_return_button_pressed"]

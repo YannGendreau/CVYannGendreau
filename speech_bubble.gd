@@ -7,7 +7,7 @@ class_name SpeechBubble
 @onready var margin_container = $Bubble/MarginContainer
 @onready var arrow = $Bubble/Arrow
 
-const MAX_WIDTH := 280
+const MAX_WIDTH := 500
 const MARGIN := 12
 
 func set_text(text: String) -> void:
