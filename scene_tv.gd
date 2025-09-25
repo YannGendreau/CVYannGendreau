@@ -2,6 +2,7 @@ extends Node2D
 
 @onready var video_player = $VideoStreamPlayer
 @onready var texture_rect = $TextureRect
+@onready var return_bouton = $ReturnButton/AnimatedSprite2D
 @export var scene_name : String = "" 
 
 func _on_return_button_pressed() -> void:
@@ -11,6 +12,7 @@ func _on_return_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://chez_yann.tscn")
 
 func _ready():
+	return_bouton.play("glow")
 	#video_player.visible = false
 	video_player.play()
 	wait_for_texture()

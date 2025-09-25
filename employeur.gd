@@ -86,3 +86,15 @@ func _on_context_menu_action_selected(action: String, object_name: String):
 
 func face_direction(facing: String):
 	animated_sprite.play(facing)  # joue directement le nom
+	
+# Dans employeur.gd (ton player)
+func get_progress_ratio() -> float:
+	var pf = get_parent()
+	if pf is PathFollow2D:
+		return pf.progress_ratio
+	return -1.0
+
+func set_progress_ratio(value: float) -> void:
+	var pf = get_parent()
+	if pf is PathFollow2D:
+		pf.progress_ratio = value

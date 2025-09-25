@@ -1,8 +1,80 @@
-[gd_scene load_steps=4 format=3 uid="uid://cvo3ekfugckoa"]
+[gd_scene load_steps=15 format=3 uid="uid://cvo3ekfugckoa"]
 
 [ext_resource type="Script" uid="uid://2pbjpl8l2hmf" path="res://scene_tv.gd" id="1_34it3"]
 [ext_resource type="Texture2D" uid="uid://0dbvvrccrp05" path="res://assets/backgrounds/scene_TV.png" id="1_v4udv"]
 [ext_resource type="VideoStream" uid="uid://cjuivt7go6eei" path="res://Videos/COLLAB - 2019 - Real Yann Gendreau - HD.ogv" id="3_8klom"]
+[ext_resource type="Texture2D" uid="uid://cr0tlssv3qts2" path="res://sprites/UI/arrow-back-Sheet.png" id="3_j76g2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ebspx"]
+atlas = ExtResource("3_j76g2")
+region = Rect2(0, 0, 78, 108)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sqvk7"]
+atlas = ExtResource("3_j76g2")
+region = Rect2(78, 0, 78, 108)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uadqa"]
+atlas = ExtResource("3_j76g2")
+region = Rect2(156, 0, 78, 108)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8rlnm"]
+atlas = ExtResource("3_j76g2")
+region = Rect2(234, 0, 78, 108)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cksya"]
+atlas = ExtResource("3_j76g2")
+region = Rect2(312, 0, 78, 108)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wlyqw"]
+atlas = ExtResource("3_j76g2")
+region = Rect2(390, 0, 78, 108)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o4dog"]
+atlas = ExtResource("3_j76g2")
+region = Rect2(468, 0, 78, 108)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_efk76"]
+atlas = ExtResource("3_j76g2")
+region = Rect2(546, 0, 78, 108)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dbe33"]
+atlas = ExtResource("3_j76g2")
+region = Rect2(624, 0, 78, 108)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_j76g2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ebspx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sqvk7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uadqa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8rlnm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cksya")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wlyqw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o4dog")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_efk76")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dbe33")
+}],
+"loop": true,
+"name": &"glow",
+"speed": 12.0
+}]
 
 [node name="scene_tv" type="Node2D"]
 script = ExtResource("1_34it3")
@@ -11,13 +83,6 @@ scene_name = "tv"
 [node name="SceneTv" type="Sprite2D" parent="."]
 position = Vector2(960, 540)
 texture = ExtResource("1_v4udv")
-
-[node name="ReturnButton" type="Button" parent="SceneTv"]
-offset_left = -941.0
-offset_top = 493.0
-offset_right = -880.0
-offset_bottom = 524.0
-text = "Retour"
 
 [node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="."]
 visible = false
@@ -35,4 +100,16 @@ offset_bottom = 1002.0
 expand_mode = 2
 stretch_mode = 6
 
-[connection signal="pressed" from="SceneTv/ReturnButton" to="." method="_on_return_button_pressed"]
+[node name="ReturnButton" type="Button" parent="."]
+offset_left = 19.0
+offset_top = 941.0
+offset_right = 118.0
+offset_bottom = 1064.0
+flat = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ReturnButton"]
+position = Vector2(54, 56)
+sprite_frames = SubResource("SpriteFrames_j76g2")
+animation = &"glow"
+
+[connection signal="pressed" from="ReturnButton" to="." method="_on_return_button_pressed"]

@@ -124,7 +124,7 @@ size = Vector2(382, 544.484)
 script = ExtResource("1_c2wg0")
 
 [node name="shadow" type="Sprite2D" parent="."]
-position = Vector2(-6, 1)
+position = Vector2(-6, -8)
 texture = ExtResource("2_7syi5")
 script = ExtResource("3_ujnen")
 

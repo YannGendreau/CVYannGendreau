@@ -1,11 +1,84 @@
-[gd_scene load_steps=5 format=3 uid="uid://blcg0ime0y6cr"]
+[gd_scene load_steps=17 format=3 uid="uid://blcg0ime0y6cr"]
 
 [ext_resource type="Script" uid="uid://bg65d514s8q5u" path="res://informatique.gd" id="1_8bg4p"]
 [ext_resource type="Texture2D" uid="uid://dutka4kjoemrd" path="res://assets/backgrounds/ecran informatique_sm.png" id="1_jwbeo"]
 [ext_resource type="Texture2D" uid="uid://xa5qcki4n5jn" path="res://sprites/Objets/ecran informatique_texte_P1.png" id="3_8x0i1"]
+[ext_resource type="Texture2D" uid="uid://b7xchtt5m71ga" path="res://sprites/Objets/ecran informatique_texte_P1_02.png" id="4_kwn8b"]
+[ext_resource type="Texture2D" uid="uid://cr0tlssv3qts2" path="res://sprites/UI/arrow-back-Sheet.png" id="4_pp43a"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jwbeo"]
 size = Vector2(960, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ebspx"]
+atlas = ExtResource("4_pp43a")
+region = Rect2(0, 0, 78, 108)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sqvk7"]
+atlas = ExtResource("4_pp43a")
+region = Rect2(78, 0, 78, 108)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uadqa"]
+atlas = ExtResource("4_pp43a")
+region = Rect2(156, 0, 78, 108)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8rlnm"]
+atlas = ExtResource("4_pp43a")
+region = Rect2(234, 0, 78, 108)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cksya"]
+atlas = ExtResource("4_pp43a")
+region = Rect2(312, 0, 78, 108)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wlyqw"]
+atlas = ExtResource("4_pp43a")
+region = Rect2(390, 0, 78, 108)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o4dog"]
+atlas = ExtResource("4_pp43a")
+region = Rect2(468, 0, 78, 108)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_efk76"]
+atlas = ExtResource("4_pp43a")
+region = Rect2(546, 0, 78, 108)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dbe33"]
+atlas = ExtResource("4_pp43a")
+region = Rect2(624, 0, 78, 108)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kwn8b"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ebspx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sqvk7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uadqa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8rlnm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cksya")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wlyqw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o4dog")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_efk76")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dbe33")
+}],
+"loop": true,
+"name": &"glow",
+"speed": 12.0
+}]
 
 [node name="Informatique" type="Node2D"]
 script = ExtResource("1_8bg4p")
@@ -24,15 +97,26 @@ position = Vector2(0, 256)
 shape = SubResource("RectangleShape2D_jwbeo")
 
 [node name="TextureRect" type="TextureRect" parent="."]
+visible = false
 offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("3_8x0i1")
 
+[node name="TextureRect2" type="TextureRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("4_kwn8b")
+
 [node name="ReturnButton" type="Button" parent="."]
-offset_left = 24.0
-offset_top = 1036.0
-offset_right = 82.0
-offset_bottom = 1067.0
-text = "retour"
+offset_left = 26.0
+offset_top = 944.0
+offset_right = 125.0
+offset_bottom = 1064.0
+flat = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ReturnButton"]
+position = Vector2(50, 58)
+sprite_frames = SubResource("SpriteFrames_kwn8b")
+animation = &"glow"
 
 [connection signal="pressed" from="ReturnButton" to="." method="_on_return_button_pressed"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=94 format=3 uid="uid://quox87bb6okb"]
+[gd_scene load_steps=100 format=3 uid="uid://quox87bb6okb"]
 
 [ext_resource type="Script" uid="uid://dwqfhnerk2o6c" path="res://chez_yann.gd" id="1_lifh0"]
 [ext_resource type="Texture2D" uid="uid://deyqvr6xegdrj" path="res://assets/backgrounds/piece_yann.png" id="2_dk3hb"]
@@ -19,11 +19,14 @@
 [ext_resource type="PackedScene" uid="uid://b2pu573y1yatl" path="res://employeur.tscn" id="15_sbs8g"]
 [ext_resource type="Script" uid="uid://c5fghqv78cqo1" path="res://kiki.gd" id="16_opjl1"]
 [ext_resource type="Texture2D" uid="uid://e6lfe848dwke" path="res://sprites/Objets/canape.png" id="18_3w6es"]
+[ext_resource type="Texture2D" uid="uid://dd124isjfp07x" path="res://sprites/Objets/canape_cover.png" id="18_vtsx5"]
 [ext_resource type="Script" uid="uid://vmfm1qbavptn" path="res://computer.gd" id="19_5xjue"]
 [ext_resource type="Texture2D" uid="uid://ev8l37k13udj" path="res://sprites/Objets/kiki-Sheet.png" id="19_dkmgb"]
 [ext_resource type="Texture2D" uid="uid://d0chasrf2g7lb" path="res://sprites/Objets/clavier-souris-Sheet.png" id="21_hitn6"]
 [ext_resource type="Script" uid="uid://cdvhkmswwhxg6" path="res://clavier_souris.gd" id="21_mrf0o"]
 [ext_resource type="Texture2D" uid="uid://2d8hmjbem7xc" path="res://sprites/Objets/camera.png" id="25_vtsx5"]
+[ext_resource type="Texture2D" uid="uid://bth7tr7n2jf6l" path="res://sprites/Objets/aloe.png" id="26_dkmgb"]
+[ext_resource type="Texture2D" uid="uid://cu0aao5x3b741" path="res://assets/backgrounds/barre-noire.png" id="27_vvuww"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5kfan"]
 size = Vector2(195, 114)
@@ -93,59 +96,6 @@ animations = [{
 "speed": 8.0
 }]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_sggff"]
-atlas = ExtResource("21_hitn6")
-region = Rect2(0, 0, 74, 14)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_bf2m5"]
-atlas = ExtResource("21_hitn6")
-region = Rect2(74, 0, 74, 14)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_eiowk"]
-atlas = ExtResource("21_hitn6")
-region = Rect2(148, 0, 74, 14)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_8qprt"]
-atlas = ExtResource("21_hitn6")
-region = Rect2(222, 0, 74, 14)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_adedi"]
-atlas = ExtResource("21_hitn6")
-region = Rect2(296, 0, 74, 14)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_eb3gh"]
-atlas = ExtResource("21_hitn6")
-region = Rect2(370, 0, 74, 14)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_wy04w"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_sggff")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_bf2m5")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_eiowk")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_8qprt")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_adedi")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_eb3gh")
-}],
-"loop": true,
-"name": &"hue",
-"speed": 8.0
-}]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_dfg8j"]
-size = Vector2(48, 15)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_levge"]
 atlas = ExtResource("8_mrf0o")
 region = Rect2(0, 0, 272, 200)
@@ -199,9 +149,62 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mrf0o"]
 size = Vector2(172, 124)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_sggff"]
+atlas = ExtResource("21_hitn6")
+region = Rect2(0, 0, 148, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bf2m5"]
+atlas = ExtResource("21_hitn6")
+region = Rect2(148, 0, 148, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eiowk"]
+atlas = ExtResource("21_hitn6")
+region = Rect2(296, 0, 148, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8qprt"]
+atlas = ExtResource("21_hitn6")
+region = Rect2(444, 0, 148, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_adedi"]
+atlas = ExtResource("21_hitn6")
+region = Rect2(592, 0, 148, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eb3gh"]
+atlas = ExtResource("21_hitn6")
+region = Rect2(740, 0, 148, 28)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wy04w"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sggff")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bf2m5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eiowk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8qprt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_adedi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eb3gh")
+}],
+"loop": true,
+"name": &"hue",
+"speed": 8.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dfg8j"]
+size = Vector2(147, 22)
+
 [sub_resource type="Curve2D" id="Curve2D_ign4d"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 1024, 519, 0, 0, 0, 0, -140, 519)
+"points": PackedVector2Array(0, 0, 0, 0, 1026, 545, 0, 0, 0, 0, -147, 543)
 }
 point_count = 2
 
@@ -353,7 +356,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"ears",
-"speed": 10.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -499,6 +502,33 @@ animations = [{
 "speed": 12.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_3b7wl"]
+atlas = ExtResource("8_mbdna")
+region = Rect2(0, 0, 60, 68)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dchdl"]
+atlas = ExtResource("9_oik1x")
+region = Rect2(0, 0, 60, 68)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_q5up8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3b7wl")
+}],
+"loop": true,
+"name": &"close",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dchdl")
+}],
+"loop": true,
+"name": &"open",
+"speed": 5.0
+}]
+
 [node name="ChezYann" type="Node2D"]
 script = ExtResource("1_lifh0")
 
@@ -571,18 +601,6 @@ shape = SubResource("RectangleShape2D_5xjue")
 sprite_frames = SubResource("SpriteFrames_levge")
 animation = &"hue"
 
-[node name="ClavierSouris" type="CharacterBody2D" parent="."]
-position = Vector2(716, 618)
-script = ExtResource("21_mrf0o")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ClavierSouris"]
-sprite_frames = SubResource("SpriteFrames_wy04w")
-animation = &"hue"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ClavierSouris"]
-position = Vector2(-11, 0.5)
-shape = SubResource("RectangleShape2D_dfg8j")
-
 [node name="ordi" type="CharacterBody2D" parent="."]
 position = Vector2(446, 552)
 input_pickable = true
@@ -599,13 +617,27 @@ animation = &"Hue"
 position = Vector2(-27, -13)
 shape = SubResource("RectangleShape2D_mrf0o")
 
+[node name="ClavierSouris" type="CharacterBody2D" parent="."]
+position = Vector2(482, 626)
+script = ExtResource("21_mrf0o")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ClavierSouris"]
+sprite_frames = SubResource("SpriteFrames_wy04w")
+animation = &"hue"
+frame = 4
+frame_progress = 0.139212
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClavierSouris"]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_dfg8j")
+
 [node name="Path2D" type="Path2D" parent="."]
 position = Vector2(482, 324)
 curve = SubResource("Curve2D_ign4d")
 metadata/_edit_group_ = true
 
 [node name="PathFollower" type="PathFollow2D" parent="Path2D"]
-position = Vector2(1024, 519)
+position = Vector2(1026, 545)
 rotation = 3.14159
 rotates = false
 
@@ -625,11 +657,17 @@ script = ExtResource("16_opjl1")
 position = Vector2(-9, -3)
 sprite_frames = SubResource("SpriteFrames_tmcsd")
 animation = &"ears"
+frame = 3
+frame_progress = 0.433129
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="kiki"]
 position = Vector2(-0.5, -3)
 scale = Vector2(2, 2)
 shape = SubResource("RectangleShape2D_vtsx5")
+
+[node name="Cover" type="Sprite2D" parent="."]
+position = Vector2(1506, 820)
+texture = ExtResource("18_vtsx5")
 
 [node name="ContextMenu" type="Control" parent="."]
 layout_mode = 3
@@ -655,10 +693,21 @@ shape = SubResource("RectangleShape2D_21ub8")
 
 [node name="EyeButton" type="TextureButton" parent="ContextMenu"]
 layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -94.49
+offset_top = -115.0
+offset_right = -12.69
+offset_bottom = -45.0
+grow_horizontal = 0
+grow_vertical = 0
 metadata/_edit_use_anchors_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ContextMenu/EyeButton"]
-position = Vector2(-58, -38)
+position = Vector2(42, 39)
 sprite_frames = SubResource("SpriteFrames_fkqro")
 animation = &"open"
 
@@ -667,16 +716,19 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -70.0
-offset_right = 60.0
-offset_bottom = -2.0
+offset_left = -0.35
+offset_top = -109.475
+offset_right = 59.65
+offset_bottom = -41.475
 grow_horizontal = 2
 grow_vertical = 2
-texture_normal = ExtResource("9_oik1x")
-texture_pressed = ExtResource("9_oik1x")
-texture_hover = ExtResource("8_mbdna")
 script = ExtResource("10_4bvsw")
 metadata/_edit_use_anchors_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ContextMenu/HandButton"]
+position = Vector2(28.35, 31.475)
+sprite_frames = SubResource("SpriteFrames_q5up8")
+animation = &"open"
 
 [node name="FadeTimer" type="Timer" parent="."]
 one_shot = true
@@ -687,14 +739,28 @@ one_shot = true
 layout_mode = 3
 anchors_preset = 0
 offset_left = 480.0
-offset_top = 299.0
+offset_top = 237.0
 offset_right = 480.0
-offset_bottom = 299.0
+offset_bottom = 237.0
 metadata/_edit_use_anchors_ = true
 
 [node name="Camera" type="Sprite2D" parent="."]
-position = Vector2(1097, 960)
+position = Vector2(1089, 950)
 texture = ExtResource("25_vtsx5")
+
+[node name="Aloe" type="Sprite2D" parent="."]
+position = Vector2(116, 810)
+texture = ExtResource("26_dkmgb")
+
+[node name="Barre-noire" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(958, 29)
+texture = ExtResource("27_vvuww")
+
+[node name="Barre-noire2" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(962, 1180)
+texture = ExtResource("27_vvuww")
 
 [connection signal="input_event" from="cadre/Area2D" to="cadre" method="_on_area_2d_input_event"]
 [connection signal="mouse_entered" from="ContextMenu" to="kiki" method="_on_context_menu_mouse_entered"]

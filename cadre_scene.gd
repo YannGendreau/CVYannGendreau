@@ -1,6 +1,12 @@
 extends Node2D
 
 @export var scene_name : String = "" 
+@onready var return_button = $ReturnButton/AnimatedSprite2D
+
+func _ready() -> void:
+	
+	return_button.play('glow') 
+
 
 func _on_return_button_pressed() -> void:
 	print("Retour en arrière")

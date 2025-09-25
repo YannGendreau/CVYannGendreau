@@ -7,23 +7,26 @@ class_name SpeechBubble
 @onready var margin_container = $Bubble/MarginContainer
 @onready var arrow = $Bubble/Arrow
 
-const MAX_WIDTH := 500
+
+const MAX_WIDTH := 400
 const MARGIN := 12
 
 func set_text(text: String) -> void:
 	label.text = text
-	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_FILL
+	label.autowrap_mode = TextServer.AUTOWRAP_WORD
+	#label.horizontal_alignment = HORIZONTAL_ALIGNMENT_FILL
 
 	# largeur max
 	label.custom_minimum_size = Vector2(MAX_WIDTH, 0)
 
 	# attendre la frame suivante pour recalcul
 	await get_tree().process_frame
+	
+	#print('la taille du texte est:', label.custom_minimum_size)
 
 	# récupérer taille du texte calculée après wrap
 	var text_size = label.get_combined_minimum_size()
-
+	
 	# ajuster la bulle autour du texte
 	bubble.custom_minimum_size = text_size + Vector2(MARGIN * 2, MARGIN * 2)
 
@@ -33,7 +36,7 @@ func set_text(text: String) -> void:
 	# placer la flèche centrée sous la bulle
 	arrow.position = Vector2(
 		bubble.size.x / 2 - arrow.size.x / 2,
-		bubble.size.y - 5   # petit offset vers le bas
+		bubble.size.y - 4   # petit offset vers le bas
 	)
 	
 		# Gauche

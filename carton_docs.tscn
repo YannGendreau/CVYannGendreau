@@ -1,9 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://brxfg8k02trup"]
+[gd_scene load_steps=25 format=3 uid="uid://brxfg8k02trup"]
 
 [ext_resource type="Texture2D" uid="uid://cyfv5mn8xaye1" path="res://assets/backgrounds/carton_scene.png" id="1_3tc44"]
 [ext_resource type="Script" uid="uid://cmelr0ohyox5w" path="res://carton_docs.gd" id="1_n8sjn"]
 [ext_resource type="Script" uid="uid://dwsbmwxv4delu" path="res://etiquette_1.gd" id="3_3dl18"]
 [ext_resource type="Texture2D" uid="uid://cpx5p4mw8ds6q" path="res://sprites/Objets/file_buttons_2001.png" id="3_764x5"]
+[ext_resource type="Texture2D" uid="uid://cr0tlssv3qts2" path="res://sprites/UI/arrow-back-Sheet.png" id="3_oxyn8"]
 [ext_resource type="Script" uid="uid://csaijvdyuauut" path="res://etiquette_2.gd" id="5_dww28"]
 [ext_resource type="Texture2D" uid="uid://djqo7i4l0ns8k" path="res://sprites/Objets/file_buttons_2007.png" id="6_nllqb"]
 [ext_resource type="Script" uid="uid://dvkb6w7uhcxrq" path="res://etiquette_3.gd" id="7_q544b"]
@@ -12,6 +13,77 @@
 [ext_resource type="Texture2D" uid="uid://g0f1dqglanrj" path="res://sprites/Objets/file_buttons_2016.png" id="9_k2gqr"]
 [ext_resource type="Script" uid="uid://dj5kyxsugd42v" path="res://etiquette_4.gd" id="9_nllqb"]
 [ext_resource type="Script" uid="uid://bdxombifdyvae" path="res://etiquette_5.gd" id="11_nllqb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ebspx"]
+atlas = ExtResource("3_oxyn8")
+region = Rect2(0, 0, 78, 108)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sqvk7"]
+atlas = ExtResource("3_oxyn8")
+region = Rect2(78, 0, 78, 108)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uadqa"]
+atlas = ExtResource("3_oxyn8")
+region = Rect2(156, 0, 78, 108)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8rlnm"]
+atlas = ExtResource("3_oxyn8")
+region = Rect2(234, 0, 78, 108)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cksya"]
+atlas = ExtResource("3_oxyn8")
+region = Rect2(312, 0, 78, 108)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wlyqw"]
+atlas = ExtResource("3_oxyn8")
+region = Rect2(390, 0, 78, 108)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o4dog"]
+atlas = ExtResource("3_oxyn8")
+region = Rect2(468, 0, 78, 108)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_efk76"]
+atlas = ExtResource("3_oxyn8")
+region = Rect2(546, 0, 78, 108)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dbe33"]
+atlas = ExtResource("3_oxyn8")
+region = Rect2(624, 0, 78, 108)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7hpbd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ebspx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sqvk7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uadqa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8rlnm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cksya")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wlyqw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o4dog")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_efk76")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dbe33")
+}],
+"loop": true,
+"name": &"glow",
+"speed": 12.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dww28"]
 size = Vector2(89, 20)
@@ -25,11 +97,17 @@ position = Vector2(960, 540)
 texture = ExtResource("1_3tc44")
 
 [node name="ReturnButton" type="Button" parent="."]
-offset_left = 11.0
-offset_top = 999.0
-offset_right = 126.0
-offset_bottom = 1074.0
-text = "Retour"
+offset_left = 60.0
+offset_top = 933.0
+offset_right = 143.0
+offset_bottom = 1062.0
+flat = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ReturnButton"]
+position = Vector2(38, 67)
+sprite_frames = SubResource("SpriteFrames_7hpbd")
+animation = &"glow"
+frame_progress = 0.283849
 
 [node name="Etiquette1" type="Area2D" parent="."]
 position = Vector2(308, 317)

@@ -11,7 +11,7 @@ const MENU_OFFSET := Vector2(-20, -30)  # Position du menu par rapport à l'obje
 const MENU_HIDE_OFFSET := Vector2(0, 50)  # Décalage quand le menu se replie.
 const MENU_SCALE_ZERO := Vector2(0.0, 0.0)  # Échelle invisible.
 const MENU_SCALE_ONE := Vector2(1.0, 1.0)# Échelle normale.
-const FADE_DURATION := 1.5  # Durée avant repli automatique du menu.
+const FADE_DURATION := 4  # Durée avant repli automatique du menu.
 
 func _ready():
 	context_menu.visible = false  # Cache le menu au démarrage.
@@ -47,16 +47,33 @@ func _input_event(_viewport, event, _shape_idx):
 		show_context_menu()
 
 func show_context_menu():
-	GameManager.hide_all_context_menus()  # Cache les autres menus contextuels.
+	
+	GameManager.hide_all_context_menus()
 	context_menu.global_position = global_position + MENU_OFFSET  # Positionne le menu.
-	context_menu.visible = true  # Affiche le menu.
-	context_menu.scale = MENU_SCALE_ZERO  # Commence invisible.
-	context_menu.modulate.a = 0.0  # Opacité à 0.
+
+	context_menu.visible = true
+	context_menu.scale = MENU_SCALE_ZERO
+	context_menu.modulate.a = 0.0
+
+	GameManager.fade_timer.stop()
+	GameManager.fade_timer.wait_time = FADE_DURATION
+	GameManager.fade_timer.one_shot = true
+	if not GameManager.fade_timer.timeout.is_connected(_on_fade_timeout):
+		GameManager.fade_timer.timeout.connect(_on_fade_timeout)
+	GameManager.fade_timer.start()
+	print("Timer started for context menu", name)
+	
+	#GameManager.hide_all_context_menus()  # Cache les autres menus contextuels.
+	#context_menu.global_position = global_position + MENU_OFFSET  # Positionne le menu.
+	#context_menu.visible = true  # Affiche le menu.
+	#context_menu.scale = MENU_SCALE_ZERO  # Commence invisible.
+	#context_menu.modulate.a = 0.0  # Opacité à 0.
 	context_menu.set_target_scene(target_scene)  # Associe la scène cible.
 	context_menu.target_position = global_position
 	context_menu.target_node = self
-
-	GameManager.fade_timer.start()  # Lance le timer de repli automatique.
+#
+	#GameManager.fade_timer.start()  # Lance le timer de repli automatique.
+	#print("Timer started for menu:", name)
 
 	# Animation du menu avec Tween (position, échelle, opacité)
 	var tween = create_tween().set_parallel(true)
@@ -78,8 +95,8 @@ func hide_with_tween():
 	tween.tween_callback(Callable(self, "_on_hide_menu"))
 	
 func _on_fade_timeout():
-	print("Timer terminé → on replie les menus.")
-	#print("⏳ Timer déclenché pour :", self.name, "→ ID menu:", context_menu.get_instance_id())
+	#print("Timer terminé → on replie les menus.")
+	print("⏳ Timer déclenché pour :", self.name, "→ ID menu:", context_menu.get_instance_id())
 	hide_with_tween()
 	
 func _on_hover_area_mouse_entered():

@@ -37,6 +37,7 @@ var arrival_animation: String = ""  # Nom de l'animation à jouer une fois arriv
 var object_name = ""
 var last_action: String = ""   # mémorise l’action en cours ("eye" ou "hand")
 
+const ARRIVAL_THRESHOLD := 10.0
 
 
 const OBJECT_DATA := {
@@ -45,7 +46,7 @@ const OBJECT_DATA := {
 		"facing": "idle_left",
 		"animation": "idle_left",
 		"text": "Une bande démo vidéo.",
-		"bubble_offset": Vector2(0, 0),
+		"bubble_offset": Vector2(600, 900),
 		"menu_offset": Vector2(0, -40),
 	},
 	"ordi": {
@@ -53,7 +54,7 @@ const OBJECT_DATA := {
 		"facing": "idle",
 		"animation": "idle",
 		"text": "Ses compétences informatiques.",
-		"bubble_offset": Vector2(0, 0),
+		"bubble_offset": Vector2(700, 900),
 		"menu_offset": Vector2(-230, -240),
 	},
 	"carton": {
@@ -61,7 +62,7 @@ const OBJECT_DATA := {
 		"facing": "back",
 		"animation": "back",
 		"text": "Divers. Expérience inclassable.",
-		"bubble_offset": Vector2(100, 400),
+		"bubble_offset": Vector2(600,950),
 		"menu_offset": Vector2(0, -40),
 	},
 	"cadre": {
@@ -69,7 +70,7 @@ const OBJECT_DATA := {
 		"facing": "back",
 		"animation": "back",
 		"text": "Ses études et diplômes.",
-		"bubble_offset": Vector2(500, 1700),
+		"bubble_offset": Vector2(600,950),
 		"menu_offset": Vector2(20, -140),
 	},
 	"kiki": {
@@ -77,7 +78,7 @@ const OBJECT_DATA := {
 		"facing": "front",
 		"animation": "idle_right",
 		"text": "Le kiki.",
-		"bubble_offset": Vector2(170, 320),
+		"bubble_offset": Vector2(600, 950),
 		"menu_offset": Vector2(0, -40),
 	}
 }
@@ -123,6 +124,7 @@ func _ready():
 # Éviter de réinitialiser la position au démarrage
 	if path_follower.progress > 0:  # Garder la dernière position si existante
 		path_follower.moving = false  # Assurer que le déplacement s’arrête
+	
 
 #Appel des noeuds du Player, chemin et Chemin à suivre 
 func init_refs(root_node: Node):
@@ -163,8 +165,28 @@ func move_player_to_object(object_name: String, action: String = ""):
 		return false
 
 	var offset_ratio : float = obj_data.get("ratio", 0.0)
+	
 
+	
+		# ⚖️ Vérifie si on est déjà proche de la cible
 	if player and player.is_inside_tree():
+		var current_ratio: float = player.get_progress_ratio()
+		var target_ratio: float = offset_ratio
+
+
+		if abs(current_ratio - target_ratio) < 0.01:
+			print("Déjà devant l’objet → pas besoin de bouger")
+			
+			# Même si pas de déplacement, on exécute quand même l'action éventuelle
+			_on_character_reached_object(object_name)
+
+			# Exemple : si c’est la main, lancer l’action spéciale
+			if object_name == "kiki" and action == "hand":
+				var kiki = get_node("/root/ChezYann/kiki")
+				if kiki:
+					kiki.react_to_action(action)
+			return true
+
 		# 🔄 Réinitialise forced_anim avant tout nouveau déplacement
 		player.forced_anim = ""
 		player.update_animation()
@@ -174,7 +196,18 @@ func move_player_to_object(object_name: String, action: String = ""):
 		push_error("❌ Le player n'est pas prêt ou a été libéré.")
 		return false
 
+	#if player and player.is_inside_tree():
+		## 🔄 Réinitialise forced_anim avant tout nouveau déplacement
+		#player.forced_anim = ""
+		#player.update_animation()
+#
+		#player.go_to(offset_ratio)
+	#else:
+		#push_error("❌ Le player n'est pas prêt ou a été libéré.")
+		#return false
+
 	print("🚀 Déplacement demandé vers %s → ratio %.2f" % [object_name, offset_ratio])
+	
 
 	await player.reached_target
 	print("✅ Joueur arrivé à destination !")
@@ -185,6 +218,8 @@ func move_player_to_object(object_name: String, action: String = ""):
 	if texte != "":
 		await timer
 		show_speech_bubble_above(player, texte)
+		if action =="hand":
+			pass
 
 	if object_name == "kiki" and action == "hand":
 		var kiki = get_node("/root/ChezYann/kiki")  # adapte ton chemin
@@ -266,11 +301,12 @@ func show_speech_bubble_above(character: Node2D, text: String) -> void:
 	var bubble_offset = OBJECT_DATA[last_clicked_object]["bubble_offset"]
 	var world_pos: Vector2 = character.global_position - bubble_offset
 	var screen_pos := get_viewport().get_canvas_transform().affine_inverse() * world_pos
+	print(screen_pos)
 
 	# Clamp pour rester dans l’écran
-	var screen_size = get_viewport().size
-	screen_pos.x = clamp(screen_pos.x, 0, screen_size.x - bubble.size.x)
-	screen_pos.y = clamp(screen_pos.y, 0, screen_size.y - bubble.size.y)
+	#var screen_size = get_viewport().size
+	#screen_pos.x = clamp(screen_pos.x, 0, screen_size.x - bubble.size.x)
+	#screen_pos.y = clamp(screen_pos.y, 0, screen_size.y - bubble.size.y)
 
 	bubble.position = screen_pos
 	bubble.set_text(text)

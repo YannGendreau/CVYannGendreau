@@ -1,14 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://cbsbrthy3pi30"]
+[gd_scene load_steps=5 format=3 uid="uid://cbsbrthy3pi30"]
 
 [ext_resource type="Script" uid="uid://bux32raxik8f6" path="res://speech_bubble.gd" id="1_h50nq"]
 [ext_resource type="Texture2D" uid="uid://dhu3p4l5832fr" path="res://sprites/Objets/bubble_square.png" id="2_6n4en"]
-[ext_resource type="FontFile" uid="uid://gg3uyttn5v82" path="res://fonts/NFPixels-Regular.ttf" id="3_6n4en"]
+[ext_resource type="FontFile" uid="uid://ddt3roo7yxa0j" path="res://fonts/Retro Gaming.ttf" id="3_0g8jb"]
 [ext_resource type="Texture2D" uid="uid://bn2ncvq14jgrd" path="res://sprites/Objets/base_bubble.png" id="4_0g8jb"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_6n4en"]
-font = ExtResource("3_6n4en")
-font_size = 24
-font_color = Color(0, 0, 0, 1)
 
 [node name="SpeechBubble" type="Control"]
 layout_mode = 3
@@ -21,10 +16,10 @@ layout_mode = 0
 offset_right = 20.0
 offset_bottom = 20.0
 texture = ExtResource("2_6n4en")
-patch_margin_left = 10
-patch_margin_top = 10
-patch_margin_right = 10
-patch_margin_bottom = 10
+patch_margin_left = 20
+patch_margin_top = 20
+patch_margin_right = 20
+patch_margin_bottom = 20
 axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
 
@@ -39,9 +34,10 @@ theme_override_constants/margin_bottom = 5
 
 [node name="Text" type="Label" parent="Bubble/MarginContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_6n4en")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_0g8jb")
+theme_override_font_sizes/font_size = 32
 text = "test"
-label_settings = SubResource("LabelSettings_6n4en")
 vertical_alignment = 1
 
 [node name="Arrow" type="TextureRect" parent="Bubble"]

@@ -3,6 +3,7 @@ class_name ContextMenu
 
 # Référence à l'animation de l'œil si elle existe (dans EyeButton)
 @onready var eye_anim: AnimatedSprite2D = $EyeButton.get_node_or_null("AnimatedSprite2D")
+@onready var hand_anim: AnimatedSprite2D = $HandButton.get_node_or_null("AnimatedSprite2D")
 @onready var player = get_node("/root/ChezYann/Path2D/PathFollower/Employeur")
 
 # Position cible à laquelle le joueur doit se rendre
@@ -75,6 +76,16 @@ func _on_eye_button_mouse_entered() -> void:
 func _on_eye_button_mouse_exited() -> void:
 	if eye_anim:
 		eye_anim.play("idle")
+		
+# Quand la souris entre sur le bouton main → joue l'animation "open"
+func _on_hand_button_mouse_entered() -> void:
+	if hand_anim:
+		hand_anim.play("close")
+#
+# Quand la souris quitte le bouton main → retourne à l'animation "idle"
+func _on_hand_button_mouse_exited() -> void:
+	if hand_anim:
+		hand_anim.play("open")
 
 func _on_eye_button_pressed():
 	if not target_node:
@@ -116,6 +127,14 @@ func _on_hand_button_pressed():
 
 	# 🔒 Cache le menu après l’action
 	visible = false
+	
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		# Vérifie si le clic est en dehors du menu
+		var mouse_pos = get_viewport().get_mouse_position()
+		if not get_global_rect().has_point(mouse_pos):
+			visible = false
+	
 
 
 #################################################################
