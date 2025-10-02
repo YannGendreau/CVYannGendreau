@@ -215,11 +215,10 @@ func move_player_to_object(object_name: String, action: String = ""):
 	var timer = get_tree().create_timer(0.5).timeout
 
 	var texte = obj_data.get("text", "")
-	if texte != "":
+	if action == "eye" and texte != "":
 		await timer
 		show_speech_bubble_above(player, texte)
-		if action =="hand":
-			pass
+
 
 	if object_name == "kiki" and action == "hand":
 		var kiki = get_node("/root/ChezYann/kiki")  # adapte ton chemin

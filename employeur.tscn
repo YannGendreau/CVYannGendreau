@@ -1,9 +1,9 @@
 [gd_scene load_steps=19 format=3 uid="uid://b2pu573y1yatl"]
 
-[ext_resource type="Script" uid="uid://dtjlmqd5ijjsj" path="res://employeur.gd" id="1_c2wg0"]
-[ext_resource type="Texture2D" uid="uid://d3w0rc5q5lndd" path="res://sprites/player/shadow.png" id="2_7syi5"]
-[ext_resource type="Script" uid="uid://33mm4a1jvh27" path="res://shadow.gd" id="3_ujnen"]
-[ext_resource type="Texture2D" uid="uid://bpyf3k5aendi6" path="res://sprites/player/employeur_spritesheet.png" id="4_ujnen"]
+[ext_resource type="Script" uid="uid://dfi7nuo58a7wg" path="res://employeur.gd" id="1_c2wg0"]
+[ext_resource type="Texture2D" uid="uid://bmnbsvogb7id5" path="res://sprites/player/shadow.png" id="2_7syi5"]
+[ext_resource type="Script" uid="uid://ded6o6snaq2sm" path="res://shadow.gd" id="3_ujnen"]
+[ext_resource type="Texture2D" uid="uid://t2c30ubwfq7e" path="res://sprites/player/employeur_spritesheet.png" id="4_ujnen"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vyrym"]
 atlas = ExtResource("4_ujnen")
