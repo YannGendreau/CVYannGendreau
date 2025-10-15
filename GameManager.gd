@@ -2,13 +2,22 @@
 extends Node  # Le GameManager gère les déplacements du joueur, les bulles de dialogue, et les interactions globales
 
 
-@onready var speech_bubble_container := get_node("/root/ChezYann/UI/SpeechBubbleContainer")
-@onready var context_menu = get_node("/root/ChezYann/ContextMenu")  # Menu contextuel global.
+#@onready var speech_bubble_container := get_node_or_null("/root/ChezYann/UI/SpeechBubbleContainer")
+#@onready var context_menu = get_node_or_null("/root/ChezYann/ContextMenu")  # Menu contextuel global.
+#@onready var arrow_green = preload("res://assets/ui/cursors/arrow_1.png")
+#@onready var arrow_blue = preload("res://assets/ui/cursors/arrow_2.png")
+#@onready var path_follower: PathFollow2D = get_node_or_null("/root/ChezYann/Path2D/PathFollower")
+#@onready var player: CharacterBody2D = path_follower.get_node_or_null("Employeur")
+#@onready var anim_sprite: AnimatedSprite2D = null
+
+var speech_bubble_container: Node = null
+var context_menu: Node = null
+var path_follower: PathFollow2D = null
+var player: CharacterBody2D = null
+var anim_sprite: AnimatedSprite2D = null
+
 @onready var arrow_green = preload("res://assets/ui/cursors/arrow_1.png")
 @onready var arrow_blue = preload("res://assets/ui/cursors/arrow_2.png")
-@onready var path_follower: PathFollow2D = get_node_or_null("/root/ChezYann/Path2D/PathFollower")
-@onready var player: CharacterBody2D = path_follower.get_node("Employeur")
-@onready var anim_sprite: AnimatedSprite2D = null
 
 var speech_bubble_scene: PackedScene = preload("res://speechbubble.tscn")
 
@@ -22,7 +31,7 @@ var destination: Vector2 = Vector2.ZERO
 var target_position: Vector2 = Vector2.ZERO
 var last_clicked_object: String = ""
 var last_object_interacted: String = ""
-var player_path_ratio := 0.5  # Position par défaut
+var player_path_ratio := 0.25  # Position par défaut
 # Références à d'autres objets utiles
 var path: Path2D
 
@@ -37,50 +46,70 @@ var arrival_animation: String = ""  # Nom de l'animation à jouer une fois arriv
 var object_name = ""
 var last_action: String = ""   # mémorise l’action en cours ("eye" ou "hand")
 
-const ARRIVAL_THRESHOLD := 10.0
+var required_objects := ["tv", "ordi", "carton", "cadre"]  # 👈 à adapter
+#var visited_objects := {}
+var door_opened := false
 
+var visited_objects: Array = []
+
+#var all_objects_visited := false
+#var open_door_on_return := false
+
+
+const ARRIVAL_THRESHOLD := 10.0
 
 const OBJECT_DATA := {
 	"tv": {
-		"ratio": 0.1,
-		"facing": "idle_left",
-		"animation": "idle_left",
-		"text": "Une bande démo vidéo.",
+		"ratio": 0.05,
+		"facing": "idle_right",
+		"animation": "idle_right",
+		"text": "La TV est allumée. Apparemment une sélection de courts-métrages. J'aurais du apporter des popcorns",
 		"bubble_offset": Vector2(600, 900),
 		"menu_offset": Vector2(0, -40),
 	},
 	"ordi": {
-		"ratio": 0.8,
+		"ratio": 0.48,
 		"facing": "idle",
 		"animation": "idle",
-		"text": "Ses compétences informatiques.",
+		"text": "Ses compétences techniques.",
 		"bubble_offset": Vector2(700, 900),
 		"menu_offset": Vector2(-230, -240),
 	},
 	"carton": {
-		"ratio": 0.7,
+		"ratio": 0.42,
 		"facing": "back",
 		"animation": "back",
-		"text": "Divers. Expérience inclassable.",
+		"text": "Un carton au sommet de l'armoire. Il doit porter son contenu en haute estime !",
 		"bubble_offset": Vector2(600,950),
 		"menu_offset": Vector2(0, -40),
 	},
 	"cadre": {
-		"ratio": 0.6,
+		"ratio": 0.38,
 		"facing": "back",
 		"animation": "back",
-		"text": "Ses études et diplômes.",
+		"text": "Son diplôme trône fièrement au milieu de la pièce.",
 		"bubble_offset": Vector2(600,950),
 		"menu_offset": Vector2(20, -140),
 	},
 	"kiki": {
-		"ratio": 0.27,
+		"ratio": 0.15,
 		"facing": "front",
-		"animation": "idle_right",
-		"text": "Le kiki.",
+		"animation": "front",
+		"text": "Quel mignon petit chien ! C'est lui qu'il faudrait embaucher !",
 		"bubble_offset": Vector2(600, 950),
 		"menu_offset": Vector2(0, -40),
-	}
+		
+	},
+	"porte": {
+		"ratio": 1,
+		"facing": "idle",
+		"animation": "idle",
+		"text": "La porte.",
+		"bubble_offset": Vector2(600, 950),
+		"menu_offset": Vector2(-230, -240),
+		
+	},
+	
 }
 
 const OFFSET_BUBBLE := Vector2(90, 370) 
@@ -90,40 +119,93 @@ signal reached_target
 #
 #version avec position dynamique
 func _ready():
-	anim_sprite = player.get_node("AnimatedSprite2D")
+		# 🔹 Ne rien initialiser si la scène de titre est en cours
+	var current_scene = get_tree().current_scene
+	if current_scene and current_scene.scene_file_path.ends_with("title.tscn"):
+		print("🎬 GameManager ignoré sur la scène de titre.")
+		return
+		
+	refresh_references()
 
-	#Nouveau timer
+	# --- initialisation normale ---
+
+	
+	
+	anim_sprite = player.get_node("AnimatedSprite2D")
 	fade_timer = Timer.new()
-	#Nommer le timer
 	fade_timer.name = "FadeTimer"
-	#Durée
 	fade_timer.wait_time = 1.5
-	#S'arrête à la fin 
 	fade_timer.one_shot = true
-	#Ajout d'un enfant
 	add_child(fade_timer)
-	#Connecte le timer à une méthode qui est exécutée une fois le temps écoulé
 	fade_timer.timeout.connect(_on_fade_timeout)
 	
-	# Curseur vert
+	if not has_node("FadeTimer"):
+		fade_timer = Timer.new()
+		fade_timer.name = "FadeTimer"
+		add_child(fade_timer)
+	else:
+		fade_timer = get_node("FadeTimer")
+	
 	Input.set_custom_mouse_cursor(arrow_green, Input.CURSOR_POINTING_HAND)
-	# Curseur bleu
 	Input.set_custom_mouse_cursor(arrow_blue, Input.CURSOR_ARROW)
 	
 	call_deferred("place_player_at_last_offset")
 	
+	if not player:
+		pass
+	
 	if player:
 		player.reached_target.connect(_on_character_reached_object)
 
-	# Recherche des nœuds dans la scène principale (ajuste le chemin selon chez_yann.tscn)
 	if not path_follower or not player:
 		push_error("❌ GameManager : Références manquantes. Vérifie la structure de chez_yann.tscn.")
 		print("path_follower: ", path_follower, ", player: ", player)
 	else:
 		print("✅ Références GameManager initialisées")
-# Éviter de réinitialiser la position au démarrage
-	if path_follower.progress > 0:  # Garder la dernière position si existante
-		path_follower.moving = false  # Assurer que le déplacement s’arrête
+
+	if path_follower and path_follower.progress > 0:
+		path_follower.moving = false
+		
+	get_tree().tree_changed.connect(_on_tree_changed)
+	#anim_sprite = player.get_node("AnimatedSprite2D")
+#
+	##Nouveau timer
+	#fade_timer = Timer.new()
+	##Nommer le timer
+	#fade_timer.name = "FadeTimer"
+	##Durée
+	#fade_timer.wait_time = 1.5
+	##S'arrête à la fin 
+	#fade_timer.one_shot = true
+	##Ajout d'un enfant
+	#add_child(fade_timer)
+	##Connecte le timer à une méthode qui est exécutée une fois le temps écoulé
+	#fade_timer.timeout.connect(_on_fade_timeout)
+	#
+	## Curseur vert
+	#Input.set_custom_mouse_cursor(arrow_green, Input.CURSOR_POINTING_HAND)
+	## Curseur bleu
+	#Input.set_custom_mouse_cursor(arrow_blue, Input.CURSOR_ARROW)
+	#
+	#call_deferred("place_player_at_last_offset")
+	#
+	#if not player:
+		#pass
+	#
+	#if player:
+		#player.reached_target.connect(_on_character_reached_object)
+#
+	## Recherche des nœuds dans la scène principale (ajuste le chemin selon chez_yann.tscn)
+	#if not path_follower or not player:
+		#push_error("❌ GameManager : Références manquantes. Vérifie la structure de chez_yann.tscn.")
+		#print("path_follower: ", path_follower, ", player: ", player)
+	#else:
+		#print("✅ Références GameManager initialisées")
+## Éviter de réinitialiser la position au démarrage
+	#if path_follower.progress > 0:  # Garder la dernière position si existante
+		#path_follower.moving = false  # Assurer que le déplacement s’arrête
+		#
+	#get_tree().tree_changed.connect(_on_tree_changed)
 	
 
 #Appel des noeuds du Player, chemin et Chemin à suivre 
@@ -156,75 +238,52 @@ func _process(delta):
 			player.global_position = path_follower.global_position
 			emit_signal("reached_target")
 
-func move_player_to_object(object_name: String, action: String = ""):
+func move_player_to_object(object_name: String, action: String = "") -> bool:
 	last_clicked_object = object_name
+	last_action = action  
 
 	var obj_data = OBJECT_DATA.get(object_name.to_lower(), null)
 	if obj_data == null:
 		push_error("❌ Objet inconnu : %s" % object_name)
 		return false
 
-	var offset_ratio : float = obj_data.get("ratio", 0.0)
-	
+	var offset_ratio: float = obj_data.get("ratio", 0.0)
 
-	
-		# ⚖️ Vérifie si on est déjà proche de la cible
 	if player and player.is_inside_tree():
 		var current_ratio: float = player.get_progress_ratio()
 		var target_ratio: float = offset_ratio
 
-
 		if abs(current_ratio - target_ratio) < 0.01:
 			print("Déjà devant l’objet → pas besoin de bouger")
-			
-			# Même si pas de déplacement, on exécute quand même l'action éventuelle
-			_on_character_reached_object(object_name)
-
-			# Exemple : si c’est la main, lancer l’action spéciale
-			if object_name == "kiki" and action == "hand":
-				var kiki = get_node("/root/ChezYann/kiki")
-				if kiki:
-					kiki.react_to_action(action)
-			return true
-
-		# 🔄 Réinitialise forced_anim avant tout nouveau déplacement
-		player.forced_anim = ""
-		player.update_animation()
-
-		player.go_to(offset_ratio)
+		else:
+			player.go_to(target_ratio)
+			await player.reached_target
+			print("✅ Joueur arrivé à destination !")
 	else:
 		push_error("❌ Le player n'est pas prêt ou a été libéré.")
 		return false
 
-	#if player and player.is_inside_tree():
-		## 🔄 Réinitialise forced_anim avant tout nouveau déplacement
-		#player.forced_anim = ""
-		#player.update_animation()
-#
-		#player.go_to(offset_ratio)
-	#else:
-		#push_error("❌ Le player n'est pas prêt ou a été libéré.")
-		#return false
-
 	print("🚀 Déplacement demandé vers %s → ratio %.2f" % [object_name, offset_ratio])
-	
 
-	await player.reached_target
-	print("✅ Joueur arrivé à destination !")
-
+	# Petite pause avant bulle éventuelle
 	var timer = get_tree().create_timer(0.5).timeout
-
 	var texte = obj_data.get("text", "")
-	if action == "eye" and texte != "":
+	_on_character_reached_object(object_name)
+	# 👁 bulle uniquement pour l’œil
+	if last_action == "eye" and texte != "":
 		await timer
+		reset_bubbles()
 		show_speech_bubble_above(player, texte)
+		print("💬 bulle affichée")
+	else:
+		print("👁 pas de bulle")
 
-
+	# 🐶 Action spéciale pour Kiki
 	if object_name == "kiki" and action == "hand":
-		var kiki = get_node("/root/ChezYann/kiki")  # adapte ton chemin
+		var kiki = get_node("/root/ChezYann/kiki")
 		if kiki:
 			kiki.react_to_action(action)
-			
+
 		await player.animated_sprite.animation_finished
 		player.animated_sprite.play("idle")
 
@@ -234,9 +293,11 @@ func move_player_to_object(object_name: String, action: String = ""):
 		await player.animated_sprite.animation_finished
 		player.animated_sprite.play("ears")
 
-	_on_character_reached_object(object_name)
+	# 🎬 Joue l’animation de facing une seule fois
+	
 
 	return true
+
 
 	
 func is_player_moving() -> bool:
@@ -278,9 +339,33 @@ func place_player_at_last_offset():
 	print("✅ Joueur replacé sur le chemin à ratio:", ratio)
 
 #Utilisé avec la fonction on_hand_button_pressed du context_menu	
-func on_object_clicked(object_name: String):
+func on_object_clicked(object_name: String, action: String = ""):
 	last_clicked_object = object_name
 	print("Dernier objet cliqué: ", last_clicked_object)  # Ajouter un print pour confirmer
+	
+	#visited_objects[object_name] = true  # ✅ Marqué comme visité
+	#print("✔️ Objet visité :", object_name)
+	#
+		# Seule la main valide un objet comme "vu"
+	if action == "hand":
+		if not visited_objects.has(object_name):
+			#visited_objects[object_name] = true  # ✅ Marqué comme visité
+			visited_objects.append(object_name)
+			print("✔️ Objet visité :", object_name)
+	
+	else:
+		print("👁 Juste observé :", object_name)
+		
+	#if not visited_objects.has(object_name):
+		#visited_objects.append(object_name)
+		#print("✅ Objet visité :", object_name)
+
+func all_objects_visited() -> bool:
+	for obj in required_objects:
+		if not visited_objects.has(obj):
+			return false
+	return true
+	
 
 func show_speech_bubble_above(character: Node2D, text: String) -> void:
 	if not speech_bubble_scene or not speech_bubble_container:
@@ -315,24 +400,49 @@ func show_speech_bubble_above(character: Node2D, text: String) -> void:
 	if is_instance_valid(bubble):
 		bubble.queue_free()
 		current_bubble = null
-		
+
 func reset_bubbles() -> void:
 	if current_bubble and is_instance_valid(current_bubble):
 		current_bubble.queue_free()
 	current_bubble = null
-	
-func _on_character_reached_object(object_name: String):
 
+func _on_character_reached_object(object_name: String) -> void:
 	if object_name in OBJECT_DATA:
 		var data = OBJECT_DATA[object_name]
 		if data.has("facing"):
 			var anim_name = data["facing"]
-			
+
 			if player and player.animated_sprite and player.animated_sprite.sprite_frames.has_animation(anim_name):
 				player.animated_sprite.play(anim_name)
 				print("▶️ Animation jouée :", anim_name)
 			else:
 				print("⚠️ Animation", anim_name, "non trouvée dans le sprite du joueur.")
+				
+func go_to_object(object_name: String):
+	if not OBJECT_DATA.has(object_name):
+		push_error("❌ Objet inconnu : %s" % object_name)
+		return
 
+	var offset_ratio: float = OBJECT_DATA[object_name].get("ratio", 0.0)
 
-			
+	if player:
+		player.go_to(offset_ratio)
+		print("🚪 Déplacement vers", object_name, "→ ratio:", offset_ratio)
+	else:
+		push_error("❌ Player non trouvé !")
+		
+func refresh_references():
+	speech_bubble_container = get_node_or_null("/root/ChezYann/UI/SpeechBubbleContainer")
+	context_menu = get_node_or_null("/root/ChezYann/ContextMenu")
+	path_follower = get_node_or_null("/root/ChezYann/Path2D/PathFollower")
+	#player = path_follower and path_follower.get_node_or_null("Employeur") or null
+	player = get_node_or_null("/root/ChezYann/Path2D/PathFollower/Employeur")
+	
+	if player:
+		print("✅ GameManager : Références mises à jour.")
+	else:
+		print("⚠️ GameManager : pas encore de ChezYann actif.")
+
+func _on_tree_changed():
+	await get_tree().process_frame
+	refresh_references()

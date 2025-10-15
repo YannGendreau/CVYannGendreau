@@ -11,12 +11,13 @@ config_version=5
 [application]
 
 config/name="Chez Yann"
-run/main_scene="uid://quox87bb6okb"
-config/features=PackedStringArray("4.4", "Forward Plus")
+run/main_scene="uid://bs4tnut00ftw6"
+config/features=PackedStringArray("4.5", "Forward Plus")
 
 [autoload]
 
 GameManager="*res://GameManager.gd"
+FadeLayer="*res://fade_layer.tscn"
 
 [display]
 

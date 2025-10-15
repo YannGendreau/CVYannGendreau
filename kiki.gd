@@ -60,6 +60,7 @@ func _play_hand_sequence() -> void:
 	await get_tree().create_timer(3.0).timeout  # idle 2 sec
 
 	sprite.play("down")
+
 	await sprite.animation_finished
 
 	sprite.play("ears")

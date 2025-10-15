@@ -1,0 +1,305 @@
+[gd_scene load_steps=26 format=3 uid="uid://ckrpx7hu4qxh1"]
+
+[ext_resource type="Script" uid="uid://dgx62vr6nfiou" path="res://sortie.gd" id="1_2ecfy"]
+[ext_resource type="Texture2D" uid="uid://cu1okc56cymg2" path="res://assets/backgrounds/sortie.png" id="1_qy78n"]
+[ext_resource type="Script" uid="uid://cwca5sisg0bgu" path="res://yann.gd" id="2_k55g6"]
+[ext_resource type="Texture2D" uid="uid://c6lmv0g0gw4vs" path="res://sprites/player/Yann-Sheet.png" id="2_n0dnh"]
+[ext_resource type="FontFile" uid="uid://ddt3roo7yxa0j" path="res://fonts/Retro Gaming.ttf" id="3_pgafa"]
+[ext_resource type="PackedScene" uid="uid://b2pu573y1yatl" path="res://employeur.tscn" id="4_whqo4"]
+[ext_resource type="Texture2D" uid="uid://0be7hd84wbar" path="res://sprites/player/Yann_poursuite.png" id="4_yo5uj"]
+[ext_resource type="Script" uid="uid://bp1irbs1gl5p2" path="res://contactform.gd" id="8_4wx3f"]
+[ext_resource type="Script" uid="uid://dawxvjs84uvhg" path="res://canvas_layer.gd" id="8_hk7jn"]
+[ext_resource type="Texture2D" uid="uid://dle6yrg0b4n8q" path="res://sprites/Objets/page_message.png" id="8_phswr"]
+[ext_resource type="FontFile" uid="uid://gg3uyttn5v82" path="res://fonts/NFPixels-Regular.ttf" id="11_2qakm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pgafa"]
+atlas = ExtResource("2_n0dnh")
+region = Rect2(0, 0, 320, 640)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4wx3f"]
+atlas = ExtResource("2_n0dnh")
+region = Rect2(320, 0, 320, 640)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_phswr"]
+atlas = ExtResource("2_n0dnh")
+region = Rect2(640, 0, 320, 640)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hk7jn"]
+atlas = ExtResource("2_n0dnh")
+region = Rect2(960, 0, 320, 640)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2qakm"]
+atlas = ExtResource("2_n0dnh")
+region = Rect2(1280, 0, 320, 640)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sl10o"]
+atlas = ExtResource("2_n0dnh")
+region = Rect2(1600, 0, 320, 640)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0ymx6"]
+atlas = ExtResource("2_n0dnh")
+region = Rect2(1920, 0, 320, 640)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i2nyq"]
+atlas = ExtResource("2_n0dnh")
+region = Rect2(2240, 0, 320, 640)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n4cyn"]
+atlas = ExtResource("2_n0dnh")
+region = Rect2(2560, 0, 320, 640)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xgljj"]
+atlas = ExtResource("2_n0dnh")
+region = Rect2(2880, 0, 320, 640)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0ymx6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pgafa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4wx3f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_phswr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hk7jn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2qakm")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sl10o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0ymx6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i2nyq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n4cyn")
+}],
+"loop": false,
+"name": &"joy",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xgljj")
+}],
+"loop": true,
+"name": &"sad",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_phswr"]
+size = Vector2(226, 548)
+
+[sub_resource type="Curve2D" id="Curve2D_2ecfy"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 1672, 646, 0, 0, 0, 0, 611, 645)
+}
+point_count = 2
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_phswr"]
+
+[node name="Sortie" type="Node2D"]
+script = ExtResource("1_2ecfy")
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(960, 686)
+texture = ExtResource("1_qy78n")
+
+[node name="Buttons" type="Control" parent="Background"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Oui" type="Button" parent="Background/Buttons"]
+layout_mode = 0
+offset_left = -303.0
+offset_top = -444.0
+offset_right = -139.0
+offset_bottom = -346.0
+theme_override_colors/font_disabled_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_pgafa")
+theme_override_font_sizes/font_size = 70
+text = "OUI"
+
+[node name="Non" type="Button" parent="Background/Buttons"]
+layout_mode = 0
+offset_left = 111.0
+offset_top = -449.0
+offset_right = 281.0
+offset_bottom = -351.0
+theme_override_colors/font_disabled_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_pgafa")
+theme_override_font_sizes/font_size = 70
+text = "NON"
+
+[node name="Yann" type="CharacterBody2D" parent="."]
+position = Vector2(766, 694)
+script = ExtResource("2_k55g6")
+
+[node name="Poursuite" type="Sprite2D" parent="Yann"]
+position = Vector2(8, 10)
+texture = ExtResource("4_yo5uj")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Yann"]
+sprite_frames = SubResource("SpriteFrames_0ymx6")
+animation = &"joy"
+frame = 1
+frame_progress = 0.113473
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Yann"]
+position = Vector2(44, 21)
+shape = SubResource("RectangleShape2D_phswr")
+
+[node name="Path2D" type="Path2D" parent="."]
+position = Vector2(482, 324)
+curve = SubResource("Curve2D_2ecfy")
+metadata/_edit_group_ = true
+
+[node name="PathFollower" type="PathFollow2D" parent="Path2D"]
+position = Vector2(1672, 646)
+rotation = 3.14159
+rotates = false
+
+[node name="Poursuite" type="Sprite2D" parent="Path2D/PathFollower"]
+position = Vector2(-8.99935, -245)
+texture = ExtResource("4_yo5uj")
+
+[node name="Employeur" parent="Path2D/PathFollower" instance=ExtResource("4_whqo4")]
+rotation = 3.14159
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="SpeechBubbleContainer" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 480.0
+offset_top = 237.0
+offset_right = 480.0
+offset_bottom = 237.0
+metadata/_edit_use_anchors_ = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+script = ExtResource("8_hk7jn")
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("8_phswr")
+
+[node name="ContactForm" type="Panel" parent="CanvasLayer"]
+offset_left = 421.0
+offset_top = 304.0
+offset_right = 1486.0
+offset_bottom = 750.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_phswr")
+script = ExtResource("8_4wx3f")
+
+[node name="Label" type="Label" parent="CanvasLayer/ContactForm"]
+layout_mode = 0
+offset_left = 356.0
+offset_top = -37.0
+offset_right = 755.0
+offset_bottom = 14.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_pgafa")
+theme_override_font_sizes/font_size = 40
+text = "Message à Yann"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/ContactForm"]
+layout_mode = 0
+offset_left = 81.0
+offset_top = 60.0
+offset_right = 753.0
+offset_bottom = 100.0
+
+[node name="Label" type="Label" parent="CanvasLayer/ContactForm/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("11_2qakm")
+theme_override_font_sizes/font_size = 40
+text = "Je souhaite vous dire que votre jeu est"
+
+[node name="feeling" type="OptionButton" parent="CanvasLayer/ContactForm/HBoxContainer"]
+layout_mode = 2
+accessibility_name = "feeling"
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_pgafa")
+theme_override_font_sizes/font_size = 25
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/ContactForm"]
+layout_mode = 0
+offset_left = 84.0
+offset_top = 131.0
+offset_right = 476.0
+offset_bottom = 171.0
+
+[node name="Label" type="Label" parent="CanvasLayer/ContactForm/HBoxContainer2"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_pgafa")
+theme_override_font_sizes/font_size = 25
+text = "surtout la partie avec"
+
+[node name="part" type="OptionButton" parent="CanvasLayer/ContactForm/HBoxContainer2"]
+layout_mode = 2
+accessibility_name = "part"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="CanvasLayer/ContactForm"]
+layout_mode = 0
+offset_left = 79.0
+offset_top = 233.0
+offset_right = 301.0
+offset_bottom = 273.0
+
+[node name="Label" type="Label" parent="CanvasLayer/ContactForm/HBoxContainer3"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_pgafa")
+theme_override_font_sizes/font_size = 25
+text = "Continuez à"
+
+[node name="action" type="OptionButton" parent="CanvasLayer/ContactForm/HBoxContainer3"]
+layout_mode = 2
+accessibility_name = "action"
+
+[node name="name_input" type="LineEdit" parent="CanvasLayer/ContactForm"]
+layout_mode = 0
+offset_left = 93.0
+offset_top = 299.0
+offset_right = 393.0
+offset_bottom = 330.0
+placeholder_text = "Votre nom"
+
+[node name="SendButton" type="Button" parent="CanvasLayer/ContactForm"]
+layout_mode = 0
+offset_left = 96.0
+offset_top = 384.0
+offset_right = 167.0
+offset_bottom = 415.0
+accessibility_name = "SendButton"
+text = "Envoyer"
+
+[node name="StatusLabel" type="Label" parent="CanvasLayer/ContactForm"]
+layout_mode = 0
+offset_left = 327.0
+offset_top = 347.0
+offset_right = 367.0
+offset_bottom = 370.0
+accessibility_name = "StatusLabel"
+
+[connection signal="pressed" from="Background/Buttons/Oui" to="." method="_on_oui_pressed"]
+[connection signal="pressed" from="Background/Buttons/Non" to="." method="_on_non_pressed"]

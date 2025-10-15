@@ -9,10 +9,10 @@
 [ext_resource type="Texture2D" uid="uid://djqo7i4l0ns8k" path="res://sprites/Objets/file_buttons_2007.png" id="6_nllqb"]
 [ext_resource type="Script" uid="uid://dvkb6w7uhcxrq" path="res://etiquette_3.gd" id="7_q544b"]
 [ext_resource type="Texture2D" uid="uid://1gqxgy5qojfv" path="res://sprites/Objets/file_buttons_2011.png" id="7_qet46"]
-[ext_resource type="Texture2D" uid="uid://csmd2m5k8wl6d" path="res://sprites/Objets/file_buttons_2012.png" id="8_q544b"]
 [ext_resource type="Texture2D" uid="uid://g0f1dqglanrj" path="res://sprites/Objets/file_buttons_2016.png" id="9_k2gqr"]
 [ext_resource type="Script" uid="uid://dj5kyxsugd42v" path="res://etiquette_4.gd" id="9_nllqb"]
 [ext_resource type="Script" uid="uid://bdxombifdyvae" path="res://etiquette_5.gd" id="11_nllqb"]
+[ext_resource type="Texture2D" uid="uid://dc22x0hptc8su" path="res://sprites/Objets/file_buttons_2003.png" id="11_oxyn8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ebspx"]
 atlas = ExtResource("3_oxyn8")
@@ -114,61 +114,74 @@ position = Vector2(308, 317)
 script = ExtResource("3_3dl18")
 
 [node name="Sprite2D" type="Sprite2D" parent="Etiquette1"]
-position = Vector2(257, 362)
+position = Vector2(206, 407)
 texture = ExtResource("3_764x5")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Etiquette1"]
-polygon = PackedVector2Array(78, 382, 169, 380, 171, 347, 278, 348, 330, 350, 338, 379, 1227, 381, 1190, 499, 114, 499)
+polygon = PackedVector2Array(80, 437, 118, 435, 118, 395, 284, 395, 294, 425, 342, 427, 1229, 432, 1206, 499, 103, 499)
 
 [node name="Etiquette2" type="Area2D" parent="."]
 position = Vector2(438, 262)
 script = ExtResource("5_dww28")
 
 [node name="Sprite2D" type="Sprite2D" parent="Etiquette2"]
-position = Vector2(341, 330)
+position = Vector2(420, 318)
 texture = ExtResource("6_nllqb")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Etiquette2"]
-polygon = PackedVector2Array(-39, 343, 257, 340, 257, 316, 415, 316, 427, 344, 1085, 350, 1060, 426, 251, 423, 134, 392, -19, 425)
+polygon = PackedVector2Array(-21, 339, 336, 339, 336, 306, 497, 309, 503, 338, 1061, 343, 1040, 405, 340, 404, 333, 374, 158, 376, 131, 408, -10, 407)
 
 [node name="Etiquette3" type="Area2D" parent="."]
 position = Vector2(728, 166)
 script = ExtResource("7_q544b")
 
 [node name="Sprite2D" type="Sprite2D" parent="Etiquette3"]
-position = Vector2(341, 330)
+position = Vector2(310, 351)
 texture = ExtResource("7_qet46")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Etiquette3"]
-polygon = PackedVector2Array(-311, 343, 250, 342, 261, 312, 418, 315, 439, 342, 776, 346, 746, 433, 149, 435, 129, 404, -29, 403, -41, 434, -281, 430)
+polygon = PackedVector2Array(-296, 371, 227, 366, 235, 338, 389, 335, 398, 366, 751, 377, 746, 433, 223, 427, 216, 390, 38, 389, 33, 427, -280, 416)
 
 [node name="Etiquette4" type="Area2D" parent="."]
-visible = false
 position = Vector2(165, -84)
 script = ExtResource("9_nllqb")
 
 [node name="Sprite2D" type="Sprite2D" parent="Etiquette4"]
-position = Vector2(341, 330)
-texture = ExtResource("8_q544b")
+position = Vector2(517, 748)
+texture = ExtResource("11_oxyn8")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Etiquette4"]
 position = Vector2(340.5, 330)
 shape = SubResource("RectangleShape2D_dww28")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Etiquette4"]
+position = Vector2(757, 373)
+polygon = PackedVector2Array(-512, 449, -519, 393, -335, 388, -327, 355, -161, 360, -152, 392, 597, 402, 579, 445, -309, 449, -320, 414, -493, 411, -492, 450)
 
 [node name="Etiquette5" type="Area2D" parent="."]
 position = Vector2(963, 74)
 script = ExtResource("11_nllqb")
 
 [node name="Sprite2D" type="Sprite2D" parent="Etiquette5"]
-position = Vector2(341, 330)
+position = Vector2(267, 378)
 texture = ExtResource("9_k2gqr")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Etiquette5"]
-polygon = PackedVector2Array(-499, 427, -521, 346, 258, 339, 266, 314, 421, 312, 422, 344, 500, 345, 479, 428, 199, 427, 199, 399, 18, 396, 15, 428)
+polygon = PackedVector2Array(-503, 449, -519, 393, 171, 394, 190, 364, 346, 363, 348, 399, 499, 404, 485, 448, 176, 449, 169, 418, -11, 415, -16, 449)
 
 [connection signal="pressed" from="ReturnButton" to="." method="_on_return_button_pressed"]
 [connection signal="input_event" from="Etiquette1" to="Etiquette1" method="_on_input_event"]
+[connection signal="mouse_entered" from="Etiquette1" to="Etiquette1" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Etiquette1" to="Etiquette1" method="_on_mouse_exited"]
 [connection signal="input_event" from="Etiquette2" to="Etiquette2" method="_on_input_event"]
+[connection signal="mouse_entered" from="Etiquette2" to="Etiquette2" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Etiquette2" to="Etiquette2" method="_on_mouse_exited"]
 [connection signal="input_event" from="Etiquette3" to="Etiquette3" method="_on_input_event"]
+[connection signal="mouse_entered" from="Etiquette3" to="Etiquette3" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Etiquette3" to="Etiquette3" method="_on_mouse_exited"]
 [connection signal="input_event" from="Etiquette4" to="Etiquette4" method="_on_input_event"]
+[connection signal="mouse_entered" from="Etiquette4" to="Etiquette4" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Etiquette4" to="Etiquette4" method="_on_mouse_exited"]
 [connection signal="input_event" from="Etiquette5" to="Etiquette5" method="_on_input_event"]
+[connection signal="mouse_entered" from="Etiquette5" to="Etiquette5" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Etiquette5" to="Etiquette5" method="_on_mouse_exited"]

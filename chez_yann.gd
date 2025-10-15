@@ -4,8 +4,11 @@ extends Node2D
 @onready var path_follower = $Path2D/PathFollower
 @onready var player = $Path2D/PathFollower/Employeur
 @onready var animated_sprite = $Path2D/PathFollower/Employeur/AnimatedSprite2D
+@onready var porte = $porte/AnimatedSprite2D
+@onready var sign = $Sign/AnimatedSprite2D
 
 func _ready():
+
 	print("Appel de place_player_at_last_offset, last_clicked_object: ", get_node("/root/GameManager").last_clicked_object)
 	get_node("/root/GameManager").place_player_at_last_offset()
 	if GameManager and GameManager.last_clicked_object != "":
@@ -39,3 +42,23 @@ func _ready():
 			push_error("⚠️ Aucun SpeechBubbleContainer trouvé dans chez_yann.tscn")
 
 	animated_sprite.play('front')
+	
+		# 👇 Tous les objets visités
+	if GameManager.all_objects_visited():
+		if not GameManager.door_opened:
+			# ⏳ Petite pause avant la première ouverture
+			await get_tree().create_timer(1.0).timeout
+			porte.play("anim")
+			sign.play('on')
+			GameManager.door_opened = true
+		else:
+			# 🚪 Déjà ouverte → on affiche directement l’état final
+			porte.play("open")
+			sign.play('on')
+			porte.frame = porte.sprite_frames.get_frame_count("open") - 1
+	else:
+		# 🔒 Encore fermée
+		porte.play("close")
+		sign.play('off')
+	
+	

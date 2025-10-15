@@ -8,7 +8,7 @@ class_name SpeechBubble
 @onready var arrow = $Bubble/Arrow
 
 
-const MAX_WIDTH := 400
+const MAX_WIDTH := 500
 const MARGIN := 12
 
 func set_text(text: String) -> void:
@@ -56,3 +56,6 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:
 		if not bubble.get_global_rect().has_point(get_viewport().get_mouse_position()):
 			queue_free()
+
+func flip_arrow(up: bool):
+	arrow.flip_h = true

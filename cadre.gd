@@ -16,7 +16,7 @@ func _on_area_input_event(viewport, event, shape_idx):
 		print("Nom de l'objet: ", object_name)
 		GameManager.on_object_clicked(object_name)  # 👈 Déclare le nom
 		menu.target_name = object_name  # 👈 essentiel !
-		menu.show_menu(global_position, scene_path, player_target_position)
+		#menu.show_menu(global_position, scene_path, player_target_position)
 		
 
 func _ready():

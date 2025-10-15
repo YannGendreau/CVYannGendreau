@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://dpd3p2xdb87hl"]
+
+[ext_resource type="Script" uid="uid://hy36gjwo3qad" path="res://page_2007.gd" id="1_qocok"]
+[ext_resource type="Script" uid="uid://g0ojf3h852bd" path="res://background.gd" id="2_bjtuo"]
+[ext_resource type="Texture2D" uid="uid://da7m7q5ecse7s" path="res://sprites/Objets/page_3_text_2007.png" id="3_0refw"]
+[ext_resource type="Texture2D" uid="uid://cmcex4myrosw5" path="res://sprites/UI/croix.png" id="4_dhoc5"]
+[ext_resource type="Texture2D" uid="uid://d0tgk00lgwv80" path="res://sprites/Objets/page_1_text_2007.png" id="4_s2v75"]
+
+[node name="Page2007" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_qocok")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+script = ExtResource("2_bjtuo")
+
+[node name="Page" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 960.0
+offset_bottom = 540.0
+texture = ExtResource("3_0refw")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("4_s2v75")
+
+[node name="CloseButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 1522.0
+offset_top = 24.0
+offset_right = 1614.0
+offset_bottom = 116.0
+scale = Vector2(0.5, 0.5)
+icon = ExtResource("4_dhoc5")
+flat = true

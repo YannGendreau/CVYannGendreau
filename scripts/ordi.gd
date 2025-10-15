@@ -21,7 +21,7 @@ func _on_area_input_event(viewport, event, shape_idx):
 		var menu = get_node(context_menu_path)
 		var object_name = self.object_name
 		GameManager.on_object_clicked(object_name) 
-		menu.show_menu(global_position, scene_path, player_target_position)
+		#menu.show_menu(global_position, scene_path, player_target_position)
 		
 func _on_eye_icon_pressed() -> void:
 	GameManager.on_eye_clicked(self)

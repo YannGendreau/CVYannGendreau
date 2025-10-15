@@ -6,6 +6,8 @@ extends Control
 @onready var close_button: Button = $CloseButton
 @onready var arrow_left: TextureButton = $ButtonL
 @onready var arrow_right: TextureButton = $ButtonR
+@onready var return_button = get_node("/root/Carton_docs/ReturnButton") 
+
 
 @export var pages: Array[Texture2D] = []
 var current_page: int = 0
@@ -18,6 +20,7 @@ func _ready():
 
 func _on_close_pressed() -> void:
 	queue_free()  # Ferme la page
+	return_button.visible = true
 	
 func update_page():
 	if pages.is_empty():

@@ -1,22 +1,24 @@
 extends CharacterBody2D
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var shadow: Sprite2D = $shadow
 @onready var path_follower = get_node("/root/ChezYann/Path2D/PathFollower")
 
 signal reached_target   # ✅ déclaration du signal
 
 var moving = false
 var target_ratio: float = 0.0
-var speed: float = 0.5  # ajustable
+var speed: float = 0.4  # ajustable
 
 var forced_anim: String = ""
 
+var last_direction: int = 1  # 1 = droite, -1 = gauche
+
 
 func _ready() -> void:
-	#animated_sprite.play("idle")
-	#animated_sprite.animation_finished.connect(_on_animation_finished)
 
 	add_to_group("Employeur")
+	
 
 func go_to(ratio: float):
 	#target_ratio = path_follower.curve.sample_baked(ratio * path_follower.curve.get_baked_length())
@@ -30,14 +32,14 @@ func _process(delta):
 
 	var current = path_follower.progress_ratio
 	var direction = sign(target_ratio - current)
-	var step = delta * speed * direction
 
+	# garder la direction pour l'anim idle
+	if direction != 0:
+		last_direction = direction  
+
+	var step = delta * speed * direction
 	path_follower.progress_ratio += step
 	global_position = path_follower.global_position
-
-	# Gérer l'animation gauche/droite en fonction du déplacement
-	if direction != 0:
-		animated_sprite.flip_h = direction < 0
 
 	# Vérifie si on est proche de la destination
 	if abs(path_follower.progress_ratio - target_ratio) < 0.005:
@@ -46,6 +48,8 @@ func _process(delta):
 		moving = false
 		emit_signal("reached_target")
 		update_animation()
+	else:
+		update_animation()  # mettre à jour en temps réel
 	
 func update_animation():
 	if forced_anim != "":
@@ -53,9 +57,11 @@ func update_animation():
 		return
 
 	if moving:
-		animated_sprite.play("walk")
-	else:
-		animated_sprite.play("idle")
+		if last_direction < 0:
+			animated_sprite.play("walk_right")
+		else:
+			animated_sprite.play("walk_left")
+
 
 func _on_context_menu_action_selected(action: String, object_name: String):
 	#GameManager.last_object_interacted = object_name  # Ajouter cette ligne

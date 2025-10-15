@@ -1,15 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://dpd3p2xdb87hl"]
+[gd_scene load_steps=6 format=3 uid="uid://qix1icauytam"]
 
-[ext_resource type="Script" uid="uid://hy36gjwo3qad" path="res://page_2003.gd" id="1_qocok"]
+[ext_resource type="Script" uid="uid://hy36gjwo3qad" path="res://page_2007.gd" id="1_s2v75"]
 [ext_resource type="Script" uid="uid://g0ojf3h852bd" path="res://background.gd" id="2_bjtuo"]
-[ext_resource type="Texture2D" uid="uid://csbkbykm8ttd0" path="res://sprites/Objets/2007_purple_file.png" id="3_s2v75"]
+[ext_resource type="Texture2D" uid="uid://b7gweswrmdsjm" path="res://sprites/Objets/page_3_text_2003.png" id="3_s2v75"]
 [ext_resource type="Texture2D" uid="uid://cmcex4myrosw5" path="res://sprites/UI/croix.png" id="4_dhoc5"]
-[ext_resource type="Texture2D" uid="uid://d0tgk00lgwv80" path="res://sprites/Objets/page_1_text_2007.png" id="4_s2v75"]
+[ext_resource type="Texture2D" uid="uid://c47p7fr4e2aw2" path="res://sprites/Objets/page_2003.png" id="4_s2v75"]
 
-[node name="Page2007" type="Control"]
+[node name="Page2003" type="Control"]
 layout_mode = 3
 anchors_preset = 0
-script = ExtResource("1_qocok")
+script = ExtResource("1_s2v75")
 
 [node name="Background" type="ColorRect" parent="."]
 layout_mode = 0

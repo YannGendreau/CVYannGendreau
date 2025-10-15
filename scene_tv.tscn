@@ -1,9 +1,14 @@
-[gd_scene load_steps=15 format=3 uid="uid://cvo3ekfugckoa"]
+[gd_scene load_steps=20 format=3 uid="uid://cvo3ekfugckoa"]
 
 [ext_resource type="Script" uid="uid://2pbjpl8l2hmf" path="res://scene_tv.gd" id="1_34it3"]
 [ext_resource type="Texture2D" uid="uid://0dbvvrccrp05" path="res://assets/backgrounds/scene_TV.png" id="1_v4udv"]
-[ext_resource type="VideoStream" uid="uid://cjuivt7go6eei" path="res://Videos/COLLAB - 2019 - Real Yann Gendreau - HD.ogv" id="3_8klom"]
+[ext_resource type="FontFile" uid="uid://gg3uyttn5v82" path="res://fonts/NFPixels-Regular.ttf" id="3_40ts2"]
+[ext_resource type="Texture2D" uid="uid://dedk8jo6q2dp8" path="res://sprites/Objets/COLLAB-AFFICHE.jpg" id="3_hrbyb"]
 [ext_resource type="Texture2D" uid="uid://cr0tlssv3qts2" path="res://sprites/UI/arrow-back-Sheet.png" id="3_j76g2"]
+[ext_resource type="Script" uid="uid://buq1uxympr271" path="res://video_player_layer.gd" id="5_2s3iq"]
+[ext_resource type="Texture2D" uid="uid://cmcex4myrosw5" path="res://sprites/UI/croix.png" id="5_m6boe"]
+[ext_resource type="Texture2D" uid="uid://di5h6ephoh1a" path="res://sprites/Objets/VOLONTES-AFFICHE.jpg" id="5_swygl"]
+[ext_resource type="Texture2D" uid="uid://gyb221874q3d" path="res://sprites/UI/arrow-turn-R.png" id="6_2s3iq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ebspx"]
 atlas = ExtResource("3_j76g2")
@@ -78,21 +83,129 @@ animations = [{
 
 [node name="scene_tv" type="Node2D"]
 script = ExtResource("1_34it3")
-scene_name = "tv"
 
 [node name="SceneTv" type="Sprite2D" parent="."]
 position = Vector2(960, 540)
 texture = ExtResource("1_v4udv")
 
-[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="."]
+[node name="VideoButtons" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="HBoxContainer" parent="VideoButtons"]
+layout_mode = 0
+offset_left = 435.0
+offset_top = 238.0
+offset_right = 1485.0
+offset_bottom = 829.0
+theme_override_constants/separation = 106
+
+[node name="FilmButton1" type="TextureButton" parent="VideoButtons/VBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("3_hrbyb")
+
+[node name="Label" type="Label" parent="VideoButtons/VBoxContainer/FilmButton1"]
 visible = false
+layout_mode = 0
+offset_right = 162.0
+offset_bottom = 72.0
+theme_override_fonts/font = ExtResource("3_40ts2")
+theme_override_font_sizes/font_size = 60
+text = "Collab"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="FilmButton2" type="TextureButton" parent="VideoButtons/VBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("5_swygl")
+
+[node name="Label" type="Label" parent="VideoButtons/VBoxContainer/FilmButton2"]
+visible = false
+layout_mode = 0
+offset_right = 198.0
+offset_bottom = 72.0
+theme_override_fonts/font = ExtResource("3_40ts2")
+theme_override_font_sizes/font_size = 60
+text = "Volonté"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VideoPlayerLayer" type="CanvasLayer" parent="."]
+visible = false
+script = ExtResource("5_2s3iq")
+
+[node name="ColorRect" type="ColorRect" parent="VideoPlayerLayer"]
+offset_left = 57.0
+offset_top = 27.0
+offset_right = 1862.0
+offset_bottom = 1001.0
+color = Color(0, 0, 0, 1)
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="VideoPlayerLayer"]
 offset_right = 1920.0
 offset_bottom = 1080.0
-stream = ExtResource("3_8klom")
-volume_db = -54.51
 autoplay = true
+expand = true
+
+[node name="Close" type="Button" parent="VideoPlayerLayer"]
+offset_left = 1823.0
+offset_right = 1915.0
+offset_bottom = 92.0
+icon = ExtResource("5_m6boe")
+flat = true
+
+[node name="PlayerUI" type="Control" parent="VideoPlayerLayer"]
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -960.0
+offset_top = -1080.0
+offset_right = -920.0
+offset_bottom = -1040.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VideoPlayerLayer/PlayerUI"]
+layout_mode = 0
+offset_left = 561.0
+offset_top = 855.0
+offset_right = 1423.0
+offset_bottom = 995.0
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="PlayPauseButton" type="TextureButton" parent="VideoPlayerLayer/PlayerUI/HBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("6_2s3iq")
+
+[node name="ProgressBar" type="HSlider" parent="VideoPlayerLayer/PlayerUI/HBoxContainer"]
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 2
+
+[node name="TimeLabel" type="Label" parent="VideoPlayerLayer/PlayerUI/HBoxContainer"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+text = "volume"
+
+[node name="VolumeSlider" type="HSlider" parent="VideoPlayerLayer/PlayerUI/HBoxContainer"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="."]
+visible = false
 offset_left = 53.0
 offset_top = 25.0
 offset_right = 1863.0
@@ -112,4 +225,19 @@ position = Vector2(54, 56)
 sprite_frames = SubResource("SpriteFrames_j76g2")
 animation = &"glow"
 
+[node name="Label" type="Label" parent="."]
+offset_left = 697.0
+offset_top = 80.0
+offset_right = 1213.0
+offset_bottom = 152.0
+theme_override_colors/font_color = Color(1, 0.5833334, 0, 1)
+theme_override_fonts/font = ExtResource("3_40ts2")
+theme_override_font_sizes/font_size = 60
+text = "COURTS-MÉTRAGES"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="mouse_entered" from="VideoPlayerLayer/Close" to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="VideoPlayerLayer/Close" to="." method="_on_mouse_exited"]
+[connection signal="pressed" from="VideoPlayerLayer/Close" to="." method="_on_close_pressed"]
 [connection signal="pressed" from="ReturnButton" to="." method="_on_return_button_pressed"]

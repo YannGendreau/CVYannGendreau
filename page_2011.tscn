@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" uid="uid://cepyyhpo2lqx5" path="res://page_2011.gd" id="1_5jrcd"]
 [ext_resource type="Script" uid="uid://g0ojf3h852bd" path="res://background.gd" id="1_eynv8"]
-[ext_resource type="Texture2D" uid="uid://b7uq0rkf87v7n" path="res://sprites/Objets/2011_purple_file.png" id="2_5jrcd"]
 [ext_resource type="Texture2D" uid="uid://cmcex4myrosw5" path="res://sprites/UI/croix.png" id="3_ega5w"]
 [ext_resource type="Texture2D" uid="uid://c8yt6oeh8ewj1" path="res://sprites/Objets/page_2.png" id="3_fi3a7"]
 [ext_resource type="Texture2D" uid="uid://df5vnqe5gi6pt" path="res://sprites/Objets/page_3.png" id="4_2i4eo"]
 [ext_resource type="Texture2D" uid="uid://cffwleil72wvq" path="res://sprites/Objets/page_1.png" id="4_emm8h"]
+[ext_resource type="Texture2D" uid="uid://dju6rftarg6n5" path="res://sprites/Objets/2012_yellow_file.png" id="6_2i4eo"]
 [ext_resource type="Texture2D" uid="uid://dwt1wu0oc37mv" path="res://sprites/UI/arrow-turn-R-sm.png" id="8_2i4eo"]
 [ext_resource type="Texture2D" uid="uid://ds0gt7402k24n" path="res://sprites/UI/arrow-turn-L-sm.png" id="9_7i7v1"]
 [ext_resource type="Texture2D" uid="uid://ko2c4yw1mn51" path="res://sprites/Objets/page_2_text_2011.png" id="10_7i7v1"]
@@ -32,7 +32,7 @@ anchors_preset = 0
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
-texture = ExtResource("2_5jrcd")
+texture = ExtResource("6_2i4eo")
 
 [node name="Page" type="TextureRect" parent="Content"]
 layout_mode = 0
